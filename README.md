@@ -16,7 +16,7 @@
   <a href="https://github.com/GIFTEDLOV/sentinel-evidence">Evidence</a>
 </p>
 
-<!-- README HERO SCREENSHOT -->
+![Sentinel autonomous incident response](docs/assets/readme/01-landing.png)
 
 ## What Sentinel is
 
@@ -459,9 +459,11 @@ The current application exposes:
 
 Public reads do not require a wallet. A wallet is required contextually for user-approved writes such as opening an incident. The application presents the protected state and evidence as read models; the intelligent contract remains authoritative.
 
-<!-- README APP SCREENSHOTS -->
-<!-- README INCIDENT SCREENSHOT -->
-<!-- README PROOF SCREENSHOT -->
+![Sentinel protocol posture and recovery state](docs/assets/readme/02-home.png)
+
+![Sentinel incident command center](docs/assets/readme/03-incident-command-center.png)
+
+![Sentinel proof and security surface](docs/assets/readme/04-proof-security.png)
 
 ## Technology
 
