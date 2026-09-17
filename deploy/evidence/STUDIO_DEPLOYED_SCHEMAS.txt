@@ -1,0 +1,14 @@
+Studio-dev deployed schema verification
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+
+SENTINEL_ADDRESS: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+SENTINEL_SCHEMA_RPC_ERROR: null
+SENTINEL_METHOD_COUNT: 16
+SENTINEL_METHODS: assess_incident, assess_recovery, begin_recovery, bind_evidence, confirm_pause, confirm_recovered, execute_pause, execute_unpause, get_evidence, get_incident, get_protocol, get_state, lock_emergency_policy, open_incident, register_protected_protocol, update_emergency_policy
+
+PROTECTED_DEMO_ADDRESS: 0xbB956e15F58C38617CF337b0E5DeeD5B5cf2BFE3
+PROTECTED_DEMO_SCHEMA_RPC_ERROR: null
+PROTECTED_DEMO_METHOD_COUNT: 10
+PROTECTED_DEMO_METHODS: configure_sentinel, emergency_pause, emergency_unpause, get_authorized_sentinel, get_owner, get_pause_counters, get_total_processed, is_controller_configured, is_paused, process

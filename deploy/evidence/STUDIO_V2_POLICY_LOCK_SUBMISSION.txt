@@ -1,0 +1,10 @@
+Sentinel v2 emergency policy lock submission
+
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL: 0x5a965B5089878fB1DE519001350eb33664eb6995
+PROTOCOL_ID: studio-v2-demo
+GENLAYER_TRANSACTION: 0xa127ea56d1fa7431efaaed6d3a1e7ec1f15e20174d52a93fe9c43b42069a05ca
+STATUS_AT_SUBMISSION: ACCEPTED_OR_PENDING
+NO_REBROADCAST: true

@@ -1,0 +1,141 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "measuredAt": "2026-09-14T15:24:15.819Z",
+  "policy": {
+    "enabled": true,
+    "genPerTimeUnit": "1",
+    "storageUnitPrice": "250000000",
+    "receiptGasPrice": "250000000",
+    "executionBudgetFloor": "76548000000000",
+    "timeUnitOverlayBps": "1500"
+  },
+  "estimates": {
+    "protectedDemoDeployment": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "100",
+        "validatorTimeunitsAllocation": "200",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "25000000000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "0",
+          "0"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "75000000000018429",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    },
+    "sentinelDeployment": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "100",
+        "validatorTimeunitsAllocation": "200",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "25000000000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "0",
+          "0"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "75000000000018429",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    }
+  },
+  "headroom": {
+    "source": "current genlayer-js estimateTransactionFees policy path",
+    "manualFeeValues": false
+  },
+  "finalFeeValues": {
+    "protectedDemoDeployment": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "100",
+        "validatorTimeunitsAllocation": "200",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "25000000000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "0",
+          "0"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "75000000000018429",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    },
+    "sentinelDeployment": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "100",
+        "validatorTimeunitsAllocation": "200",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "25000000000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "0",
+          "0"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "75000000000018429",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    },
+    "configure_sentinel": {
+      "feeValue": "460362600018429",
+      "executionBudgetPerRound": "153454200000000",
+      "headroomSource": "estimateTransactionFeesForWrite with current Studio Next policy"
+    },
+    "register_protected_protocol": {
+      "feeValue": "460373400018429",
+      "executionBudgetPerRound": "153457800000000",
+      "headroomSource": "estimateTransactionFeesForWrite with current Studio Next policy"
+    },
+    "lock_emergency_policy": {
+      "feeValue": "460371600018429",
+      "executionBudgetPerRound": "153457200000000",
+      "headroomSource": "estimateTransactionFeesForWrite with current Studio Next policy"
+    }
+  }
+}

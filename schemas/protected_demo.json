@@ -1,0 +1,89 @@
+{
+  "ctor": {
+    "params": [
+      [
+        "authorized_sentinel",
+        "address"
+      ]
+    ],
+    "kwparams": {}
+  },
+  "methods": {
+    "configure_sentinel": {
+      "params": [
+        [
+          "sentinel",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "emergency_pause": {
+      "params": [],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "emergency_unpause": {
+      "params": [],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "get_authorized_sentinel": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "address"
+    },
+    "get_owner": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "address"
+    },
+    "get_pause_counters": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": {
+        "$dict": "int"
+      }
+    },
+    "get_total_processed": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "int"
+    },
+    "is_controller_configured": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "bool"
+    },
+    "is_paused": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "bool"
+    },
+    "process": {
+      "params": [
+        [
+          "amount",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    }
+  }
+}

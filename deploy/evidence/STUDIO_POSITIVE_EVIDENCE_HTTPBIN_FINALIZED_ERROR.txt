@@ -1,0 +1,11 @@
+Positive incident evidence binding terminal execution result
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+GENLAYER_TRANSACTION: 0xf8f539e42f769f088736775df050c4ccb1639c1cc8968db94971b09721a6def7
+FINAL_STATUS: FINALIZED
+CONSENSUS_RESULT: MAJORITY_AGREE
+EXECUTION_RESULT: FINISHED_WITH_ERROR
+ERROR: TypeError in _valid_transaction_hash because the CLI encoded the 0x-prefixed string argument as an integer.
+STATE_EFFECT: reverted; evidence-httpbin was not stored.
+RECONCILIATION: receipt --stderr on the same GenLayer transaction

@@ -1,0 +1,17 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "source_sha256": "D5A3A1FC40466E8694BC6A1C1ED1D752CF65B9E43A294A64381B2141E44C45F3",
+  "evm_submission_hash": "0xff7e98bf457f639bc8945b0f96aecdda6ed0eabd23c08d07451a362074be6a27",
+  "cli_result": "WaitForTransactionReceiptTimeoutError",
+  "final_reconciliation": {
+    "eth_getTransactionByHash": null,
+    "eth_getTransactionReceipt": null,
+    "account_latest_nonce": "0x6",
+    "account_pending_nonce": "0x6",
+    "genlayer_transaction_id": null,
+    "sentinel_address": null
+  },
+  "interpretation": "The submission was observed pending during an intermediate RPC sample, then repeatedly absent with no receipt and no confirmed nonce advancement. It was terminal/dropped before producing a GenLayer transaction identity or Sentinel address."
+}

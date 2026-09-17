@@ -1,0 +1,382 @@
+FINAL INCIDENT LIFECYCLE - PREFLIGHT STOP
+
+Scope: incident-half task stopped before any production write because no funded
+non-owner Studio-dev account was available through the configured local tooling.
+
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+OWNER_ACCOUNT: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+OWNER_BALANCE: 1.992183010499905103 GEN
+OWNER_LATEST_NONCE: 0x63 (99)
+OWNER_PENDING_NONCE: 0x63 (99)
+OWNER_NONCE_GATE: PASS
+
+SENTINEL_ADDRESS: 0x2dF0E12D4CE46f0312B7461972351F3cD074b3c9
+PROTECTED_DEMO_ADDRESS: 0x38f38591A2835e2e9b467FBAc94D4b613Ce27584
+SENTINEL_SHA: 17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D
+PROTECTED_DEMO_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+SOURCE_HASH_GATE: PASS
+PYTEST: 57 passed
+GIT_DIFF_CHECK: PASS (LF/CRLF normalization warnings only)
+
+SENTINEL_POLICY: sentinel-demo, unauthorized-drain, locked=true
+PROTECTED_DEMO_PRECONDITION: paused=false, remediated=false, treasury_balance=1000, total_outflow=0, pause_count=0, unpause_count=0
+PRECONDITION_GATE: PASS
+
+FINAL_ABI_METHODS:
+- ProtectedDemo.process(amount: int)
+- ProtectedDemo.execute_outflow(recipient: address, amount: int)
+- ProtectedDemo.get_treasury_state()
+- ProtectedDemo.get_last_outflow()
+- Sentinel.open_incident(incident_id: string, protocol_id: string)
+- Sentinel.bind_evidence(incident_id: string, evidence_id: string, phase: string, evidence_type: string, source_url: string, failure_class: string, observed_at: int, content_digest: string, transaction_hash: string, transaction_block: int, transaction_input: string)
+- Sentinel.assess_incident(incident_id: string)
+- Sentinel.execute_pause(incident_id: string)
+- Sentinel.confirm_pause(incident_id: string)
+
+CONFIGURED_NON_OWNER_ACCOUNTS:
+- cron-signer: 0x82a983325de92aede126c18e9fe3b53da1ab3329, balance=0 GEN, locked
+- deployer: 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, balance=0 GEN
+- player2: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8, balance=0 GEN
+- player3: 0xe0f17bef0587c3b66d2eb4bbe705dff821abdde7, balance=0 GEN
+- provider: 0x06bbfc5f5a06953ffdb117db376302d6bd80ebdc, balance=0 GEN
+- recallguard-v2-deployer-20260911: 0x518cbff4623c97254576882a4ae078073de2844b, balance=0 GEN
+
+ATTACKER_ACCOUNT_AVAILABLE: NO
+ATTACKER_ACCOUNT_UNAVAILABLE: YES
+ATTACKER_ACCOUNT_REASON: Every configured non-owner account has 0 GEN and cannot pay one Studio-dev outflow transaction. The owner was not used as attacker. No account was created, funded, or unlocked during this task.
+
+HEALTHY_BASELINE_TX: NOT ATTEMPTED
+OUTFLOW_TX: NOT ATTEMPTED
+INCIDENT_CREATE_TX: NOT ATTEMPTED
+INCIDENT_ADVISORY: NOT GENERATED OR PUBLISHED
+CHAIN_EVIDENCE_TX: NOT ATTEMPTED
+ADVISORY_EVIDENCE_TX: NOT ATTEMPTED
+ASSESSMENT_TX: NOT ATTEMPTED
+PAUSE_TX: NOT ATTEMPTED
+
+PRODUCTION_WRITES: 0
+PROTOCOL_REMAINS_PAUSED: NO - no incident was started; ProtectedDemo remains paused=false.
+STOP_REASON: ATTACKER_ACCOUNT_UNAVAILABLE
+
+RECHECKED_TASK: controlled Studio-dev demonstration funding gate
+SECONDARY_TEST_ACTOR: player2
+SECONDARY_TEST_ACTOR_ADDRESS: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+SECONDARY_BALANCE_BEFORE_WEI: 0
+OUTFLOW_METHOD: execute_outflow(address,int)
+OUTFLOW_ESTIMATED_FEE_VALUE: 1381095900126258
+OUTFLOW_ESTIMATED_FEE_GEN: 0.001381095900126258
+OUTFLOW_SIMULATION: completed without execution
+FUNDING_REQUIRED: YES
+FUNDING_METHOD_ATTEMPTED: owner account send to player2, requested 0.002 GEN
+FUNDING_PREFLIGHT: studio-dev / chain 61997 / owner latest=pending nonce 99
+FUNDING_RESULT: LOCAL CLI INPUT FAILURE - Cannot convert 0.002 to a BigInt
+FUNDING_BROADCAST: NO
+FUNDING_TX: NONE
+SECONDARY_BALANCE_AFTER_WEI: 0
+OWNER_NONCE_AFTER_FUNDING_FAILURE: latest=99, pending=99
+FUNDING_STOP_RULE: STOPPED; no alternate amount representation was retried
+STEP: healthy_baseline
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"label":"owner","network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1990183010499905103","latestNonce":100,"pendingNonce":100,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"process","encoded":"0x0e04617267730d09","decoded":["1"]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153454200000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381087800126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78628500000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188707800000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x87b34b0d16c6e3541a4153543a5e97cb7d0a7ec5caa82d3e593ff87c6b449f73
+BROADCAST_COUNT: 1
+
+INCIDENT_TASK_FINAL_STATUS
+
+TASK_SCOPE: Healthy baseline -> controlled non-owner outflow -> incident record -> evidence preparation; stopped on failed advisory evidence binding before assessment or pause.
+EXECUTION_DATE_UTC: 2026-09-12
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL_ADDRESS: 0x2dF0E12D4CE46f0312B7461972351F3cD074b3c9
+PROTECTED_DEMO_ADDRESS: 0x38f38591A2835e2e9b467FBAc94D4b613Ce27584
+POLICY: sentinel-demo / unauthorized-drain / locked=true
+ADVISORY_PREFIX: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/
+SOURCE_HASHES: sentinel=17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D, protected_demo=1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+PYTEST: 57 passed
+SOURCE_HASH_GATE: PASS
+GIT_DIFF_CHECK: PASS (LF/CRLF normalization warnings only)
+
+SECONDARY_TEST_ACTOR: player2
+SECONDARY_TEST_ACTOR_ADDRESS: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+SECONDARY_BALANCE_AFTER_WEI: 5001842742749996706
+SECONDARY_BALANCE_AFTER_GEN: 5.001842742749996706
+
+HEALTHY_BASELINE_TX: 0x87b34b0d16c6e3541a4153543a5e97cb7d0a7ec5caa82d3e593ff87c6b449f73
+HEALTHY_BASELINE_STATUS: FINALIZED
+HEALTHY_BASELINE_CONSENSUS: MAJORITY_AGREE
+HEALTHY_BASELINE_EXECUTION: FINISHED_WITH_RETURN
+HEALTHY_BASELINE_CALL: ProtectedDemo.process(1)
+TOTAL_PROCESSED_AFTER_BASELINE: 1
+
+DEMO_OUTFLOW_AMOUNT: 100
+DEMO_OUTFLOW_TX: 0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202
+DEMO_OUTFLOW_STATUS: FINALIZED
+DEMO_OUTFLOW_CONSENSUS: MAJORITY_AGREE
+DEMO_OUTFLOW_EXECUTION: FINISHED_WITH_RETURN
+TREASURY_BEFORE: 1000
+TREASURY_AFTER_OUTFLOW: 900
+TOTAL_OUTFLOW_AFTER: 100
+LAST_OUTFLOW_ACTOR: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+LAST_OUTFLOW_RECIPIENT: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+LAST_OUTFLOW_AMOUNT: 100
+OUTFLOW_PAUSED: false
+OUTFLOW_REMEDIATED: false
+
+CANONICAL_TRANSACTION_AUTHENTICATION: PASS via eth_getTransactionByHash at the locked RPC
+RPC_HASH_MATCH: PASS
+RPC_SENDER_MATCH: PASS (from_address=0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8)
+RPC_TARGET_MATCH: PASS (to_address=0x38f38591a2835e2e9b467fbac94d4b613ce27584)
+RPC_CALLDATA_MATCH: PASS (data.calldata base64 equals the bound authenticated input; tx_data decodes to execute_outflow with player2 and 100)
+RPC_FINALITY: PASS (status=FINALIZED)
+RPC_CONSENSUS: PASS (result_name=MAJORITY_AGREE)
+RPC_EXECUTION: PASS (txExecutionResultName=FINISHED_WITH_RETURN)
+RPC_TIMESTAMP: 1789254937 / 2026-09-12T23:15:37.305199Z
+RPC_TRANSACTION_DIGEST: b16be533da155338b201ebd944059ce8d5f40e89d6aa57f8cf08bfb8b6896132
+
+INCIDENT_CREATE_TX: 0x3688f1c6926fab4ce8b9086de4373b26f52e3abc3f6ef17cba6a6ab3c6e93075
+INCIDENT_CREATE_STATUS: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+INCIDENT_ID: incident-254762469c
+INCIDENT_STATE_AFTER_CREATE: ASSESSING
+
+INCIDENT_ADVISORY_FILE: evidence/advisories/incident-254762469c.json
+INCIDENT_ADVISORY_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-254762469c.json
+INCIDENT_ADVISORY_SHA256: 00271088c87cb739ab63a38288cf07b2f60bedc702a7c413f24cb2a80bad78ad
+INCIDENT_ADVISORY_BYTES: 888
+INCIDENT_ADVISORY_RAW_FETCH: HTTP 200; exact byte and digest match; transaction_hash and incident_id match
+EVIDENCE_REPOSITORY_COMMIT: a6e8eab52d93ebd8d224fa917dc402f87b187479
+
+CHAIN_EVIDENCE_TX: 0xa9f0b8f4c27e3d012c046eb9de6827170c9244d2cc16baa703502ab2bb98713c
+CHAIN_EVIDENCE_STATUS: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+CHAIN_EVIDENCE_BOUND: YES
+CHAIN_EVIDENCE_PHASE: EMERGENCY
+CHAIN_EVIDENCE_SOURCE: studio-dev.genlayer.com
+
+ADVISORY_EVIDENCE_OBSERVED_AT_USED: 1732601000 (selected from the deterministic hosted GenVM simulation window; current runtime clock limitation)
+ADVISORY_EVIDENCE_TX: 0x0bdb8dc5982b0bde2369b045310ba6f82b76353e628505cb431f96a604495c92
+ADVISORY_EVIDENCE_STATUS: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_ERROR
+ADVISORY_EVIDENCE_BOUND: NO
+ADVISORY_EVIDENCE_ERROR: Evidence timestamp is in the future
+ADVISORY_EVIDENCE_ROOT_CAUSE: bind_evidence rejected the SECURITY_ADVISORY because the current hosted GenVM transaction timestamp was earlier than the supplied observed_at. The SDK/RPC surfaced the final execution error; no retry was made.
+
+DISTINCT_APPROVED_SOURCES: only studio-dev.genlayer.com is attached onchain; advisory raw source is published and verified but not attached
+SOURCE_THRESHOLD_MET: NO
+ASSESSMENT_TX: NOT ATTEMPTED
+INCIDENT_VERDICT: NOT PRODUCED
+PAUSE_TX: NOT ATTEMPTED
+TARGET_PAUSED_READBACK: false
+PAUSE_COUNT: 0
+FINAL_INCIDENT_STATE: ASSESSING
+
+POST_PAUSE_OUTFLOW_SIMULATION: NOT RUN
+POST_PAUSE_PROCESS_SIMULATION: NOT RUN
+PROTOCOL_REMAINS_PAUSED: NO - task stopped before pause because advisory evidence binding failed
+REMEDIATION_EXECUTED: NO
+RECOVERY_STARTED: NO
+RECOVERY_ADVISORY_PUBLISHED: NO
+UNPAUSE_EXECUTED: NO
+
+PRODUCTION_CONTRACT_CHANGED: NO
+FRONTEND_CHANGED: NO
+SENTINEL_COMMITS: 0
+SENTINEL_PUSHES: 0
+EVIDENCE_REPO_COMMITS_THIS_TASK: 1
+EVIDENCE_REPO_PUSHES_THIS_TASK: 1
+STOP_REASON: Advisory evidence transaction finalized with FINISHED_WITH_ERROR; absolute no-retry rule applied.
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":0,"treasury_balance":1000},"lastOutflow":{"actor":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc","amount":0,"recipient":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc"},"totalProcessed":1,"counters":{"pause_count":0,"unpause_count":0}}
+
+TIMESTAMP_CORRECTION_DIAGNOSIS:
+FAILED_ADVISORY_BIND_TX: 0x0bdb8dc5982b0bde2369b045310ba6f82b76353e628505cb431f96a604495c92
+FAILED_OBSERVED_AT: 1732601000
+FAILED_BIND_TX_TIMESTAMP: 1789257596
+FAILED_BIND_TX_DATETIME: 2026-09-12T23:59:56.960445+00:00
+CLOCK_SKEW_SECONDS: -56656596
+CONTRACT_TIME_SOURCE: gl.message.datetime parsed by _transaction_timestamp()
+FUTURE_TIMESTAMP_CHECK: observed_at > _now() + 300
+ADVISORY_ISSUED_AT_VALIDATED_BY_CONTRACT: NO
+OBSERVED_AT_INDEPENDENT: YES
+ADVISORY_REPUBLICATION_REQUIRED: NO
+CURRENT_CANONICAL_TIME: 1789324576
+OUTFLOW_TIMESTAMP: 1789254937
+OUTFLOW_AGE_SECONDS: 69639
+MAX_EVIDENCE_AGE_SECONDS: 3600
+SAFE_REMAINING_WINDOW_SECONDS: 0
+CHAIN_EVIDENCE_REMAINS_FRESH: NO
+INCIDENT_FRESHNESS_WINDOW_EXPIRED: YES
+CORRECTED_OBSERVED_AT_CANDIDATE: 1789257596
+CORRECTED_OBSERVED_AT_APPLIED: NO - freshness window expired before retry
+CORRECTED_BIND_SIMULATION: NOT RUN - stopped by freshness gate
+CORRECTED_BIND_ATTEMPTED: NO
+CORRECTED_BIND_COUNT: 0
+CORRECTED_BIND_TX: NONE
+DETAILS: See ADVISORY_TIMESTAMP_CORRECTION.txt for decoded calldata, canonical
+timestamps, exact arithmetic, and the no-retry decision.
+
+FRESH_INCIDENT_CYCLE:
+MULTIPLE_INCIDENTS_SUPPORTED: YES - open_incident only rejects a duplicate incident_id; no global per-protocol ASSESSING guard exists.
+OLD_INCIDENT_BLOCKS_NEW_INCIDENT: NO
+OLD_INCIDENT_STATE: ASSESSING (incident-254762469c; not modified)
+
+FRESH_OUTFLOW_AMOUNT: 50
+FRESH_OUTFLOW_TX: 0xe25b16a6628d55e2b3325be4dcad6073c422f4227990e605146c9211e6d1325e
+FRESH_OUTFLOW_STATUS: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+FRESH_OUTFLOW_TIMESTAMP_RAW: created_timestamp=1789325441; created_at=2026-09-13T18:50:41.606307+00:00; current_timestamp=1789325498
+FRESH_OUTFLOW_OBSERVED_AT: 1789325441
+FRESH_OUTFLOW_READBACK: paused=false; remediated=false; treasury_balance=850; total_outflow=150; last_outflow_actor=0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8; last_outflow_amount=50
+
+FRESH_INCIDENT_CREATE_TX: 0x7d5f94391d9f7a10669aa6cbb477af85c2b7d23bb2a60752b026ec213f72e2d2
+FRESH_INCIDENT_ID: incident-e25b16a662
+FRESH_INCIDENT_STATE_AFTER_CREATE: ASSESSING
+
+FRESH_CHAIN_EVIDENCE_TX: 0x282481539eceefdf5be0dd88a2e37f922583954d327b03cb6bc0eb407aac23c1
+FRESH_CHAIN_EVIDENCE_BOUND: YES
+FRESH_CHAIN_EVIDENCE_DIGEST: 81783f615c01f9b4356d5a349cacd65602d7d268819ba671ce62d834a71561b1
+
+FRESH_ADVISORY_FILE: evidence/advisories/incident-e25b16a662.json
+FRESH_ADVISORY_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-e25b16a662.json
+FRESH_ADVISORY_SHA256: c7d3d0bf4b58a7531b8baa71e9099f97149bc5e97c25adbaffc2e0410781d0cf
+FRESH_ADVISORY_BYTES: 901
+FRESH_ADVISORY_COMMIT: 8de581c3f0f737f63fee750bcad0845737f0c3e5
+FRESH_ADVISORY_RAW_FETCH: HTTP success; exact bytes and digest matched
+
+ADVISORY_OBSERVED_AT: 1789325441
+ADVISORY_BIND_SIMULATION: REJECTED before broadcast; exact VM error was "Evidence timestamp is in the future"
+FRESH_ADVISORY_EVIDENCE_TX: NONE
+FRESH_ADVISORY_EVIDENCE_BOUND: NO
+ADVISORY_BIND_BROADCAST_COUNT: 0
+OWNER_NONCE_AFTER_FAILED_SIMULATION: latest=106; pending=106
+TIMESTAMP_MODEL_PROVEN_SAFE: NO - the required canonical outflow timestamp was rejected by hosted GenVM simulation as future; no alternate timestamp was guessed
+
+DISTINCT_APPROVED_SOURCES: 1 attached onchain (studio-dev.genlayer.com)
+SOURCE_THRESHOLD_MET: NO
+FRESH_ASSESSMENT_TX: NOT ATTEMPTED
+FRESH_INCIDENT_VERDICT: NOT PRODUCED
+FRESH_PAUSE_TX: NOT ATTEMPTED
+TARGET_PAUSED_READBACK: false
+FINAL_FRESH_INCIDENT_STATE: ASSESSING
+PROTECTED_DEMO_REMAINS: paused=false; remediated=false; treasury_balance=850; total_outflow=150
+
+FRESH_CYCLE_STOP_REASON: Required advisory bind simulation failed with the deterministic future-timestamp error. Per task instruction, no alternate timestamp, advisory bind retry, assessment, or pause was attempted.
+
+GENVM_TIME_DOMAIN_DIAGNOSIS:
+NODE_CLOCK_SECONDS: 1789326641 (gen_getTransactionLifecycle.evaluatedAt with timestamp omitted)
+CHAIN_EVIDENCE_AGE_SECONDS: 1200
+CHAIN_EVIDENCE_REMAINING_SECONDS: 2400
+CHAIN_EVIDENCE_STILL_USABLE: YES at measurement
+FUTURE_COMPARISON_OPERATOR: observed_at > _now() + 300
+STALE_COMPARISON_OPERATOR: _now() > observed_at and _now() - observed_at > max_evidence_age_seconds
+MAX_AGE: 3600
+SIMULATION_PROBES_RUN: 20
+GEN_CALL_MAX_ACCEPTED_OBSERVED_AT: 1732603500
+GEN_CALL_MIN_FRESH_OBSERVED_AT: 1732600000
+INFERRED_GENVM_SIMULATION_NOW: 1732603200..1732603949
+NODE_TO_GENVM_SKEW_SECONDS: 56722692..56723441
+SAFE_ADVISORY_OBSERVED_AT: NONE
+SAFE_TIMESTAMP_SEMANTICALLY_POST_PUBLICATION: NO
+FINAL_ADVISORY_BIND_SIMULATION: NOT RUN - no semantically valid timestamp exists
+FRESH_ADVISORY_EVIDENCE_BOUND: NO
+FRESH_ADVISORY_BIND_ATTEMPTED: NO
+HOSTED_SIMULATION_TIME_DOMAIN_INCOMPATIBLE: YES for required post-publication semantics
+TIME_DOMAIN_STOP_REASON: Accepted GenVM timestamps are in the 173260xxxx domain,
+while the advisory was published in the 2026/178932xxxx domain. No pre-publication
+timestamp was used and no bind transaction was submitted.
+STEP: demo_outflow
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8
+PREFLIGHT: {"label":"outflow","network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8","balanceWei":"5001921371999998353","latestNonce":1,"pendingNonce":1,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"execute_outflow","encoded":"0x0e046172677315d402307836333131646539383961623031616534646137376433366363343564343935666263643462376138a106","decoded":["0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","100"]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153455100000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381095900126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78629250000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188708700000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202
+BROADCAST_COUNT: 1
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":100,"treasury_balance":900},"lastOutflow":{"actor":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","amount":100,"recipient":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"},"totalProcessed":1,"counters":{"pause_count":0,"unpause_count":0}}
+STEP: incident_create
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"label":"owner","network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1990104381999903456","latestNonce":101,"pendingNonce":101,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"open_incident","encoded":"0x0e0461726773159c01696e636964656e742d323534373632343639636c73656e74696e656c2d64656d6f","decoded":["incident-254762469c","sentinel-demo"]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153456300000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381106700126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78630250000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188709900000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x3688f1c6926fab4ce8b9086de4373b26f52e3abc3f6ef17cba6a6ab3c6e93075
+BROADCAST_COUNT: 1
+INCIDENT_ID: incident-254762469c
+INCIDENT_STATE_AFTER_CREATE: {"evidence_ids_csv":"","incident_verdict":"INCONCLUSIVE","opened_at":1789255565,"pause_confirmed_at":0,"pause_requested":false,"protocol_id":"sentinel-demo","recovery_verdict":"INCONCLUSIVE","reporter":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","source_domains_csv":"","state":"ASSESSING","unpause_requested":false}
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":100,"treasury_balance":900},"lastOutflow":{"actor":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","amount":100,"recipient":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"},"totalProcessed":1,"counters":{"pause_count":0,"unpause_count":0}}
+STEP: chain_evidence_bind
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1990025751749901809","latestNonce":102,"pendingNonce":102,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"bind_evidence","encoded":"0x0e04617267735d9c01696e636964656e742d323534373632343639638401636861696e2d323534373632343639634c454d455247454e43598c01434841494e5f5452414e53414354494f4e9c0268747470733a2f2f73747564696f2d6465762e67656e6c617965722e636f6d2f6170699401756e617574686f72697a65642d647261696ec9d1bba9358404623136626535333364613135353333386232303165626439343430353963653864356634306538396436616135376638636630386266623862363839363133329404307832353437363234363963653430393561373466343434393639316363633265613861663262656162343161333565663564333131613566616663356639323032018406466742385a58686c593356305a5639766458526d62473933424746795a334d56314149776544597a4d54466b5a546b344f5746694d4446685a54526b595463335a444d3259324d304e5751304f54566d596d4e6b4e4749335954696842673d3d","decoded":["incident-254762469c","chain-254762469c","EMERGENCY","CHAIN_TRANSACTION","https://studio-dev.genlayer.com/api","unauthorized-drain","1789254937","b16be533da155338b201ebd944059ce8d5f40e89d6aa57f8cf08bfb8b6896132","0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202","0","FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg=="]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153462300000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381160700126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78635250000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188715900000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0xa9f0b8f4c27e3d012c046eb9de6827170c9244d2cc16baa703502ab2bb98713c
+BROADCAST_COUNT: 1
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"evidence":{"content_digest":"b16be533da155338b201ebd944059ce8d5f40e89d6aa57f8cf08bfb8b6896132","evidence_type":"CHAIN_TRANSACTION","failure_class":"unauthorized-drain","incident_id":"incident-254762469c","observed_at":1789254937,"phase":"EMERGENCY","source_domain":"studio-dev.genlayer.com","source_url":"https://studio-dev.genlayer.com/api","transaction_block":0,"transaction_hash":"0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202","transaction_input":"FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg=="},"incident":{"evidence_ids_csv":"chain-254762469c","incident_verdict":"INCONCLUSIVE","opened_at":1789255565,"pause_confirmed_at":0,"pause_requested":false,"protocol_id":"sentinel-demo","recovery_verdict":"INCONCLUSIVE","reporter":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","source_domains_csv":"studio-dev.genlayer.com","state":"ASSESSING","unpause_requested":false}}
+STEP: advisory_evidence_bind
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989947116499900162","latestNonce":103,"pendingNonce":103,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"bind_evidence","encoded":"0x0e04617267735d9c01696e636964656e742d323534373632343639639c0161647669736f72792d323534373632343639634c454d455247454e43598c0153454355524954595f41445649534f5259fc0668747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f4749465445444c4f562f73656e74696e656c2d65766964656e63652f6d61696e2f65766964656e63652f61647669736f726965732f696e636964656e742d323534373632343639632e6a736f6e9401756e617574686f72697a65642d647261696ec1caacd13384043030323731303838633837636237333961623633613338323838636630376232663630626564633730326137633431336632346362326138306261643738616494043078323534373632343639636534303935613734663434343936393163636332656138616632626561623431613335656635643331316135666166633566393230320904","decoded":["incident-254762469c","advisory-254762469c","EMERGENCY","SECURITY_ADVISORY","https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-254762469c.json","unauthorized-drain","1732601000","00271088c87cb739ab63a38288cf07b2f60bedc702a7c413f24cb2a80bad78ad","0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202","1",""]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153462900000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381166100126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78635750000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188716500000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x0bdb8dc5982b0bde2369b045310ba6f82b76353e628505cb431f96a604495c92
+BROADCAST_COUNT: 1
+STEP: fresh_demo_outflow
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8
+PREFLIGHT: {"label":"outflow","network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8","balanceWei":"5001842742749996706","latestNonce":2,"pendingNonce":2,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"execute_outflow","encoded":"0x0e046172677315d4023078363331316465393839616230316165346461373764333663633435643439356662636434623761389103","decoded":["0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","50"]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153455100000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381095900126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78629250000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188708700000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0xe25b16a6628d55e2b3325be4dcad6073c422f4227990e605146c9211e6d1325e
+BROADCAST_COUNT: 1
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":150,"treasury_balance":850},"lastOutflow":{"actor":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","amount":50,"recipient":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"},"totalProcessed":1,"counters":{"pause_count":0,"unpause_count":0}}
+STEP: fresh_incident_create
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"label":"owner","network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989868488499898515","latestNonce":104,"pendingNonce":104,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"open_incident","encoded":"0x0e0461726773159c01696e636964656e742d653235623136613636326c73656e74696e656c2d64656d6f","decoded":["incident-e25b16a662","sentinel-demo"]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153456300000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381106700126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78630250000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188709900000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x7d5f94391d9f7a10669aa6cbb477af85c2b7d23bb2a60752b026ec213f72e2d2
+BROADCAST_COUNT: 1
+FRESH_INCIDENT_ID: incident-e25b16a662
+FRESH_INCIDENT_STATE_AFTER_CREATE: {"evidence_ids_csv":"","incident_verdict":"INCONCLUSIVE","opened_at":1789325546,"pause_confirmed_at":0,"pause_requested":false,"protocol_id":"sentinel-demo","recovery_verdict":"INCONCLUSIVE","reporter":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","source_domains_csv":"","state":"ASSESSING","unpause_requested":false}
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":150,"treasury_balance":850},"lastOutflow":{"actor":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","amount":50,"recipient":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"},"totalProcessed":1,"counters":{"pause_count":0,"unpause_count":0}}
+STEP: fresh_chain_evidence_bind
+SOURCE_HASHES: {"sentinel":"17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D","demo":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"}
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989789858249896868","latestNonce":105,"pendingNonce":105,"unknownPendingTransactions":"eth_pendingTransactions unsupported; latest==pending is the available gate"}
+CALLDATA: {"method":"bind_evidence","encoded":"0x0e04617267735d9c01696e636964656e742d653235623136613636328401636861696e2d653235623136613636324c454d455247454e43598c01434841494e5f5452414e53414354494f4e9c0268747470733a2f2f73747564696f2d6465762e67656e6c617965722e636f6d2f6170699401756e617574686f72697a65642d647261696e8988dea9358404383137383366363135633031663962343335366435613334396361636436353630326437643236383831396261363731636536326438333461373135363162319404307865323562313661363632386435356532623333323562653464636164363037336334323266343232373939306536303531343663393231316536643133323565018406466742385a58686c593356305a5639766458526d62473933424746795a334d56314149776544597a4d54466b5a546b344f5746694d4446685a54526b595463335a444d3259324d304e5751304f54566d596d4e6b4e4749335954695241773d3d","decoded":["incident-e25b16a662","chain-e25b16a662","EMERGENCY","CHAIN_TRANSACTION","https://studio-dev.genlayer.com/api","unauthorized-drain","1789325441","81783f615c01f9b4356d5a349cacd65602d7d268819ba671ce62d834a71561b1","0xe25b16a6628d55e2b3325be4dcad6073c422f4227990e605146c9211e6d1325e","0","FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTiRAw=="]}
+FEES: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153462600000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1381163400126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"},"observed":{"executionFeeConsumed":"78635500000000","executionFeeReportTotal":"78628000000000","recommendedExecutionBudgetPerRound":"188716200000000","genvmMessageFeeConsumed":"0","messageFeeBudget":"0","messageFeeConsumed":"0","messageFeeRefunded":"0","internalDeclaredBudget":"0","externalMessageReserved":"0","externalMessageReimbursed":"0","externalMessageRemainder":"0","recommendedTotalMessageFees":"0"}}
+SIMULATION: {"status":null,"consensus":null,"execution":null}
+TX: 0x282481539eceefdf5be0dd88a2e37f922583954d327b03cb6bc0eb407aac23c1
+BROADCAST_COUNT: 1
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+STATE_AFTER: {"evidence":{"content_digest":"81783f615c01f9b4356d5a349cacd65602d7d268819ba671ce62d834a71561b1","evidence_type":"CHAIN_TRANSACTION","failure_class":"unauthorized-drain","incident_id":"incident-e25b16a662","observed_at":1789325441,"phase":"EMERGENCY","source_domain":"studio-dev.genlayer.com","source_url":"https://studio-dev.genlayer.com/api","transaction_block":0,"transaction_hash":"0xe25b16a6628d55e2b3325be4dcad6073c422f4227990e605146c9211e6d1325e","transaction_input":"FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTiRAw=="},"incident":{"evidence_ids_csv":"chain-e25b16a662","incident_verdict":"INCONCLUSIVE","opened_at":1789325546,"pause_confirmed_at":0,"pause_requested":false,"protocol_id":"sentinel-demo","recovery_verdict":"INCONCLUSIVE","reporter":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","source_domains_csv":"studio-dev.genlayer.com","state":"ASSESSING","unpause_requested":false}}

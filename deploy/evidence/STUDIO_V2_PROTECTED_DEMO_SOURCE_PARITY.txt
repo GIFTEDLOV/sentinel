@@ -1,0 +1,19 @@
+ProtectedDemo Studio-dev v2 deployed source parity
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Contract address: 0xC786C9a28997cdD42483A45Bc60961D673a36969
+GenLayer deployment transaction: 0x56ad4259b8ae22b73ae2512cfaee86f4b41b901cb9e24b73296a38e5a9aec05d
+Final status: FINALIZED
+Execution result: FINISHED_WITH_RETURN
+Consensus result: MAJORITY_AGREE
+
+Retrieval method: gen_getContractCode via the Studio-dev RPC
+Expected local SHA-256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+Local source bytes: 3449
+Deployed source SHA-256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+Deployed source bytes: 3449
+
+HASH_PARITY: PASS
+BYTE_FOR_BYTE_PARITY: PASS

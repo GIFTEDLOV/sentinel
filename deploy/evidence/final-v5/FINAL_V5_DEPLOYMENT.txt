@@ -1,0 +1,43 @@
+FINAL V5 DEPLOYMENT — COMPLETE
+
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+OWNER: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+CONTROLLED_SECONDARY: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+
+CURRENT FIXED SOURCE SHA256
+SENTINEL: 49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED
+PROTECTED_DEMO: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+
+FINAL V5 ADDRESSES
+SENTINEL: 0xd83b20EcCF5c1Ddd70aD57EF0E25a5200079c4de
+PROTECTED_DEMO: 0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA
+
+DEPLOYMENT AND SETUP — ALL FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+ProtectedDemo deploy, owner nonce 256:
+  0x011d4d32e88fe4ffa41c909908886b7b4fed34561e6ce0046f1977bf25948812
+Sentinel deploy, owner nonce 257:
+  0x922859bfb7ba291ca099beeaddabc0f616fd0544528ad9e05e599d4bf39d6108
+configure_sentinel, owner nonce 258:
+  0x318700b877897a084c29f05d93ad9f6531ce5b9d223a8c5185c6ddea439bc43e
+register_protected_protocol, owner nonce 259:
+  0xa701e19a0a920f676130ee1c25342d5e153c25ae17a8c52c1cc4a3f30a8ed9a7
+lock_emergency_policy, owner nonce 260:
+  0x93a99c7586585848feab2df32f48167c02e27a713d3ae352f9ec2ea2a4cd4e33
+
+LOCKED POLICY
+protocol_id: sentinel-demo
+target: 0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA
+failure_class: unauthorized-drain
+canonical_rpc: https://studio-next.genlayer.com/api
+approved domains: studio-next.genlayer.com,raw.githubusercontent.com
+advisory prefix: raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/
+minimum_sources: 2
+max_evidence_age_seconds: 3600
+recovery_cooldown_seconds: 900
+policy_locked: true
+
+BACKEND_PROTOCOL_COMPLETE: YES
+NO CONTRACT SOURCE WAS MODIFIED DURING RESUMPTION.
+NO REDEPLOYMENT WAS PERFORMED AFTER THIS PAIR WAS CREATED.

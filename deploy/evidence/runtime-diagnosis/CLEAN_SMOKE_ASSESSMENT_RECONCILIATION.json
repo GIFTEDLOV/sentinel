@@ -1,0 +1,36 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sentinel": "0xE8dF7DDDcca3F4640b1ce8B7C6cc1bE032573664",
+  "protectedDemo": "0x5Fb5C741d565dC79DaD9b01053aAb09d293bbaE4",
+  "incident": "incident-9f85596208f3",
+  "assessmentTx": "0x3e96937c2f11ae030291a41853380cfc9b868c323c091104cae3cee0ed791379",
+  "broadcastCount": 1,
+  "status": "FINALIZED",
+  "consensus": "MAJORITY_AGREE",
+  "execution": "FINISHED_WITH_RETURN",
+  "createdTimestamp": 1789511309,
+  "activatedTimestamp": 1789511321,
+  "proposedAt": "2026-09-15T22:28:29.321966+00:00",
+  "contractStateAfter": "ASSESSING",
+  "incidentVerdict": "INCONCLUSIVE",
+  "leader": {
+    "reachedNondeterminism": true,
+    "authenticatedCount": 0,
+    "sourceCount": 0,
+    "criteriaMet": false,
+    "verdict": "INCONCLUSIVE",
+    "reason": "Evidence could not be safely authenticated",
+    "storageReads": 141,
+    "llmModel": "policy:dev-gpt-5-4",
+    "llmTokens": 1316
+  },
+  "validators": {
+    "activeVotes": "3 agree, 1 disagree",
+    "idleVotes": 1,
+    "disagreementObserved": true,
+    "disagreeingModel": "policy:dev-gemini"
+  },
+  "interpretation": "The storage-boundary fix removed the pre-LLM failure and the receipt proves LLM execution. This finalized assessment did not establish ACTIVE_INCIDENT and cannot authorize pause. No duplicate assessment may be broadcast."
+}

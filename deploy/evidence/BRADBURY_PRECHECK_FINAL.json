@@ -1,0 +1,20 @@
+{
+  "timestamp_utc": "2026-09-11T04:56:08.6574128Z",
+  "network": "testnet-bradbury",
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "chain_id": 4221,
+  "account": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+  "balance_gen": "6.99855432905691685",
+  "latest_nonce": "0x6",
+  "pending_nonce": "0x6",
+  "old_submission_hash": "0x2c519c72f1759270937d64401312447d352d291317bda021a04f65e6cd96a8cc",
+  "old_submission_present": false,
+  "conditional_submission_hash": "0xff7e98bf457f639bc8945b0f96aecdda6ed0eabd23c08d07451a362074be6a27",
+  "conditional_submission_present": false,
+  "final_submission_hash": "0x5418e895888d2b68f43a9c8a1b3e21ca552163b8e0355d64604b3789dadb9439",
+  "final_submission_present": false,
+  "final_submission_receipt_present": false,
+  "canonical_genlayer_transaction": null,
+  "sentinel_address": null,
+  "private_key_or_mnemonic_logged": false
+}

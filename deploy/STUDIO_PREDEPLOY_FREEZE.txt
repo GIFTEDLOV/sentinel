@@ -1,0 +1,35 @@
+Sentinel Studio-dev predeploy freeze
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Runner: py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng
+GenVM runtime observed during hosted schema validation: v0.3.0-rc7-x86_64-linux-release
+
+Contract source SHA-256:
+- contracts/sentinel.py: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+- contracts/protected_demo.py: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+
+Toolchain:
+- Python: 3.14.3
+- GenLayer CLI: 0.40.0-rc.3
+- genlayer-py: 0.19.0rc2
+- genlayer-test: 0.30.0rc2
+- genvm-linter: 0.11.0
+
+Gates:
+- pytest: PASS (15 passed)
+- genvm-lint check: PASS (static lint and SDK validation for both contracts via GENVMROOT)
+- genvm-lint typecheck --strict: PASS using the cached v0.6 standard library
+- genvm-lint schema: PASS (both schemas regenerated via GENVMROOT)
+- hosted gen_getContractSchemaForCode: PASS (both contracts)
+- git diff --check: PASS
+
+Source revision note: the semantic prompt now separates deterministic
+authenticated facts from untrusted raw evidence text. This was required after
+hosted execution conservatively rejected valid authenticated facts that were
+embedded only in the raw-evidence block.
+
+This is a source freeze. Contract source must not change unless a real hosted
+Studio-dev execution error demonstrates a compatibility defect; any such change
+requires rerunning all gates and issuing a new freeze.

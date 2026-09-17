@@ -1,0 +1,20 @@
+Sentinel Bradbury deployment submission
+
+Timestamp: 2026-09-11T05:50:00+01:00 (reconciliation record)
+Source SHA-256: D5A3A1FC40466E8694BC6A1C1ED1D752CF65B9E43A294A64381B2141E44C45F3
+Network: testnet-bradbury
+Chain ID: 4221
+RPC: https://rpc-bradbury.genlayer.com
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Command: npx --yes genlayer@0.39.1 deploy --contract contracts/sentinel.py --rpc https://rpc-bradbury.genlayer.com
+
+Canonical GenLayer transaction hash: NOT YET EMITTED
+Prior EVM submission hash: 0xff7e98bf457f639bc8945b0f96aecdda6ed0eabd23c08d07451a362074be6a27
+Prior EVM submission status: DROPPED AFTER RECONCILIATION
+EVM submission hash being reconciled: 0x5418e895888d2b68f43a9c8a1b3e21ca552163b8e0355d64604b3789dadb9439
+EVM nonce: 0x6 (expected from account nonce before retry)
+Status at this record: PENDING / UNMINED
+
+Deployment discipline: the prior nonce-6 submission was repeatedly absent with no receipt and no
+confirmed nonce advancement. Exactly one conditional retry was submitted through the normal stable
+GenLayer CLI. Reconcile this hash only; no replacement or rebroadcast will be issued.

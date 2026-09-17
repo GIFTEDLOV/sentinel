@@ -1,0 +1,84 @@
+GENVM ADVISORY TIME-DOMAIN DIAGNOSIS
+
+INCIDENT_ID: incident-e25b16a662
+OUTFLOW_TX: 0xe25b16a6628d55e2b3325be4dcad6073c422f4227990e605146c9211e6d1325e
+CHAIN_EVIDENCE_TX: 0x282481539eceefdf5be0dd88a2e37f922583954d327b03cb6bc0eb407aac23c1
+ADVISORY_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-e25b16a662.json
+ADVISORY_SHA256: c7d3d0bf4b58a7531b8baa71e9099f97149bc5e97c25adbaffc2e0410781d0cf
+
+CURRENT_STATE:
+INCIDENT_STATE: ASSESSING
+CHAIN_EVIDENCE_BOUND: YES
+ADVISORY_EVIDENCE_BOUND: NO
+PROTECTED_DEMO_PAUSED: false
+PROTECTED_DEMO_REMEDIATED: false
+TREASURY_BALANCE: 850
+TOTAL_OUTFLOW: 150
+OWNER_NONCE: latest=106; pending=106
+
+NODE_CLOCK_RPC: gen_getTransactionLifecycle
+NODE_CLOCK_REQUEST: {"txId":"0x282481539eceefdf5be0dd88a2e37f922583954d327b03cb6bc0eb407aac23c1"}
+NODE_CLOCK_SECONDS: 1789326641
+NODE_CLOCK_SOURCE: lifecycle.evaluatedAt with timestamp omitted, so node-clock default
+CHAIN_TIMESTAMP_SECONDS: 1789325441
+CHAIN_EVIDENCE_AGE_SECONDS: 1200
+CHAIN_EVIDENCE_REMAINING_SECONDS: 2400
+CHAIN_EVIDENCE_STILL_USABLE_AT_MEASUREMENT: YES
+
+FUTURE_COMPARISON_OPERATOR: observed_at > _now() + 300
+STALE_COMPARISON_OPERATOR: _now() > observed_at and _now() - observed_at > max_evidence_age_seconds
+MAX_AGE: 3600
+
+SIMULATION_METHOD: exact SECURITY_ADVISORY bind_evidence call; only observed_at varied
+SIMULATION_PROBES_RUN: 20
+FEE_VALUE_FOR_RAW_DIAGNOSTIC_PROBES: 1500000000000000
+
+PROBE_RESULTS:
+1789326641: FUTURE_TIMESTAMP_ERROR
+1789326640: FUTURE_TIMESTAMP_ERROR
+1789326636: FUTURE_TIMESTAMP_ERROR
+1789326611: FUTURE_TIMESTAMP_ERROR
+1789326581: FUTURE_TIMESTAMP_ERROR
+1732598000: STALE_TIMESTAMP_ERROR
+1732600000: NO_RPC_ERROR / accepted gen_call result
+1732602000: ACCEPTED by fee-bearing simulation; feeValue=1381168800126258
+1732603500: ACCEPTED by fee-bearing simulation; feeValue=1381168800126258
+1732604250: FUTURE_TIMESTAMP_ERROR
+1732604625: FUTURE_TIMESTAMP_ERROR
+1732604812: FUTURE_TIMESTAMP_ERROR
+1732604906: FUTURE_TIMESTAMP_ERROR
+1732604953: FUTURE_TIMESTAMP_ERROR
+1732604976: FUTURE_TIMESTAMP_ERROR
+1732604988: FUTURE_TIMESTAMP_ERROR
+1732604994: FUTURE_TIMESTAMP_ERROR
+1732605000: FUTURE_TIMESTAMP_ERROR
+
+GEN_CALL_MAX_ACCEPTED_OBSERVED_AT: 1732603500
+GEN_CALL_MIN_FRESH_OBSERVED_AT: 1732600000
+INFERRED_GENVM_SIMULATION_NOW: 1732603200..1732603949
+NODE_TO_GENVM_SKEW_SECONDS: 56722692..56723441
+
+The interval follows directly from the frozen checks: 1732603500 was accepted,
+so _now() was at least 1732603200; 1732604250 was rejected as future, so
+_now() was below 1732603950. The exact internal _now value is not exposed by
+the RPC response.
+
+POST_PUBLICATION_TEST:
+The advisory was published in the 2026-09-13 canonical chain-time domain.
+All accepted GenVM observed_at values are in the 2024-era 173260xxxx domain.
+Therefore no accepted observed_at is a genuine post-publication observation
+timestamp. The raw GenVM freshness interval exists, but it cannot satisfy the
+required semantic meaning of advisory observation time.
+
+SAFE_ADVISORY_OBSERVED_AT: NONE
+SAFE_TIMESTAMP_SEMANTICALLY_POST_PUBLICATION: NO
+FINAL_ADVISORY_BIND_SIMULATION: NOT RUN; no semantically valid timestamp exists
+BIND_ATTEMPTED: NO
+BIND_ATTEMPT_COUNT: 0
+BIND_TX: NONE
+
+HOSTED_SIMULATION_TIME_DOMAIN_INCOMPATIBLE: YES for the required
+post-publication advisory semantics. No transaction was submitted.
+CONCLUSION: Do not bind this advisory with a pre-publication GenVM timestamp.
+The existing fresh incident remains ASSESSING and requires a supported runtime
+time-domain solution or a future clean cycle after the issue is resolved.

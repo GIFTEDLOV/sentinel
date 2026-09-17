@@ -1,0 +1,51 @@
+PLAYER2 STUDIO-DEV FUNDING
+
+SCOPE: Fund the existing secondary test account only. No contract call or incident lifecycle action was performed.
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+
+SECONDARY_TEST_ACTOR_ALIAS: player2
+SECONDARY_TEST_ACTOR_ADDRESS: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+OWNER_ADDRESS: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+FUNDING_INTERFACE: genlayer account send <to> <amount> --account <name>
+FUNDING_METHOD: owner native GEN transfer
+EXPECTED_VALUE_TYPE: BigInt-compatible integer string
+EXPECTED_VALUE_UNIT: wei
+DECIMAL_INPUT_REJECTED: 0.002 (local parser failure; no broadcast)
+
+OUTFLOW_METHOD_ESTIMATE: execute_outflow(address,int), simulation only
+OUTFLOW_FEE_ESTIMATE_WEI: 1381095900126258
+OUTFLOW_FEE_ESTIMATE_GEN: 0.001381095900126258
+
+FUNDING_VALUE_WEI: 2000000000000000
+FUNDING_VALUE_GEN_DISPLAY: 0.002 GEN
+BIGINT_PARSE_TEST: PASS - integer string parsed by the installed CLI
+DECIMAL_FLOAT_USED: NO for the successful transfer
+
+FUNDING_PREFLIGHT_OWNER_BALANCE_WEI: 1992183010499905103
+FUNDING_PREFLIGHT_OWNER_LATEST_NONCE: 99
+FUNDING_PREFLIGHT_OWNER_PENDING_NONCE: 99
+FUNDING_PREFLIGHT_SECONDARY_BALANCE_WEI: 0
+FUNDING_PREFLIGHT_NONCE_GATE: PASS
+FAUCET_CHECK: No faucet operation exposed by the installed CLI; documented faucet is browser account-selector functionality.
+
+FUNDING_ATTEMPTED: YES
+FUNDING_ATTEMPT_COUNT: 1
+FUNDING_TX: 0xb3674e21d7f66094206ef8fd2b4e4058cf41bf092d604183c15724f31747a08
+FUNDING_FINAL_STATUS: SUCCESSFUL CLI transfer confirmation; balance and nonce readback verified
+FUNDING_ETH_RECEIPT_NOTE: The CLI returned blockNumber=0 and gasUsed=8000000; a later raw eth_getTransactionReceipt lookup returned null, while the balance credit and owner nonce advancement were present. Native funding is not a GenLayer contract-consensus transaction.
+
+PLAYER2_BALANCE_AFTER_WEI: 2000000000000000
+PLAYER2_BALANCE_AFTER_GEN: 0.002 GEN
+PLAYER2_BALANCE_COVERS_OUTFLOW_QUOTE: YES
+OWNER_LATEST_NONCE_AFTER: 100
+OWNER_PENDING_NONCE_AFTER: 100
+
+INCIDENT_LIFECYCLE_STARTED: NO
+PROTECTED_DEMO_CALLED: NO
+PRODUCTION_CONTRACT_CHANGED: NO
+FRONTEND_CHANGED: NO
+COMMITS: 0
+PUSHES: 0

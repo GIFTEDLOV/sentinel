@@ -1,0 +1,18 @@
+Sentinel Studio-dev deployment finalized
+
+Contract: contracts/protected_demo.py
+Source SHA-256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+GenLayer deployment transaction: 0xbee259e24612c0a573389c5070001bad2502f92490d762a96098be3117b0e0dc
+Status: FINALIZED
+Execution: FINISHED_WITH_RETURN
+Consensus: MAJORITY_AGREE
+Validator slots: 5
+Contract address: 0xbB956e15F58C38617CF337b0E5DeeD5B5cf2BFE3
+
+The address is taken from the finalized GenLayer receipt, not inferred from
+the account nonce.

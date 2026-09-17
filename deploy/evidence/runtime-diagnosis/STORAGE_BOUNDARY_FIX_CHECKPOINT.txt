@@ -1,0 +1,61 @@
+STORAGE-BOUNDARY FIX CHECKPOINT
+================================
+
+Date: 2026-09-15
+Network: Studio Next
+RPC: https://studio-next.genlayer.com/api
+Chain ID: 61997
+
+LOCAL FIX
+---------
+The Sentinel assessment and recovery-assessment callbacks now receive a plain
+policy snapshot produced by gl.storage.copy_to_memory(protocol). The leader and
+validator therefore do not capture the storage-backed ProtocolConfig object.
+Independent validator re-execution remains enabled.
+
+SENTINEL_SHA: 71903559BA14136CEDDE049A9EE5C6DB1C8BECE29B1773AB069DEC577FE87622
+PROTECTED_DEMO_SHA: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+LOCAL_TESTS: 72 passed
+GENVM_LINT: PASS (sentinel.py, protected_demo.py)
+
+CLEAN HOSTED SMOKE CHECKPOINT
+-----------------------------
+The previous diagnostic smoke pair was not reused. The one clean smoke started
+after local validation and completed these writes, each finalized with majority
+agreement and successful execution:
+
+PROTECTED_DEMO: 0x5Fb5C741d565dC79DaD9b01053aAb09d293bbaE4
+SENTINEL: 0xE8dF7DDDcca3F4640b1ce8B7C6cc1bE032573664
+OUTFLOW_TX: 0x9f85596208f3d40ce0a521f82b5ae9f24999a06e3a2da2aa880b6d0a4eb963e7
+INCIDENT: incident-9f85596208f3
+INCIDENT_CREATE_TX: 0x72fe19f88efadffac2a141a313ff774df9a67ab37607b0674cf7a79d1dcd5a5c
+CHAIN_EVIDENCE_BIND_TX: 0x35fe1eff852fabfa89d1dbf7007c16b990a0f95097e2a10c35f55a42236f7497
+
+The process stopped before incident advisory binding because local GitHub
+publication failed. No assessment, pause, remediation, recovery, unpause, or
+post-recovery transaction was broadcast for this pair.
+
+ADVISORY PUBLICATION CHECKPOINT
+-------------------------------
+The truthful incident advisory was verified absent from origin/main, written
+once, and committed locally:
+
+LOCAL_ADVISORY_COMMIT: 4b2fb0487af78fe52ed31b0ed33d32af1f114956
+ADVISORY_PATH: evidence/advisories/incident-incident-9f85596208f3.json
+ADVISORY_TX: 0x9f85596208f3d40ce0a521f82b5ae9f24999a06e3a2da2aa880b6d0a4eb963e7
+REMOTE_ADVISORY_PRESENT: NO
+
+The push failed because the stored GIFTEDLOV GitHub CLI credential is invalid;
+the browser fallback is blocked by the saved GitHub browser-access policy. The
+local repository remains at the single advisory commit with no duplicate
+advisory or remote publication.
+
+RESUME POINT
+------------
+LAST_CONFIRMED_COMPLETED_STEP: incident chain evidence binding
+NEXT_REQUIRED_STEP: publish the already-created incident advisory remotely,
+verify raw bytes, then bind that advisory on the existing clean-smoke Sentinel
+incident.
+OWNER_NONCE_LATEST: 204
+OWNER_NONCE_PENDING: 204
+SAFE_TO_RESUME_AFTER_GITHUB_REAUTH: YES

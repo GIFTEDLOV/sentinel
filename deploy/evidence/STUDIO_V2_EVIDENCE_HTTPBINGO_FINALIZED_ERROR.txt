@@ -1,0 +1,13 @@
+Sentinel Studio-dev v2 positive incident evidence: first httpbingo bind attempt
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+INCIDENT_ID: studio-v2-positive-20260911
+EVIDENCE_ID: v2-httpbingo
+GENLAYER_TRANSACTION: 0x9836b864fbec228dccbd4fd37afd0cb1f5a22cac8b0ee65b3595f0e727d0f51e
+FINAL_STATUS: FINALIZED
+CONSENSUS_RESULT: MAJORITY_AGREE
+EXECUTION_RESULT: FINISHED_WITH_ERROR
+ERROR: The CLI bytes marker encoded the transaction-hash argument as bytes; Sentinel rejected the argument type during _valid_transaction_hash validation.
+STATE_EFFECT: reverted; v2-httpbingo was not stored.
+RECONCILIATION: same GenLayer transaction hash; no rebroadcast of this failed hash.

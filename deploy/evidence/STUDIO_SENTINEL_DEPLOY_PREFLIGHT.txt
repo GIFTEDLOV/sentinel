@@ -1,0 +1,44 @@
+Studio-dev Sentinel deployment preflight
+
+Timestamp: 2026-09-12 (local run)
+
+Network:
+  alias: studio-dev
+  rpc: https://studio-dev.genlayer.com/api
+  chainId: 61997
+  account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Source integrity:
+  Sentinel SHA256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  ProtectedDemo SHA256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+  hosted Sentinel schema: PASS
+  pytest: 15 passed
+
+Account preflight immediately before broadcast:
+  balance: 1.99383697199993601 GEN
+  latest nonce: 77
+  pending nonce: 77
+  unknown pending transaction: NONE
+
+Fee profile:
+  path: deploy/fee-profile.json
+  leaderTimeunitsAllocation: 200
+  validatorTimeunitsAllocation: 400
+  executionBudgetPerRound: 157789000000000
+  totalMessageFees: 0
+  appealRounds: 1 (standard preset)
+  rotations: [3,3]
+  measured Sentinel receipt with 2.0x headroom via current gltest FeeProfileCollector
+
+Fresh deployment estimate:
+  command: npx --yes genlayer@0.40.0-rc.3 estimate-fees --rpc https://studio-dev.genlayer.com/api --fee-profile deploy\\fee-profile.json --fee-preset standard --json
+  feeValue: 1420101000126258
+  distribution: {leaderTimeunitsAllocation: 200, validatorTimeunitsAllocation: 400, appealRounds: 1, executionBudgetPerRound: 157789000000000, executionConsumed: 0, totalMessageFees: 0, rotations: [3,3], maxPriceGenPerTimeUnit: 2, storageFeeMaxGasPrice: 300000000, receiptFeeMaxGasPrice: 300000000}
+  policy: {enabled: true, genPerTimeUnit: 1, storageUnitPrice: 250000000, receiptGasPrice: 250000000, executionBudgetFloor: 76548000000000, timeUnitOverlayBps: 1500}
+  observed Studio-dev startup floor: 127878000000000
+  startup headroom: 29911000000000
+
+CLI note:
+  --include-report was rejected for deployment-profile estimation because the installed CLI requires both contractAddress and method for that option. The supported deployment-profile estimate was obtained without --include-report; deploy will perform its own live estimate from the same profile.
+
+Broadcast gate: PASS

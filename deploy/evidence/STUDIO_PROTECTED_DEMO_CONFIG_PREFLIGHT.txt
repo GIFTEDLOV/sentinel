@@ -1,0 +1,45 @@
+ProtectedDemo configure_sentinel preflight
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Precondition reads:
+  get_owner: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+  get_authorized_sentinel: 0x0000000000000000000000000000000000000000
+  is_controller_configured: false
+  is_paused: false
+
+Source hashes:
+  Sentinel: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  ProtectedDemo: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+
+Account preflight:
+  balance: 1.993758077499934363 GEN
+  latest nonce: 78
+  pending nonce: 78
+  unknown pending transaction: NONE
+
+Concrete write estimate command:
+  npx --yes genlayer@0.40.0-rc.3 estimate-fees 0xba51Ee9C0bA22e751EBa5eCa7E1b68B71306e6cc configure_sentinel --rpc https://studio-dev.genlayer.com/api --args 0xb7385835D950fdE5F43c95b252759701E6287Ffe --include-report --json
+
+Generated quote:
+  leaderTimeunitsAllocation: 100
+  validatorTimeunitsAllocation: 200
+  executionBudgetPerRound: 188707800000000
+  totalMessageFees: 0
+  appealRounds: 0
+  rotations: [3]
+  maxPriceGenPerTimeUnit: 2
+  storageFeeMaxGasPrice: 300000000
+  receiptFeeMaxGasPrice: 300000000
+  feeValue: 754831200010352
+  observed executionFeeConsumed: 78628500000000
+  observed totalStudioMeteredFee: 127878000000000
+  observed recommendedExecutionBudgetPerRound: 188707800000000
+  message fees consumed: 0
+
+The write quote was simulation-derived; no deployment profile entry was reused and no fee field was hand-invented.
+
+Broadcast gate before immediate recheck: PASS

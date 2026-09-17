@@ -1,0 +1,27 @@
+{
+  "freeze_timestamp": "2026-09-12T01:04:46+01:00",
+  "network": "studio-dev",
+  "chain_id": 61997,
+  "rpc": "https://studio-dev.genlayer.com/api",
+  "runner": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng",
+  "genvm_runtime_observed": "v0.3.0-rc7-x86_64-linux-release",
+  "toolchain": {
+    "genlayer_cli": "0.40.0-rc.3",
+    "genlayer_test": "0.30.0rc2",
+    "genlayer_py": "0.19.0rc2",
+    "genvm_linter": "0.11.0",
+    "genlayer_js": "1.1.8"
+  },
+  "sources": {
+    "contracts/sentinel.py": "81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA",
+    "contracts/protected_demo.py": "AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD"
+  },
+  "deployment": {
+    "protected_demo_address": "0xC786C9a28997cdD42483A45Bc60961D673a36969",
+    "protected_demo_deploy_tx": "0x56ad4259b8ae22b73ae2512cfaee86f4b41b901cb9e24b73296a38e5a9aec05d",
+    "sentinel_address": "0x5a965B5089878fB1DE519001350eb33664eb6995",
+    "sentinel_deploy_tx": "0x92b395ea0c75702591eab2d498ccb4fa89a38db759b493f6a6102607e1f9621a",
+    "historical_failed_submission_tx": "0x2c519c72f1759270937d64401312447d352d291317bda021a04f65e6cd96a8cc",
+    "historical_failed_submission_status": "NOT_FOUND_NO_GENLAYER_TRANSACTION"
+  }
+}

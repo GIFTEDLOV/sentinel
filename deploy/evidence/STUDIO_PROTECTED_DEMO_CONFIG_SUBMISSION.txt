@@ -1,0 +1,25 @@
+ProtectedDemo configure_sentinel submission
+
+State-changing broadcast count: 1
+Contract: 0xba51Ee9C0bA22e751EBa5eCa7E1b68B71306e6cc
+Method: configure_sentinel
+Argument: 0xb7385835D950fdE5F43c95b252759701E6287Ffe
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Transaction hash:
+  0xc64ddf9ff7a8354390dc12490f02b7c1cead82ada5438f7f393e849c5e91c620
+
+Fee quote used:
+  leaderTimeunitsAllocation: 100
+  validatorTimeunitsAllocation: 200
+  executionBudgetPerRound: 188707800000000
+  totalMessageFees: 0
+  appealRounds: 0
+  rotations: [3]
+  feeValue: 754831200010352
+
+The two preceding CLI invocations were rejected locally for invalid JSON quoting and produced no transaction hash. This is the one actual broadcast.
+No second state-changing submission will be made.

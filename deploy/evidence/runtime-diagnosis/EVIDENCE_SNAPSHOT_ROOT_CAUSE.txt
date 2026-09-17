@@ -1,0 +1,92 @@
+Sentinel evidence snapshot root-cause diagnosis
+===============================================
+
+Scope
+-----
+This diagnosis concerns only the existing smoke deployment:
+
+- Sentinel: 0xE8dF7DDDcca3F4640b1ce8B7C6cc1bE032573664
+- ProtectedDemo: 0x5Fb5C741d565dC79DaD9b01053aAb09d293bbaE4
+- Incident: incident-9f85596208f3
+- Assessment transaction: 0x3e96937c2f11ae030291a41853380cfc9b868c323c091104cae3cee0ed791379
+
+The incident was not retried or otherwise mutated during this diagnosis.
+
+Observed hosted state
+---------------------
+The public read artifact CURRENT_SMOKE_PUBLIC_READS.json records:
+
+- bound evidence: 2
+- evidence IDs: chain-9f85596208f3, advisory-9f85596208f3
+- source identities: studio-next.genlayer.com, raw.githubusercontent.com
+- distinct sources: 2
+- chain observed_at: 1789508282
+- advisory observed_at: 1789511255
+- both records were fresh at the finalized assessment evaluation time
+- policy minimum_sources: 2
+- policy max_evidence_age_seconds: 3600
+
+The deployed pre-fix schema did not expose authenticated snapshot fields in
+get_evidence. The two binding transactions nevertheless completed the deployed
+authentication path; the assessment receipt is the authoritative evidence for
+the later count drop.
+
+Count trace
+-----------
+
+| Stage | Input | Output | Source / artifact | Expected | Actual |
+|---|---:|---:|---|---:|---:|
+| incident evidence ID list | incident record | 2 IDs | CURRENT_SMOKE_PUBLIC_READS.json | 2 | 2 |
+| evidence records read | 2 IDs | 2 records | current _copied_evidence path | 2 | 2 |
+| freshness and source calculation | 2 records | 2 fresh / 2 domains | CURRENT_SMOKE_PUBLIC_READS.json and CLEAN_SMOKE_ASSESSMENT_RECONCILIATION.json | 2 / 2 | 2 / 2 |
+| semantic assessment input before fix | 2 metadata items | no frozen authenticated facts | deployed assess_incident / _judge_evidence | 2 authenticated | missing |
+| duplicate authentication inside nondeterminism | 2 items | 0 usable/authenticated | CLEAN_SMOKE_ASSESSMENT_RECONCILIATION.json | 2 / 2 | 0 / 0 |
+| finalized incident assessment | 0 usable sources | INCONCLUSIVE | assessment receipt and public state | ACTIVE_INCIDENT | INCONCLUSIVE |
+
+Exact count-drop location
+-------------------------
+The count did not drop while reading the incident, reading the two evidence
+records, computing freshness, or computing distinct source domains. The deployed
+assessment passed a metadata list into semantic judgment, and _judge_evidence
+then called _authenticate_one again for each item inside the leader and
+validator nondeterministic callbacks. That second live re-authentication was
+the count-drop boundary: the hosted receipt reports leader authenticated/source
+counts 0/0 and reason "Evidence could not be safely authenticated", while the
+same assessment finalized with successful nondeterministic execution and LLM
+activity.
+
+This is a duplicate live-authentication / missing frozen-snapshot payload bug,
+not a storage decoding failure. The receipt also shows the prior storage-boundary
+fix had already allowed the assessment to reach nondeterminism.
+
+Fix applied locally
+-------------------
+The local source now authenticates evidence once during bind_evidence, stores
+the authenticated status, canonical facts, and normalized flags, then builds a
+plain dict/list assessment_context before run_nondet. It computes bound_count,
+authenticated_count, fresh_count, and distinct_count deterministically and
+rejects failed quorum before nondeterminism. Both leader and validator consume
+the same context; semantic callbacks perform no storage reads, contract calls,
+or web fetches.
+
+The same context architecture is used for recovery assessment. No chain write,
+deployment, incident creation, outflow, or advisory publication was performed
+while applying this fix.
+
+Local verification
+------------------
+
+- pytest: 77 passed, 1 warning
+- git diff --check: passed
+- current local Sentinel SHA-256: 1193FC755AF278B977B5D7D089AE29B75C85845478A90886AB6554AE701C3548
+- ProtectedDemo SHA-256: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+- fast genvm-lint lint: passed for both contracts
+- current SDK reflection schema: passed for both contracts
+- strict typecheck: Sentinel reports one pre-existing unused local variable at
+  bind_evidence line 1246; it is not a v0.6 runtime incompatibility and was
+  intentionally not changed as a style-only edit. ProtectedDemo passes.
+- genvm-lint semantic check/schema command: the installed 0.11.0 validator
+  imports removed genlayer.py names from the rc5 package layout; this is a
+  linter/tool compatibility blocker, not a contract execution result.
+- WSL/Docker Direct Mode host run: unavailable because WSL/Docker access is
+  denied by the host; the Windows authoritative direct suite above passes.

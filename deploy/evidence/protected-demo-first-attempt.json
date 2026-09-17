@@ -1,0 +1,14 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "transaction_hash": "0x3e2423df900399852241527e200919d6195fca9b5bf40603528030f1e2dfaa6f",
+  "status_observed": "ACCEPTED",
+  "consensus_result": "AGREE",
+  "execution_result": "FINISHED_WITH_ERROR",
+  "trace_result": "invalid_contract",
+  "trace_cause": "trailing characters at line 1 column 84",
+  "provisional_address": "0xa2e6a3Ed4740C9dBB5389b0D991b19504f88759b",
+  "source_hash_at_attempt": "4090BCB19A77C6017DFD17D8C08DC3685A5182D9C762D72A1F2D177F977156A5",
+  "accepted_as_deployment": false,
+  "note": "This failed attempt was not rebroadcast. It is retained as negative deployment evidence."
+}

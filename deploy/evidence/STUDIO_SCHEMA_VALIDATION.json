@@ -1,0 +1,52 @@
+{
+  "network": "studio-dev",
+  "rpc": "https://studio-dev.genlayer.com/api",
+  "chain_id": 61997,
+  "rpc_method": "gen_getContractSchemaForCode",
+  "validated_at": "2026-09-12T01:10:31+01:00",
+  "runtime_observed": "v0.3.0-rc7-x86_64-linux-release",
+  "contracts": {
+    "sentinel.py": {
+      "result": "PASS",
+      "json_rpc_error": null,
+      "schema_shape": ["ctor", "methods"],
+      "method_count": 16,
+      "methods": [
+        "assess_incident",
+        "assess_recovery",
+        "begin_recovery",
+        "bind_evidence",
+        "confirm_pause",
+        "confirm_recovered",
+        "execute_pause",
+        "execute_unpause",
+        "get_evidence",
+        "get_incident",
+        "get_protocol",
+        "get_state",
+        "lock_emergency_policy",
+        "open_incident",
+        "register_protected_protocol",
+        "update_emergency_policy"
+      ]
+    },
+    "protected_demo.py": {
+      "result": "PASS",
+      "json_rpc_error": null,
+      "schema_shape": ["ctor", "methods"],
+      "method_count": 10,
+      "methods": [
+        "configure_sentinel",
+        "emergency_pause",
+        "emergency_unpause",
+        "get_authorized_sentinel",
+        "get_owner",
+        "get_pause_counters",
+        "get_total_processed",
+        "is_controller_configured",
+        "is_paused",
+        "process"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+Studio-dev fail-closed incident readback
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+PROTOCOL_ID: protected-demo
+INCIDENT_ID: studio-positive-20260911
+ASSESSMENT_TRANSACTION: 0xad02471ad0d92c8210da1f66a02afd226160dd1e14f62c936735edd83940f27f
+ASSESSMENT_STATUS: FINALIZED
+ASSESSMENT_EXECUTION: FINISHED_WITH_RETURN
+ASSESSMENT_CONSENSUS: MAJORITY_AGREE
+EVIDENCE_IDS: evidence-httpbin,evidence-example
+EVIDENCE_SOURCES: httpbin.org,example.com
+STORED_VERDICT: INCONCLUSIVE
+STORED_STATE: ASSESSING
+PAUSE_REQUESTED: false
+PAUSE_CONFIRMED_AT: 0
+TARGET_IS_PAUSED: false
+FAIL_CLOSED_PROVEN: true
+REASON: neither public source supplied the authenticated Sentinel fact object required by the contract; the semantic layer could not override objective authentication failure.

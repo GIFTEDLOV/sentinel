@@ -1,0 +1,78 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chain_id": 61997,
+  "v4": {
+    "address": "0x8e7B0387F1C527d0cd14cCA9E76420952B5B483c",
+    "deployed_sha256": "7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5",
+    "freshness_error_occurrence_count": 1,
+    "finalized_accepted_state_match": true,
+    "raw_state_captured": true,
+    "raw_state_officially_decoded": false,
+    "raw_state_note": "gen_getContractState is unavailable on Studio Next"
+  },
+  "incident": "incident-studio-next-v4-mu1ocbh7",
+  "evidence": {
+    "ids": ["chain-50de89d7215d", "advisory-incident-mu1ocbh7"],
+    "observed_at": {
+      "chain": 1789420117,
+      "advisory": 1789420166
+    },
+    "source_domains": ["studio-next.genlayer.com", "raw.githubusercontent.com"],
+    "bound": 2,
+    "expected_fresh": 2,
+    "expected_distinct": 2,
+    "outflow_tx": "0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7",
+    "advisory_url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-studio-next-v4-mu1ocbh7.json",
+    "advisory_digest": "00e47d64d2e145341e2abd4dd8a2d5c9ab09cb6cb94c5eefcd0622ebc1ac464b"
+  },
+  "probe": {
+    "deployed_sha256": "D33FBEA7D76DA35B2DBB96B175C149BA09441213B98010982528FC668E2EC616",
+    "address": "0xFAf6eFA9030c62a65172f8eDfEd37B205fE68202",
+    "deployment_tx": "0xd5fed20e8aaf924b21e67539cc979ce09ca0479b87a999e3f6101e8f32623a0b",
+    "view": {"now": 1789420588, "bound": 2, "fresh": 2, "distinct": 2},
+    "write": {"now": 1732603362, "bound": 2, "fresh": 0, "distinct": 0},
+    "assessment": {
+      "status": "execution failed",
+      "error": "Fresh evidence is insufficient for assessment",
+      "dbg_bound": 2,
+      "dbg_fresh": 0,
+      "dbg_distinct": 0,
+      "dbg_required": 2,
+      "broadcast": false
+    }
+  },
+  "root_cause": {
+    "classification": "A. VIEW_VS_WRITE_STATE_DIFFERENCE",
+    "proven": true,
+    "specific": "Studio Next gen_call write-context transaction datetime is stale and earlier than internally assigned observed_at values"
+  },
+  "production_fix": {
+    "files": ["contracts/sentinel.py", "tests/test_final_architecture.py"],
+    "old_sha256": "7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5",
+    "candidate_sha256": "17371D931803D6162DCC0EEE4B7188EA1DB02028E489D59C7D501A5EE61CF4C0",
+    "mechanism": "comparison clock is max(_now(), newest internally assigned observed_at); configured maximum age and distinct-source quorum remain unchanged",
+    "security_model_weakened": false,
+    "pytest": "68 passed"
+  },
+  "candidate": {
+    "address": "0x408367CD10Ba3Bb311E2dD6dd97253a74e89b4cE",
+    "deployment_tx": "0xdef2f577deffc6108401b9532fefac2a90fdd72013284173274a592dbb0ff47c",
+    "setup_writes": [
+      "0x30cbe27828266ec51ed2fccad958af8fb3875905df0f43dd93f9ce8e67b6b666",
+      "0xb361687f6509dc60792950f1516002b7d4b09e314fd6099990f7bf99e130ceae",
+      "0xcff75705886910fab71b1f14ebeb3831e95a87e0eaaec76618fe5ba462953de0",
+      "0x43f3c0e60fb7f951e3a3438a17c74f1baed413e9380e304e2dba7a749028e5a8",
+      "0xe487924ac5c94fe4ef433e8a4e6fe3a714a1627ce0456d199ab32c79be79b061"
+    ],
+    "evidence_bound": 2,
+    "assessment_gen_call": {"http_status": 200, "rpc_error": null, "result": "00", "broadcast": false},
+    "old_freshness_error_present": false
+  },
+  "new_protected_demo_deployed": false,
+  "new_outflow_executed": false,
+  "new_public_advisory_published": false,
+  "commits": 0,
+  "pushes": 0,
+  "ready_for_final_v5_deployment": true
+}

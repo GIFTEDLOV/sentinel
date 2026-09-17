@@ -1,0 +1,32 @@
+Current Sentinel protocol registration submission
+
+State-changing broadcast count: 1
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Sentinel: 0xb7385835D950fdE5F43c95b252759701E6287Ffe
+
+Method: register_protected_protocol
+Arguments:
+  protocol_id: demo
+  target_address: 0xba51Ee9C0bA22e751EBa5eCa7E1b68B71306e6cc
+  critical_failure_class: unauthorized-drain
+  allowed_source_domains: explorer.example,advisory.example
+  minimum_sources: 2
+  max_evidence_age_seconds: 86400
+  recovery_cooldown_seconds: 0
+
+Fee quote used:
+  leaderTimeunitsAllocation: 100
+  validatorTimeunitsAllocation: 200
+  executionBudgetPerRound: 188709600000000
+  totalMessageFees: 0
+  appealRounds: 0
+  rotations: [3]
+  feeValue: 754838400010352
+
+Transaction hash:
+  0xf8fa9cbb01598ea989d0d86adcc86d73a4ffa5092ae1166e7912e8e14bab4654
+
+No second registration broadcast will be made.

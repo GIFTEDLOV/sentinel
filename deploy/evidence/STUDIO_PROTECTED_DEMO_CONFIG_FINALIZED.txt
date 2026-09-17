@@ -1,0 +1,57 @@
+ProtectedDemo configure_sentinel final evidence
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Transaction:
+  hash: 0xc64ddf9ff7a8354390dc12490f02b7c1cead82ada5438f7f393e849c5e91c620
+  nonce: 78
+  recipient: 0xba51Ee9C0bA22e751EBa5eCa7E1b68B71306e6cc
+  lifecycle: finalized
+  outcome: accepted
+  consensus result: MAJORITY_AGREE
+  execution result: FINISHED_WITH_RETURN
+
+Fee accounting:
+  feeValue/deposit: 754831200010352
+  leaderTimeunitsAllocation: 100
+  validatorTimeunitsAllocation: 200
+  executionBudgetPerRound: 188707800000000
+  totalMessageFees: 0
+  appealRounds: 0
+  rotations: [3]
+  executionConsumed: 78628500000000
+  storageFeeUsed: 500000000
+  messageFeesConsumed: 0
+  leaderTimeunitsUsed: 1
+  validatorTimeunitsUsed: 3
+  per-round result: round 0, Accepted, leader 1, validators 3
+
+Readback after finalized execution:
+  get_authorized_sentinel: 0xb7385835d950fde5f43c95b252759701e6287ffe
+  is_controller_configured: true
+  is_paused: false
+  get_owner: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+  get_total_processed: 0
+  get_pause_counters: {pause_count: 0, unpause_count: 0}
+
+Immutability check:
+  second configure_sentinel: rejected by non-broadcast simulation
+  simulation exit code: 1
+  second configuration broadcast: NO
+
+Account state:
+  balance before: 1.993758077499934363 GEN
+  balance after: 1.99367944899993354 GEN
+  latest nonce before: 78
+  pending nonce before: 78
+  latest nonce after: 79
+  pending nonce after: 79
+  unknown pending transaction: NONE
+
+ProtectedDemo configured: YES
+Sentinel protocol registered: NO
+Lifecycle writes attempted: NO
+State-changing configure attempts: 1

@@ -1,0 +1,45 @@
+RECALLGUARD V2 VS SENTINEL ASSESSMENT BOUNDARY
+================================================
+
+Reference: GIFTEDLOV/recallguard
+Commit: 54bdb7319f69233555a78fc55f50337604e4f028
+File: contracts/recall_guard.py
+Network reference: Studio Next / chain 61997
+
+KNOWN-GOOD PATTERN
+------------------
+RecallGuard reads a storage-backed listing, then calls
+gl.storage.copy_to_memory(listing) before constructing the leader and validator
+closures. The nondeterministic code receives the copied listing and ordinary
+in-memory facts. Its source comment states that storage objects are not
+available in nondeterministic blocks.
+
+SENTINEL CURRENT PATH
+---------------------
+contracts/sentinel.py::_copied_evidence (current source line 959) reads the
+incident and protocol before gl.vm.run_nondet, then reads each
+self.evidence[evidence_id] before the boundary and materializes a bounded plain
+dict for each admitted record. The evidence list passed as the first judge
+argument is therefore an ordinary in-memory list of ordinary dicts.
+
+However, assess_incident captures the storage-backed ProtocolConfig object in
+judge_args (current source line 1236). Both leader_fn and validator_fn pass that
+object through _judge_evidence -> _authenticate_one. This is a storage-boundary
+difference from RecallGuard. It is a compatibility risk worth eliminating in a
+future source change, but it is NOT the cause of the current smoke failure:
+
+1. The current raw finalized gen_call fails before gl.vm.run_nondet.
+2. Its only execution trace count is STORAGE_READ: 85.
+3. Its exact returned error is "Fresh evidence is insufficient for assessment".
+4. The same pre-nondet path is shared by the old working V5 source and the
+   current deployed source.
+5. A prior hosted candidate using this same assess structure reached and
+   completed the semantic path when its evidence was within the configured age.
+
+HYPOTHESIS RESULT
+-----------------
+RECALLGUARD_STORAGE_TO_MEMORY_HYPOTHESIS_AS_CURRENT_ROOT_CAUSE: FALSIFIED
+RECALLGUARD_PATTERN_RELEVANT_AS_HARDENING_REVIEW: YES
+
+The current failure is a deterministic freshness-quorum rejection, not a
+storage object crossing error. No contract source was changed for this audit.

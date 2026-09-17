@@ -1,0 +1,18 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "canonical_main_contract": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+  "account": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+  "account_status": "unlocked and active",
+  "balance": "6.99855432905691685 GEN",
+  "latest_nonce": "0x6",
+  "pending_nonce": "0x6",
+  "sentinel_submission_reconciliation": {
+    "evm_hash": "0x2c519c72f1759270937d64401312447d352d291317bda021a04f65e6cd96a8cc",
+    "eth_getTransactionByHash": null,
+    "eth_getTransactionReceipt": null,
+    "genlayer_transaction_id": null
+  },
+  "private_key_or_mnemonic_logged": false
+}

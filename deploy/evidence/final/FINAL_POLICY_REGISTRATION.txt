@@ -1,0 +1,22 @@
+FINAL POLICY REGISTRATION
+SENTINEL_SHA: 17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D
+PROTECTED_DEMO_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+BALANCE_BEFORE_WEI: 1992418906999910044
+LATEST_NONCE_BEFORE: 96
+PENDING_NONCE_BEFORE: 96
+PROTOCOL_PRECONDITION: UNKNOWN_PROTECTED_PROTOCOL
+REGISTER_CALLDATA_ROUNDTRIP: PASS
+REGISTER_SIMULATION: PASS
+REGISTER_FEE_VALUE: 1381120200126258
+REGISTER_FEE_DISTRIBUTION: {"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"153457800000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"}
+REGISTER_TX: 0x48a2a8202a72d1ba0602ec4a8d0277aa98f00101caf683d3f72c1a60ea02976f
+REGISTER_BROADCAST_COUNT: 1
+REGISTER_FINAL_STATUS: FINALIZED
+REGISTER_CONSENSUS: MAJORITY_AGREE
+REGISTER_EXECUTION: FINISHED_WITH_RETURN
+PROTOCOL_READBACK_AFTER_REGISTER: {"allowed_source_domains":"studio-dev.genlayer.com,raw.githubusercontent.com","allowed_source_prefixes":"studio-dev.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/","canonical_rpc_endpoint":"https://studio-dev.genlayer.com/api","critical_failure_class":"unauthorized-drain","max_evidence_age_seconds":3600,"minimum_sources":2,"owner":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc","policy_locked":false,"recovery_cooldown_seconds":900,"target_address":"0x38f38591a2835e2e9b467fbac94d4b613ce27584"}
+POLICY_LOCKED_AFTER_REGISTER: false

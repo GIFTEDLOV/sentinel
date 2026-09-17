@@ -1,0 +1,225 @@
+{
+  "hashes": {
+    "sentinel": "7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE",
+    "demo": "1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"
+  },
+  "ownerPreflight": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6989160062249883692",
+    "latestNonce": 113,
+    "pendingNonce": 113
+  },
+  "actorPreflight": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8",
+    "balanceWei": "5001764113499995059",
+    "latestNonce": 3,
+    "pendingNonce": 3
+  },
+  "policy": {
+    "target_address": "0xfcec042b2fcc1d793bf92877665c9bae16971ae1",
+    "critical_failure_class": "unauthorized-drain",
+    "allowed_source_domains": "studio-dev.genlayer.com,raw.githubusercontent.com",
+    "allowed_source_prefixes": "studio-dev.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+    "canonical_rpc_endpoint": "https://studio-dev.genlayer.com/api",
+    "minimum_sources": "2",
+    "max_evidence_age_seconds": "3600",
+    "recovery_cooldown_seconds": "900",
+    "policy_locked": true
+  },
+  "initialProtectedState": {
+    "paused": false,
+    "remediated": false,
+    "treasury": {
+      "remediated": false,
+      "total_outflow": 0,
+      "treasury_balance": 1000
+    },
+    "lastOutflow": {
+      "actor": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+      "amount": 0,
+      "recipient": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc"
+    },
+    "totalProcessed": 0,
+    "counters": {
+      "pause_count": 0,
+      "unpause_count": 0
+    }
+  },
+  "player2BalanceBefore": "5001764113499995059",
+  "player2OutflowFeeEstimate": "1381095900126258",
+  "preflight": "PASS",
+  "BASELINE_PREFLIGHT": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6989160062249883692",
+    "latestNonce": 113,
+    "pendingNonce": 113
+  },
+  "BASELINE_CALLDATA": {
+    "method": "process",
+    "encoded": "0x0e04617267730d09",
+    "decoded": [
+      "1"
+    ]
+  },
+  "BASELINE_FEE_VALUE": "1381087800126258",
+  "BASELINE_SIMULATION": "PASS",
+  "BASELINE_TX": "0xc1404f50706c8a19b8d027df370645f7a4514b227b946998ae954fb5ceb09fb7",
+  "BASELINE_BROADCAST_COUNT": 1,
+  "BASELINE_STATUS": "FINALIZED",
+  "BASELINE_CONSENSUS": "MAJORITY_AGREE",
+  "BASELINE_EXECUTION": "FINISHED_WITH_RETURN",
+  "healthyBaselineTx": "0xc1404f50706c8a19b8d027df370645f7a4514b227b946998ae954fb5ceb09fb7",
+  "totalProcessedAfterBaseline": "1",
+  "baselineProtectedState": {
+    "paused": false,
+    "remediated": false,
+    "treasury": {
+      "remediated": false,
+      "total_outflow": 0,
+      "treasury_balance": 1000
+    },
+    "lastOutflow": {
+      "actor": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+      "amount": 0,
+      "recipient": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc"
+    },
+    "totalProcessed": 1,
+    "counters": {
+      "pause_count": 0,
+      "unpause_count": 0
+    }
+  },
+  "FINAL_OUTFLOW_PREFLIGHT": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8",
+    "balanceWei": "5001764113499995059",
+    "latestNonce": 3,
+    "pendingNonce": 3
+  },
+  "FINAL_OUTFLOW_CALLDATA": {
+    "method": "execute_outflow",
+    "encoded": "0x0e046172677315d402307836333131646539383961623031616534646137376433366363343564343935666263643462376138a106",
+    "decoded": [
+      "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+      "100"
+    ]
+  },
+  "FINAL_OUTFLOW_FEE_VALUE": "1381095900126258",
+  "FINAL_OUTFLOW_SIMULATION": "PASS",
+  "FINAL_OUTFLOW_TX": "0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f",
+  "FINAL_OUTFLOW_BROADCAST_COUNT": 1,
+  "FINAL_OUTFLOW_STATUS": "FINALIZED",
+  "FINAL_OUTFLOW_CONSENSUS": "MAJORITY_AGREE",
+  "FINAL_OUTFLOW_EXECUTION": "FINISHED_WITH_RETURN",
+  "outflowAmount": "100",
+  "treasuryBeforeOutflow": {
+    "remediated": false,
+    "total_outflow": 0,
+    "treasury_balance": 1000
+  },
+  "treasuryAfterOutflow": {
+    "remediated": false,
+    "total_outflow": 100,
+    "treasury_balance": 900
+  },
+  "lastOutflow": {
+    "actor": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+    "amount": 100,
+    "recipient": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"
+  },
+  "CANONICAL_RPC_FACTS": {
+    "consensus": "MAJORITY_AGREE",
+    "event_timestamp": 1789339593,
+    "execution": "FINISHED_WITH_RETURN",
+    "hash": "0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f",
+    "input": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==",
+    "origin": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+    "sender": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+    "status": "FINALIZED",
+    "target": "0xfcec042b2fcc1d793bf92877665c9bae16971ae1"
+  },
+  "CANONICAL_RPC_DIGEST": "4aa3613fe65f00d04ff576f73803fc159a9519dcb64d6c3c11180758f82d4192",
+  "CANONICAL_RPC_INPUT": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==",
+  "EXTERNAL_EVENT_TIMESTAMP": "1789339593",
+  "rpcAuthentication": "PASS",
+  "outflowReconciled": true,
+  "FINAL_INCIDENT_CREATE_PREFLIGHT": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6989081433749882045",
+    "latestNonce": 114,
+    "pendingNonce": 114
+  },
+  "FINAL_INCIDENT_CREATE_CALLDATA": {
+    "method": "open_incident",
+    "encoded": "0x0e046172677315ac01696e636964656e742d3734316535643634303634366c73656e74696e656c2d64656d6f",
+    "decoded": [
+      "incident-741e5d640646",
+      "sentinel-demo"
+    ]
+  },
+  "FINAL_INCIDENT_CREATE_FEE_VALUE": "1381106700126258",
+  "FINAL_INCIDENT_CREATE_SIMULATION": "PASS",
+  "FINAL_INCIDENT_CREATE_TX": "0x22ca1323897c8dcbc761e9f499507b93392586b1373bce215d664a1544547cee",
+  "FINAL_INCIDENT_CREATE_BROADCAST_COUNT": 1,
+  "FINAL_INCIDENT_CREATE_STATUS": "FINALIZED",
+  "FINAL_INCIDENT_CREATE_CONSENSUS": "MAJORITY_AGREE",
+  "FINAL_INCIDENT_CREATE_EXECUTION": "FINISHED_WITH_RETURN",
+  "FINAL_INCIDENT_ID": "incident-741e5d640646",
+  "incidentStateAfterCreate": "ASSESSING",
+  "incidentAfterCreate": {
+    "evidence_ids_csv": "",
+    "incident_verdict": "INCONCLUSIVE",
+    "opened_at": 1789339842,
+    "pause_confirmed_at": 0,
+    "pause_requested": false,
+    "protocol_id": "sentinel-demo",
+    "recovery_verdict": "INCONCLUSIVE",
+    "reporter": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "source_domains_csv": "",
+    "state": "ASSESSING",
+    "unpause_requested": false
+  },
+  "FINAL_CHAIN_EVIDENCE_PREFLIGHT": {
+    "network": "studio-dev",
+    "rpc": "https://studio-dev.genlayer.com/api",
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6989002803499880398",
+    "latestNonce": 115,
+    "pendingNonce": 115
+  },
+  "FINAL_CHAIN_EVIDENCE_CALLDATA": {
+    "method": "bind_evidence",
+    "encoded": "0x0e046172677355ac01696e636964656e742d3734316535643634303634369401636861696e2d3734316535643634303634364c454d455247454e43598c01434841494e5f5452414e53414354494f4e9c0268747470733a2f2f73747564696f2d6465762e67656e6c617965722e636f6d2f6170699401756e617574686f72697a65642d647261696e8404346161333631336665363566303064303466663537366637333830336663313539613935313964636236346436633363313131383037353866383264343139329404307837343165356436343036343636646662633962643763353465663633336330363236303630343732343061373930623033376263663763663564636264313966018406466742385a58686c593356305a5639766458526d62473933424746795a334d56314149776544597a4d54466b5a546b344f5746694d4446685a54526b595463335a444d3259324d304e5751304f54566d596d4e6b4e4749335954696842673d3d",
+    "decoded": [
+      "incident-741e5d640646",
+      "chain-741e5d640646",
+      "EMERGENCY",
+      "CHAIN_TRANSACTION",
+      "https://studio-dev.genlayer.com/api",
+      "unauthorized-drain",
+      "4aa3613fe65f00d04ff576f73803fc159a9519dcb64d6c3c11180758f82d4192",
+      "0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f",
+      "0",
+      "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg=="
+    ]
+  },
+  "FINAL_CHAIN_EVIDENCE_FEE_VALUE": "1429544700126258",
+  "FINAL_CHAIN_EVIDENCE_SIMULATION": "PASS",
+  "FINAL_CHAIN_EVIDENCE_TX": "0x03c1be3df89a2c111acf5ea40d804a440b454c8c6fdead5ba5289d2fccd244f2",
+  "FINAL_CHAIN_EVIDENCE_BROADCAST_COUNT": 1
+}

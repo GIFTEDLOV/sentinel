@@ -1,0 +1,169 @@
+HOSTED STUDIO NEXT ASSESSMENT RUNTIME DIAGNOSIS
+================================================
+
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+
+V4 DEPLOYED CONTRACT
+--------------------
+V4_SENTINEL: 0x8e7B0387F1C527d0cd14cCA9E76420952B5B483c
+V4_SENTINEL_DEPLOYED_SHA: 7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5
+V4_DEPLOYED_SHA_VERIFIED: YES
+V4_PROTECTED_DEMO: 0x7F3F78291C3bE65d924C3e18bc65F7500E93c590
+V4_INCIDENT: incident-studio-next-v4-mu1ocbh7
+V4_OUTFLOW: 0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7
+V4_EXISTING_ADVISORY: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-studio-next-v4-mu1ocbh7.json
+
+The deployed V4 code hash was obtained with gen_getContractCode and matches the
+V4 source. The V4 source contained one occurrence of the freshness error, in
+Sentinel._copied_evidence (the patched candidate occurrence is line 968). The
+guard is:
+
+fresh_count < int(protocol.minimum_sources) or
+distinct_fresh_source_count < int(protocol.minimum_sources)
+
+Both counts are computed after direct reads from self.evidence indexed by the
+incident evidence_ids_csv. V4 no longer uses TreeMap copy_to_memory or native
+list counting for this decision. The V4 diagnosis that blamed that removed path
+is therefore INCOMPLETE / FALSIFIED BY HOSTED EXECUTION.
+
+FINALIZED / ACCEPTED STATE COMPARISON
+-------------------------------------
+V4_FINAL_STATE_SNAPSHOT.json contains latest-final and latest-nonfinal getter
+snapshots. They were identical for incident, both evidence records, and policy:
+
+incident evidence IDs: chain-50de89d7215d,advisory-incident-mu1ocbh7
+incident state: ASSESSING
+incident source domains: studio-next.genlayer.com,raw.githubusercontent.com
+chain phase: EMERGENCY; observed_at: 1789420117
+advisory phase: EMERGENCY; observed_at: 1789420166
+chain source: studio-next.genlayer.com
+advisory source: raw.githubusercontent.com
+transaction linkage: both reference the V4 outflow hash
+policy minimum_sources: 2
+policy max_evidence_age_seconds: 3600
+policy locked: true
+FINALIZED_ACCEPTED_STATE_MATCH: YES
+
+gen_getContractState was called and the raw response was preserved in
+gen_getContractState_response.json. Studio Next returned MethodNotFound for
+gen_getContractState; no binary state decoder was invented.
+RAW_STATE_CAPTURED: YES
+RAW_STATE_OFFICIALLY_DECODED: NO (RPC method unavailable)
+
+FULL GENVM PROBE
+---------------
+RUNTIME_PROBE_SHA (deployed): D33FBEA7D76DA35B2DBB96B175C149BA09441213B98010982528FC668E2EC616
+RUNTIME_PROBE_ADDRESS: 0xFAf6eFA9030c62a65172f8eDfEd37B205fE68202
+RUNTIME_PROBE_DEPLOY_TX: 0xd5fed20e8aaf924b21e67539cc979ce09ca0479b87a999e3f6101e8f32623a0b
+PROBE_POLICY_REGISTERED: YES
+PROBE_INCIDENT_RECREATED: YES
+EXISTING_V4_OUTFLOW_REUSED: YES
+EXISTING_V4_ADVISORY_REUSED: YES
+
+Probe setup writes all finalized with MAJORITY_AGREE and FINISHED_WITH_RETURN:
+register: 0x18b5c8d8e5c189d9470272355084dbdb9b2fae20d0d1ddd80e03ed970c7e96b3
+lock: 0x4580b8f776c3c5230d83cafa05ba1462ae482f7e400bbbc25adac50e92c55393
+open incident: 0xa2aa2cd3425e633ffe3ace4c0103d851b63152a36e755143d7c67667fbe6e9b3
+bind chain: 0x8e1b5e780942a5492f4b0e76e03df0ca7052b239f0d1f55687c874f5e73eff30
+bind advisory: 0x1ed0b433167b3a8dbd3808cca29219fb2b60e597ea701a4f6735dd82c045703d
+
+VIEW CONTEXT
+------------
+debug_assessment_snapshot at latest-final returned:
+VIEW_BOUND_COUNT: 2
+VIEW_FRESH_COUNT: 2
+VIEW_DISTINCT_COUNT: 2
+VIEW_NOW: 1789420588
+VIEW observations: chain=1789420117, advisory=1789420166
+
+WRITE / GEN_CALL CONTEXT
+------------------------
+Both latest-final and latest-nonfinal write-context gen_call calls returned the
+same diagnostic snapshot. The stored records and bound count were unchanged,
+but the GenVM transaction datetime was:
+
+WRITE_NOW: 1732603362
+WRITE_BOUND_COUNT: 2
+WRITE_FRESH_COUNT: 0
+WRITE_DISTINCT_COUNT: 0
+WRITE chain age: -56816755; now_ge_observed_at=false; fresh=false
+WRITE advisory age: -56816804; now_ge_observed_at=false; fresh=false
+
+The write-context snapshot proves a context-dependent clock, not a storage
+index discrepancy. The evidence IDs, records, phases, source domains, and
+linkage were all present and identical.
+
+REAL ASSESSMENT GEN_CALL ON PROBE
+---------------------------------
+The probe's assess_incident gen_call returned HTTP 200 with execution failed and
+the exact old error. It printed:
+
+DBG_EVIDENCE_0: observed_at=1789420117, age=-56816755, fresh=false
+DBG_EVIDENCE_1: observed_at=1789420166, age=-56816804, fresh=false
+DBG_NOW=1732603362
+DBG_BOUND=2
+DBG_FRESH=0
+DBG_DISTINCT=0
+DBG_REQUIRED=2
+
+The exact failure occurs at the single quorum guard in _copied_evidence. No
+other guard was reached. The transaction hash variant did not change the
+result. This proves:
+
+ROOT_CAUSE_CLASSIFICATION: A. VIEW_VS_WRITE_STATE_DIFFERENCE
+ROOT_CAUSE_PROVEN: YES
+ROOT_CAUSE: Studio Next gen_call write-context transaction datetime is pinned
+to 1732603362, approximately 56,817,226 seconds behind the latest-final view
+clock and earlier than internally assigned evidence observations. The write
+context therefore treats both records as future-dated and drops them from the
+fresh quorum.
+
+MINIMAL PRODUCTION FIX
+----------------------
+contracts/sentinel.py::_copied_evidence now reads all indexed records once,
+sets the comparison clock to max(self._now(), newest internally assigned
+record.observed_at), and then applies the unchanged phase, freshness, maximum
+age, and distinct-source checks. The fix uses no external event timestamp,
+caller timestamp, RPC time, or advisory data for the clock. Because observed_at
+is assigned only after authenticated binding and is not a public argument, the
+fix handles the demonstrated runtime clock rollback without weakening the
+caller/authentication/security model or the configured age bound.
+
+LOCAL REGRESSION
+----------------
+The exact rollback regression was added to tests/test_final_architecture.py.
+It binds two independent authenticated sources, moves the direct GenVM clock
+back before both internally assigned observations, and requires assessment to
+proceed past the freshness guard. Full suite result: 68 passed.
+
+PRODUCTION CANDIDATE HOSTED SMOKE
+---------------------------------
+CANDIDATE_SENTINEL_SHA: 17371D931803D6162DCC0EEE4B7188EA1DB02028E489D59C7D501A5EE61CF4C0
+CANDIDATE_SENTINEL_ADDRESS: 0x408367CD10Ba3Bb311E2dD6dd97253a74e89b4cE
+CANDIDATE_DEPLOY_TX: 0xdef2f577deffc6108401b9532fefac2a90fdd72013284173274a592dbb0ff47c
+CANDIDATE_POLICY_REGISTER_TX: 0x30cbe27828266ec51ed2fccad958af8fb3875905df0f43dd93f9ce8e67b6b666
+CANDIDATE_POLICY_LOCK_TX: 0xb361687f6509dc60792950f1516002b7d4b09e314fd6099990f7bf99e130ceae
+CANDIDATE_INCIDENT_CREATE_TX: 0xcff75705886910fab71b1f14ebeb3831e95a87e0eaaec76618fe5ba462953de0
+CANDIDATE_CHAIN_BIND_TX: 0x43f3c0e60fb7f951e3a3438a17c74f1baed413e9380e304e2dba7a749028e5a8
+CANDIDATE_ADVISORY_BIND_TX: 0xe487924ac5c94fe4ef433e8a4e6fe3a714a1627ce0456d199ab32c79be79b061
+All six candidate setup writes finalized with MAJORITY_AGREE and
+FINISHED_WITH_RETURN. Candidate deployed code was read back with
+gen_getContractCode and matched the candidate SHA. Candidate getters show two
+bound EMERGENCY records and two distinct source domains.
+
+CANDIDATE_ASSESSMENT_GENCALL: PASS
+CANDIDATE_ASSESSMENT_RESULT: HTTP 200, no RPC error, result "00", broadcast=false
+OLD_FRESHNESS_ERROR_PRESENT_ON_CANDIDATE: NO
+The candidate gen_call passed the quorum guard and returned successfully without
+broadcasting an assessment transaction. No candidate assessment write was sent.
+
+SECURITY_MODEL_WEAKENED: NO
+NEW_PROTECTED_DEMO_DEPLOYED: NO
+NEW_OUTFLOW_EXECUTED: NO
+NEW_PUBLIC_ADVISORY_PUBLISHED: NO
+SENTINEL_COMMITS: 0
+SENTINEL_PUSHES: 0
+
+READY_FOR_FINAL_V5_DEPLOYMENT: YES

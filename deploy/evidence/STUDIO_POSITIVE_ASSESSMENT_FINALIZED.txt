@@ -1,0 +1,17 @@
+Hosted Studio-dev incident assessment finality and readback
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+INCIDENT_ID: studio-positive-20260911
+GENLAYER_TRANSACTION: 0xad02471ad0d92c8210da1f66a02afd226160dd1e14f62c936735edd83940f27f
+FINAL_STATUS: FINALIZED
+EXECUTION_RESULT: FINISHED_WITH_RETURN
+CONSENSUS_RESULT: MAJORITY_AGREE
+VALIDATOR_COUNT: 5
+STORED_VERDICT: INCONCLUSIVE
+STORED_STATE: ASSESSING
+PAUSE_REQUESTED: false
+TARGET_IS_PAUSED_READBACK: false
+FAIL_CLOSED_REASON: external sources did not provide the required authenticated Sentinel fact schema.
+SEMANTIC_CONSENSUS: live hosted GenLayer transaction reached majority agreement; no unsafe verdict was committed.

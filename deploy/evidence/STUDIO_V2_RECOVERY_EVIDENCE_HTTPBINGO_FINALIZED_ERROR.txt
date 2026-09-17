@@ -1,0 +1,10 @@
+NETWORK: studio-dev
+CHAIN_ID: 61997
+EVIDENCE_ID: v2-recovery-httpbingo
+GENLAYER_TRANSACTION: 0xd6af6de5442da93557bd6287ad3c6faeee0c097f50f82912c8c505bbeea23655
+STATUS: FINALIZED
+EXECUTION: FINISHED_WITH_ERROR
+CONSENSUS: MAJORITY_AGREE
+ERROR: Transaction hash must be a 32-byte hash
+STATE_EFFECT: evidence record was not stored
+NO_REBROADCAST: true

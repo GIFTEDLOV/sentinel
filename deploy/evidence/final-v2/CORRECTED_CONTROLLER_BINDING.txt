@@ -1,0 +1,13 @@
+CORRECTED CONTROLLER BINDING
+TRANSACTION_HASH: 0xa255a17c70dc722a008f828ec3b781fff61b9b64fd2560d4e93cdc6e7833cfe3
+BROADCAST_COUNT: 1
+PREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989553472749891927","latestNonce":108,"pendingNonce":108,"unknownPendingTransactions":"not exposed by the canonical RPC; latest equals pending is the available gate"}
+CALLDATA: {"method":"configure_sentinel","encodedHex":"0x0e04617267730dd402307835613261353238384337323133643630454339433932666661353034456638464136346663373233","decodedArgs":["0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723"],"exact":true}
+SIMULATION: PASS
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+AUTHORIZED_SENTINEL_AFTER: 0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723
+CONTROLLER_CONFIGURED_AFTER: true
+SECOND_CONFIGURATION_SIMULATION: REJECTED
+STATE: {"owner":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc","authorized":"0x5a2a5288c7213d60ec9c92ffa504ef8fa64fc723","configured":true,"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":0,"treasury_balance":1000},"totalProcessed":0,"counters":{"pause_count":0,"unpause_count":0}}

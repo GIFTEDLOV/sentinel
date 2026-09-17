@@ -1,0 +1,11 @@
+Sentinel emergency policy lock submission
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+METHOD: lock_emergency_policy
+PROTOCOL_ID: protected-demo
+PRECONDITION_POLICY_LOCKED: false
+SENDER: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+GENLAYER_TRANSACTION: 0x37d001367187c4f5cced77feb9a43e75ca66b8b9583ddf39fc05567bee0f61b0
+INITIAL_STATUS: ACCEPTED (provisional; same hash is being reconciled)

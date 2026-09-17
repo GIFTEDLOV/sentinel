@@ -1,0 +1,314 @@
+ASSESSMENT FRESHNESS DIAGNOSIS
+==============================
+
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL: 0x452CA08CfF00A792bFcc0CdFCFaBe3CFe0B54709
+INCIDENT_ID: incident-studio-next-mu1fr5u2
+
+FROZEN_SOURCE_HASHES:
+SENTINEL: 27D86513D161D5D324B1C5845750BFEE5C92F16467AFECDB7CFD548415994A67
+PROTECTED_DEMO: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+DEPLOYED_SENTINEL_SOURCE_MATCH: YES
+
+1. FROZEN FRESHNESS LOGIC
+--------------------------
+
+_copied_evidence obtains now = self._now(). For each evidence ID:
+- wrong phase raises: Evidence phase does not match assessment
+- if now < record.observed_at: the record is skipped
+- if now - record.observed_at > protocol.max_evidence_age_seconds: the record is skipped
+- otherwise the record is copied and its source domain is counted once
+
+Assessment freshness therefore is:
+FRESH(record) iff now >= observed_at AND
+                  now - observed_at <= max_evidence_age_seconds
+
+Assessment rejects when:
+len(fresh_evidence) < minimum_sources OR
+len(distinct_fresh_source_domains) < minimum_sources
+
+The exact assessment method also requires incident.state == ASSESSING. After
+freshness passes, _judge_evidence independently authenticates the chain/advisory
+facts and requires the configured source quorum. The current failure occurs
+before _judge_evidence, inside _copied_evidence.
+
+_now() is self._transaction_timestamp(), parsed from gl.message.datetime. The
+caller cannot supply observed_at.
+
+2. LIVE INCIDENT AND EVIDENCE
+-----------------------------
+
+INCIDENT_STATE: ASSESSING
+INCIDENT_VERDICT: INCONCLUSIVE
+INCIDENT_PROTOCOL: sentinel-demo
+INCIDENT_EVIDENCE_IDS: chain-8288af3d8f09,advisory-8288af3d8f09
+INCIDENT_SOURCE_DOMAINS: studio-next.genlayer.com,raw.githubusercontent.com
+
+CHAIN EVIDENCE:
+BOUND_BY_GETTER: YES
+INCIDENT_ID: incident-studio-next-mu1fr5u2
+PHASE: EMERGENCY
+EVIDENCE_TYPE: CHAIN_TRANSACTION
+SOURCE_DOMAIN: studio-next.genlayer.com
+SOURCE_URL: https://studio-next.genlayer.com/api
+TRANSACTION_HASH: 0x8288af3d8f09139895cea0bd105c30e66e7384c1fb243161b50f3d7c64d20ff9
+OBSERVED_AT: 1789402675
+EVENT_TIMESTAMP: 1789402447
+CONTENT_DIGEST: dfca627ad095183db79c33874e9866ce6c919251b1d8754776c99b0b58d6cc9a
+
+ADVISORY EVIDENCE:
+BOUND_BY_GETTER: YES
+INCIDENT_ID: incident-studio-next-mu1fr5u2
+PHASE: EMERGENCY
+EVIDENCE_TYPE: SECURITY_ADVISORY
+SOURCE_DOMAIN: raw.githubusercontent.com
+SOURCE_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-studio-next-mu1fr5u2.json
+TRANSACTION_HASH: 0x8288af3d8f09139895cea0bd105c30e66e7384c1fb243161b50f3d7c64d20ff9
+OBSERVED_AT: 1789402809
+EVENT_TIMESTAMP: 0
+CONTENT_DIGEST: a028ed14208a059d36e902feb92bf6d787cd8defa74c018c4f3cfdfcbecf4469
+
+3. NODE SYNC AND CLOCK
+----------------------
+
+GEN_SYNCING_RESULT: RPC method not found (-32601)
+ETH_SYNCING_RESULT: false
+LATEST_BLOCK_NUMBER: 1789404948
+LATEST_BLOCK_TIMESTAMP: 1789404948
+NODE_SYNCED_BLOCK: unavailable (gen_syncing unsupported)
+NODE_LATEST_BLOCK: 1789404948
+NODE_BLOCKS_BEHIND: unavailable; eth_syncing=false and finalized lifecycle reads succeeded
+
+GEN_GET_TRANSACTION_LIFECYCLE_ADVISORY_EVALUATED_AT: 1789404125
+GEN_GET_TRANSACTION_LIFECYCLE_CHAIN_EVALUATED_AT: 1789404126
+NODE_NOW: 1789404126
+
+CHAIN_AGE_AT_NODE_NOW: 1451
+ADVISORY_AGE_AT_NODE_NOW: 1317
+OLDEST_EVIDENCE_REMAINING_SECONDS: 2149
+NODE_EVIDENCE_FRESH: YES
+
+4. GEN_CALL CLOCK PROBE
+-----------------------
+
+An ephemeral, non-broadcast gen_call deploy probe raised a diagnostic UserError
+containing the GenVM time.
+GEN_CALL_NOW: 1789404735
+NODE_TO_GEN_CALL_SKEW_SECONDS: +609 (GEN_CALL_NOW - NODE_NOW)
+GEN_CALL_BEFORE_CHAIN_OBSERVED: NO
+GEN_CALL_BEFORE_ADVISORY_OBSERVED: NO
+
+This probe proves the deploy-form gen_call clock was later than both stored
+observations. It does not expose a numeric transaction datetime for the separate
+stateful assessment call.
+
+5. EXACT ASSESSMENT GEN_CALL REPRODUCTION
+-----------------------------------------
+
+REQUEST: gen_call type=write, assess_incident(incident-studio-next-mu1fr5u2)
+BROADCAST: NO
+HTTP_STATUS: 200
+RPC_ERROR: -32000 execution failed
+EXECUTION_RESULT: ERROR
+STATUS_MESSAGE: Fresh evidence is insufficient for assessment
+STDOUT: empty
+STDERR: empty
+LOGS: not returned
+NONDET_DISAGREEMENT_CALL_NO: null
+
+6. EXACT PREDICATE REPLAY
+-------------------------
+
+MAX_EVIDENCE_AGE_SECONDS: 3600
+REQUIRED_FRESH_COUNT: 2
+
+AT_GEN_CALL_NOW = 1789404735:
+CHAIN_AGE: 2060
+ADVISORY_AGE: 1926
+FRESH_COUNT: 2
+EXPECTED_RESULT: PASS
+
+AT_NODE_NOW = 1789404126:
+CHAIN_AGE: 1451
+ADVISORY_AGE: 1317
+FRESH_COUNT: 2
+EXPECTED_RESULT: PASS
+
+All non-time prerequisites also pass in live state: ASSESSING state, both
+evidence records bound, EMERGENCY phase, correct incident linkage, two distinct
+approved source domains, minimum_sources=2, correct locked target and failure
+class. The deployed Sentinel source hash matches the frozen local source hash.
+
+7. ROOT-CAUSE CLASSIFICATION
+----------------------------
+
+ROOT_CAUSE_CLASSIFICATION: E. FRESHNESS_IMPLEMENTATION_BUG
+ROOT_CAUSE_PROVEN: The frozen deployed assessment path returns the exact
+freshness rejection even though the exact source predicate evaluates true at
+both the node lifecycle clock and the isolated gen_call clock, with live bound
+evidence and all non-time prerequisites satisfied.
+
+Classification B is NOT proven: the available gen_call clock probe is not before
+either observed_at value. Therefore the one-time simulation-clock exception is
+not authorized. No assessment broadcast is safe to claim under the requested
+gates.
+
+8. SAFETY RESULT
+----------------
+
+INCIDENT_REUSED: YES
+NEW_INCIDENTS: 0
+NEW_OUTFLOWS: 0
+NEW_ADVISORIES: 0
+ASSESSMENT_BROADCAST: 0
+PAUSE_BROADCAST: 0
+REMEDIATION_BROADCAST: 0
+RECOVERY_BROADCASTS: 0
+
+STOP_REASON: The diagnosed blocker is not proven to be the permitted
+simulation-only earlier-timestamp exception. The assessment was not broadcast.
+
+9. SOURCE-LEVEL COUNTING DIAGNOSIS AND FIX (CURRENT TURN)
+----------------------------------------------------------
+
+The preceding sections preserve the original live blocker history. The
+following addendum records the source diagnosis and the local correction. No
+Studio Next transaction was submitted by this diagnosis.
+
+THROW_SITE:
+contracts/sentinel.py::_copied_evidence, at the final quorum guard
+
+CALL_GRAPH:
+assess_incident(incident_id)
+  -> _require_incident(incident_id)
+  -> _require_protocol(incident.protocol_id)
+  -> _copied_evidence(incident, protocol, EMERGENCY)
+  -> incident.evidence_ids_csv.split(",")
+  -> self.evidence[evidence_id]
+  -> freshness test _is_fresh_at(protocol, record.observed_at, now)
+  -> fresh-domain accumulation
+  -> quorum guard
+
+OLD_THROW_EXPRESSION:
+len(copied) < int(protocol.minimum_sources) or
+len(fresh_domains) < int(protocol.minimum_sources)
+
+The deployed source used gl.storage.copy_to_memory(self.evidence[evidence_id])
+inside the evidence-counting pass and then relied on a native Python list for
+distinct source-domain accumulation. The public getters read the TreeMap
+records directly and therefore did not exercise that same storage
+materialization path. This is the only storage-specific path between the live
+getter evidence and the deployed assessment throw. The live getter state proves
+that the incident index and both TreeMap keys exist; the exact count exposed by
+the public interface is therefore:
+
+TOTAL_BOUND_COUNT_EXPECTED: 2
+TOTAL_BOUND_COUNT_ACTUAL: 2
+
+The deployed error does not expose the two private local counters, so the
+pre-fix live runtime cannot report them individually. It proves only that the
+effective pre-fix freshness/domain quorum result was below 2. The exact
+live-shaped local replay, using the two live IDs, both live timestamps, both
+live domains, the final target, and the final transaction linkage, produced:
+
+FRESH_COUNT_EXPECTED: 2
+FRESH_COUNT_ACTUAL: 2
+DISTINCT_SOURCE_COUNT_EXPECTED: 2
+DISTINCT_SOURCE_COUNT_ACTUAL: 2
+
+The local replay reached ACTIVE_INCIDENT, so the discrepancy is specific to the
+deployed storage-backed materialization/counting path rather than the
+freshness predicate, phase, index contents, or source-domain policy. A direct
+runtime cannot reproduce the old deployed failure because it does not emulate
+that remote storage-materialization discrepancy; this is recorded explicitly
+instead of claiming that the old behavior fails in the local adapter.
+
+STORAGE_LAYOUT:
+- protocols: TreeMap[str, ProtocolConfig]
+- incidents: TreeMap[str, IncidentRecord]
+- evidence: TreeMap[str, EvidenceRecord]
+- incident evidence index: IncidentRecord.evidence_ids_csv
+- incident source metadata: IncidentRecord.source_domains_csv
+- evidence keys: chain-8288af3d8f09 and advisory-8288af3d8f09
+
+CHAIN_INTERNAL_STORAGE_KEY: chain-8288af3d8f09
+ADVISORY_INTERNAL_STORAGE_KEY: advisory-8288af3d8f09
+CHAIN_INCIDENT_INDEX_PRESENT: YES
+ADVISORY_INCIDENT_INDEX_PRESENT: YES
+CHAIN_SOURCE_DOMAIN: studio-next.genlayer.com
+ADVISORY_SOURCE_DOMAIN: raw.githubusercontent.com
+CHAIN_PHASE_INTERNAL: EMERGENCY
+ADVISORY_PHASE_INTERNAL: EMERGENCY
+ASSESSMENT_REQUIRED_PHASE: EMERGENCY
+CHAIN_INTERNAL_OBSERVED_AT: 1789402675
+ADVISORY_INTERNAL_OBSERVED_AT: 1789402809
+
+All one-at-a-time local bisect controls passed or failed as required by the
+security model: one source alone, duplicate source domain, stale evidence,
+wrong phase, wrong incident, unbound evidence, future observation, missing
+linkage, and recovery-phase evidence do not satisfy the quorum. Two fresh
+records from the two distinct approved domains do satisfy it. No change to
+minimum_sources, freshness bounds, phase isolation, authentication, or
+transaction linkage was made.
+
+ROOT_CAUSE_CLASSIFICATION: H. STORAGE_TYPE / COLLECTION_SEMANTICS_BUG
+ROOT_CAUSE:
+The deployed assessment count traversed TreeMap dataclass values through the
+storage-copy/list path, while the live getters proved the index itself was
+correct. The minimal correction is to read the stored record once into the
+deterministic assessment pass, normalize its domain to a string, count fresh
+records explicitly, and accumulate distinct fresh domains through the existing
+canonical CSV helpers. This removes the unsupported storage-copy/list
+combination while preserving both independent quorum predicates.
+
+MINIMAL_FIX:
+contracts/sentinel.py::_copied_evidence now uses:
+- record = self.evidence[evidence_id]
+- fresh_count
+- fresh_domains_csv plus _csv_contains/_csv_append
+- _distinct_count(fresh_domains_csv)
+
+The security condition remains:
+fresh_count >= minimum_sources AND
+distinct_fresh_source_count >= minimum_sources.
+
+REGRESSION:
+tests/test_final_architecture.py::test_live_studio_next_two_source_assessment_counts_storage_records
+replays the live incident identifiers, phases, timestamps, source domains,
+transaction hash, calldata, and policy. It observes two bound records, two
+fresh records, two distinct fresh domains, and ACTIVE_INCIDENT. It also guards
+that the old storage-copy path is not reintroduced. Existing negative tests
+continue to reject one source, same-domain duplicates, stale/future evidence,
+wrong phase/incident, unbound evidence, missing linkage, and recovery evidence
+during emergency assessment.
+
+VERIFICATION:
+PYTEST: 67 passed
+GENVM_LINT: PASS for contracts/sentinel.py and contracts/protected_demo.py
+AST: PASS for contracts/sentinel.py and contracts/protected_demo.py
+GIT_DIFF_CHECK: PASS
+HOSTED_STUDIO_NEXT_SCHEMA: PASS; Sentinel ABI includes 16 public methods and
+bind_evidence has no observed_at parameter
+NEW_SENTINEL_SHA256: 7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5
+PROTECTED_DEMO_SHA256: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+
+10. DEPLOYMENT CONSEQUENCE
+--------------------------
+
+The current deployed Sentinel is immutable and remains the pre-fix
+27D86513D161D5D324B1C5845750BFEE5C92F16467AFECDB7CFD548415994A67 source.
+The live incident incident-studio-next-mu1fr5u2 is preserved as the
+FINAL-V3 FAILED PRE-FIX INCIDENT PROOF and is not reusable after a source
+change. A future deployment must use a fresh ProtectedDemo and a fresh
+corrected Sentinel, then configure the new controller, register the new locked
+policy, and lock it. No deployment or production transaction was performed in
+this turn.
+
+CURRENT_INCIDENT_REUSABLE: NO
+NEW_SENTINEL_DEPLOYMENT_REQUIRED: YES
+NEW_PROTECTED_DEMO_DEPLOYMENT_REQUIRED: YES
+NEW_CONTROLLER_BIND_REQUIRED: YES
+NEW_POLICY_REGISTER_REQUIRED: YES
+NEW_POLICY_LOCK_REQUIRED: YES

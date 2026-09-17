@@ -1,0 +1,75 @@
+FINAL SENTINEL DEPLOYMENT EVIDENCE
+=================================
+
+Scope: final contract-pair deployment task. No protocol policy, evidence,
+incident, lifecycle write, or frontend action is included.
+
+Source / preflight
+------------------
+Local source: contracts/sentinel.py
+Local SHA256: 17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D
+Hosted schema: PASS
+Constructor: no arguments
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Balance before: 1.993049299999922042 GEN
+Latest nonce before: 88
+Pending nonce before: 88
+Unknown pending transaction: NONE OBSERVED (latest equals pending)
+
+ProtectedDemo final target: 0x38f38591A2835e2e9b467FBAc94D4b613Ce27584
+ProtectedDemo deployment hash: 0x815f779351d2b910f17e6ee14b8b17f4fc760a24801ba1c41352c772cd2af969
+
+Fee profile
+-----------
+Path: deploy/fee-profile.json
+Measured at: 2026-09-12T05:55:19Z
+Profile provenance: installed gltest FeeProfileCollector, 2.0x measured-headroom profile from current Studio-dev receipt observations.
+Direct-mode refresh attempt: produced no observations because the backend did not expose consumed fee data; the empty candidate was not used.
+Leader allocation: 200
+Validator allocation: 400
+Execution budget per round: 157789000000000
+Total message fees: 0
+Appeal rounds: 1 (standard)
+Rotations: [3,3]
+Live estimate feeValue: 1420101000126258
+Live estimate execution budget: 157789000000000
+Live estimate policy floor: 76548000000000
+
+Deployment
+----------
+Attempt count: 1
+Transaction hash: 0xb5c0a10685c66faa65f9d0a950ee3eac3446d4d29df4b51164b5b9519bfe11ee
+Transaction nonce: 88
+Final status: FINALIZED
+Consensus: MAJORITY_AGREE / ACCEPTED
+Execution: FINISHED_WITH_RETURN
+Deployed address: 0x2dF0E12D4CE46f0312B7461972351F3cD074b3c9
+Same-hash reconciliation: receipt command queried the exact broadcast hash at finalized state; no rebroadcast.
+
+Final receipt fee accounting
+----------------------------
+Fee deposit: 1420101000126258
+Execution consumed: 79046000000000
+GenVM execution bucket consumed: 128296000000000
+GenVM execution budget remaining: 29493000000000
+Storage fee used: 418000000000
+Message fees consumed: 0
+Leader timeunits used: 1
+Validator timeunits used: 4
+Execution budget exceeded: false
+
+Source parity
+-------------
+Deployed code bytes: 53252
+Deployed SHA256: 17B170A8394EDD250536937898EFF1FFD30AE8E90258E7578B8DD00E5FE1BD7D
+Exact source parity: YES
+
+Safe empty-state read
+---------------------
+No protocol or incident was created. The available get_state view requires an
+incident_id; a no-argument invocation was rejected as invalid input without
+changing state. No state-changing Sentinel method was called.

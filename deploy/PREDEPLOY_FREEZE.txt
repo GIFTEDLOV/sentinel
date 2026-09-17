@@ -1,0 +1,52 @@
+Sentinel Studio-dev Predeploy Freeze
+
+Freeze timestamp: 2026-09-11T20:36:00+01:00
+Network: studio-dev
+Chain ID: 61997
+RPC: https://studio-dev.genlayer.com/api
+
+Frozen sources
+-------------
+contracts/sentinel.py SHA-256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+contracts/protected_demo.py SHA-256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+Runner: py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng
+
+Toolchain
+---------
+Python: 3.14.3
+GenLayer CLI: 0.40.0-rc.3
+genlayer-test: 0.30.0rc2
+genlayer-py: 0.19.0rc2
+genvm-linter: 0.11.0
+genlayer-js: 1.1.8
+
+Verification gates
+------------------
+Contract tests: PASS (15 passed; Studio-dev RPC selected by gltest.config.yaml)
+GenVM lint: PASS (Sentinel and ProtectedDemo static checks; 3 checks each)
+GenVM strict typecheck: PASS using the cached v0.6 standard library
+Schema generation: hosted gen_getContractSchemaForCode PASS for both contracts
+Local schema CLI: blocked by the installed linter's stale v0.6 archive index
+
+Public contract surface
+-----------------------
+Sentinel writes: register_protected_protocol, update_emergency_policy,
+lock_emergency_policy, open_incident, bind_evidence, assess_incident,
+execute_pause, confirm_pause, begin_recovery, assess_recovery,
+execute_unpause, confirm_recovered.
+Sentinel views: get_protocol, get_incident, get_evidence, get_state.
+ProtectedDemo writes: process, configure_sentinel, emergency_pause,
+emergency_unpause.
+ProtectedDemo views: get_owner, is_paused, get_authorized_sentinel,
+is_controller_configured, get_total_processed, get_pause_counters.
+
+Freeze rule
+----------
+Source revision note: the Sentinel prompt was corrected after hosted execution
+showed that authenticated normalized facts were being presented only inside the
+untrusted raw-evidence block. The correction keeps raw evidence untrusted while
+exposing only deterministic contract-derived facts to semantic adjudication.
+
+Do not modify either contract source after this freeze unless an actual Studio-dev
+execution error proves a contract compatibility bug. Any such change requires all
+gates to be rerun and a new freeze record.

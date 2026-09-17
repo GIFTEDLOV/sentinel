@@ -1,0 +1,78 @@
+PRE-LLM ASSESSMENT FIX AND HOSTED RECONCILIATION
+================================================
+
+CURRENT SOURCE SHA: 87E65CC72D41E4DCF6DFC3E93EBE80B0081A4C5E4A32C6A9435FD8C4CFC90693
+DEPLOYED SOURCE SHA: 87E65CC72D41E4DCF6DFC3E93EBE80B0081A4C5E4A32C6A9435FD8C4CFC90693
+RUNNER: py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng
+NETWORK: Studio Next
+CHAIN_ID: 61997
+
+FIX ALREADY PRESENT
+-------------------
+_copied_evidence reads each indexed EvidenceRecord once, tracks the newest
+internally assigned observed_at, and compares freshness against:
+
+max(self._now(), newest internally assigned observed_at)
+
+The configured maximum evidence age and the two-source/distinct-domain quorum
+remain unchanged. The caller cannot supply observed_at. This is the minimal
+fix for the previously proven GenVM clock rollback where gen_call supplied
+1732603362 while the node and finalized evidence were in the 17894... domain.
+
+DEPLOYED-BYTES PROOF
+--------------------
+The contract_code embedded in deployment transaction
+0x6ee9a387565a5f3d03568b8aee08b65b062e5ae0f2cf384a3d9292cb6c5c9072 hashes to
+the exact current source SHA above and contains both the monotonic observation
+floor and _parse_judgment_result.
+
+RAW CURRENT SMOKE PROBE
+-----------------------
+File: ASSESS_INCIDENT_GEN_CALL_RAW.json
+Sentinel: 0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5
+Incident: incident-b2fa64830f71
+Broadcast: false
+
+Accepted-state request:
+HTTP 200; RPC code -32602; Invalid status: must be 'decided' or 'finalized'.
+This is an RPC input-state validation error, not contract execution.
+
+Finalized-state request:
+HTTP 200; RPC code -32000; execution failed.
+Decoded receipt result: Fresh evidence is insufficient for assessment.
+Execution stats: STORAGE_READ=85; no LLM/equivalence/validator execution.
+
+The finalized request is not a storage decoding failure. Individual finalized
+public reads show both indexed evidence records, correct phases, correct source
+domains, and valid metadata. The actual evidence observations are 7385 seconds
+apart, while max_evidence_age_seconds is 3600. With the deployed monotonic
+floor, one record is correctly stale; the deterministic quorum guard therefore
+fails before nondeterminism.
+
+HOSTED POSITIVE PROBE AFTER FRESH EVIDENCE
+------------------------------------------
+The existing published incident advisory and finalized outflow were reused as
+the underlying evidence payloads; no advisory was republished and no outflow or
+incident was created. Two additional evidence records were bound only to refresh
+the internally assigned observation clock:
+
+recent chain bind:    0xdd946c3a4fb985a01f8d581502400080d391d3989c8c98009706bd598f70632d
+recent advisory bind: 0x04f0a12138c2861f32dd47909b8b97e53988dacf2b9465e38b6b231628e202c2
+
+The same-hash reconciliations finalized successfully with accepted consensus
+and FINISHED_WITH_RETURN. The subsequent no-broadcast raw gen_call returned
+result "00". The SDK simulation receipt is preserved in
+ASSESS_INCIDENT_SIMULATION_RECEIPT.json and reports execution_result=SUCCESS,
+LLM token accounting, and nondeterministicOutputBytes=183. This proves the
+assessment path passed the deterministic storage/freshness gate and reached
+the nondeterministic LLM boundary. No assessment transaction was broadcast.
+
+CONCLUSION
+----------
+PRE_LLM_STORAGE_PATH_FOR_THIS_SMOKE: PASS_AFTER_FRESH_EVIDENCE
+STORAGE_TO_MEMORY_HYPOTHESIS_AS_CURRENT_ROOT_CAUSE: FALSIFIED
+CONTRACT_SOURCE_CHANGE_REQUIRED_FOR_THIS_FAILURE: NO
+SEMANTIC_PROMPT_CHANGED: NO
+RUNNER_CHANGED: NO
+ASSESSMENT_TRANSACTION_BROADCAST: NO
+CURRENT_PARTIAL_SMOKE_REUSED_AS_FINAL_PROOF: NO

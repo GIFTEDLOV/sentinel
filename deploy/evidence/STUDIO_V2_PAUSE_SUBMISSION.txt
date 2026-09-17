@@ -1,0 +1,12 @@
+Sentinel Studio-dev v2 pause request submission
+
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL: 0x5a965B5089878fB1DE519001350eb33664eb6995
+PROTOCOL_ID: studio-v2-demo
+INCIDENT_ID: studio-v2-positive-20260911
+PRECONDITION: Stored verdict ACTIVE_INCIDENT; incident state ACTIVE_INCIDENT; ProtectedDemo is_paused false; configured controller matches Sentinel.
+GENLAYER_TRANSACTION: 0x42e4d52c1c46ef2d8d0c5ee52befd43a5c1e7d85d01173ba4f49201f80341796
+STATUS_AT_SUBMISSION: ACCEPTED_OR_PENDING
+NO_REBROADCAST: true

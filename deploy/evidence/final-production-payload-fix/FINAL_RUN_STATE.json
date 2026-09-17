@@ -1,0 +1,230 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sourceHashes": {
+    "sentinel": "49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED",
+    "protectedDemo": "7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD"
+  },
+  "ownerPreflight": {
+    "role": "owner",
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "rpc": "https://studio-next.genlayer.com/api",
+    "chainId": 61997,
+    "balanceWei": "6977139993999755766",
+    "latestNonce": 256,
+    "pendingNonce": 256
+  },
+  "actorPreflight": {
+    "role": "actor",
+    "account": "0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8",
+    "rpc": "https://studio-next.genlayer.com/api",
+    "chainId": 61997,
+    "balanceWei": "5000819474499981887",
+    "latestNonce": 15,
+    "pendingNonce": 15
+  },
+  "canonicalSourceHashes": {
+    "sentinel": "49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED",
+    "protectedDemo": "7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD"
+  },
+  "hostedSchema": {
+    "sentinelMethods": [
+      "assess_incident",
+      "assess_recovery",
+      "begin_recovery",
+      "bind_evidence",
+      "confirm_pause",
+      "confirm_recovered",
+      "execute_pause",
+      "execute_unpause",
+      "get_evidence",
+      "get_incident",
+      "get_protocol",
+      "get_state",
+      "lock_emergency_policy",
+      "open_incident",
+      "register_protected_protocol",
+      "update_emergency_policy"
+    ],
+    "protectedDemoMethods": [
+      "apply_remediation",
+      "configure_sentinel",
+      "emergency_pause",
+      "emergency_unpause",
+      "execute_outflow",
+      "get_authorized_sentinel",
+      "get_last_outflow",
+      "get_owner",
+      "get_pause_counters",
+      "get_total_processed",
+      "get_treasury_state",
+      "is_controller_configured",
+      "is_paused",
+      "is_remediated",
+      "process"
+    ]
+  },
+  "demoAddress": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA",
+  "protectedDemoDeployTx": "0x011d4d32e88fe4ffa41c909908886b7b4fed34561e6ce0046f1977bf25948812",
+  "sentinelAddress": "0xd83b20EcCF5c1Ddd70aD57EF0E25a5200079c4de",
+  "sentinelDeployTx": "0x922859bfb7ba291ca099beeaddabc0f616fd0544528ad9e05e599d4bf39d6108",
+  "configureTx": "0x318700b877897a084c29f05d93ad9f6531ce5b9d223a8c5185c6ddea439bc43e",
+  "registerPolicyTx": "0xa701e19a0a920f676130ee1c25342d5e153c25ae17a8c52c1cc4a3f30a8ed9a7",
+  "lockPolicyTx": "0x93a99c7586585848feab2df32f48167c02e27a713d3ae352f9ec2ea2a4cd4e33",
+  "policyLocked": true,
+  "healthyBaselineTx": "0xc623cb32326e9736de4a243efe96b3b067eb5fa7dd6f5ab9935422201c7069b6",
+  "totalProcessedAfterBaseline": "1",
+  "outflowTx": "0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860",
+  "outflowFacts": {
+    "consensus": "MAJORITY_AGREE",
+    "event_timestamp": 1789542844,
+    "execution": "FINISHED_WITH_RETURN",
+    "hash": "0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860",
+    "input": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==",
+    "origin": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+    "sender": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+    "status": "FINALIZED",
+    "target": "0xdf9635a1e13379b2f7c25166aae1c29729b3bfda"
+  },
+  "outflowDigest": "1c6072664fb4a07432ccbfc69cc4a58deff1aa5ad5c120dc3f237cb2521d8bd4",
+  "outflowInput": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==",
+  "incidentId": "incident-e5115f160d64",
+  "incidentCreateTx": "0x3bf4873ec650f6ec11316228c3de53d83eda5c691db93121f8256b53b313ca3c",
+  "chainEvidenceTx": "0xaf270b262163354ed4cd6acf45426c4e464fa74a9aa766ac3ff4acdabc831362",
+  "chainEvidenceId": "chain-e5115f160d64",
+  "chainEvidenceRefreshTx": "0x8e26e2bfa08bcad3ae552bc017b79a0884265f0f30a01b8e5bdca59035bfe5a0",
+  "chainEvidenceRefreshId": "chain-refresh-e5115f160d64",
+  "incidentAdvisory": {
+    "file": "C:/Users/DELL/Sentinel/_sentinel-evidence-publish/evidence/advisories/incident-incident-e5115f160d64.json",
+    "url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-incident-e5115f160d64.json",
+    "digest": "62464982faddd34e5eff54c14e14a5cf9cac654ffa679cd96d61e7fd74c55fce",
+    "bytes": 931,
+    "commit": "d1bcb30e825a2c486220de2a0f4d5c7b648b7be3",
+    "document": {
+      "schema": "sentinel-advisory-v1",
+      "protocol_id": "sentinel-demo",
+      "protocol_address": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA",
+      "network": "Studio Next",
+      "canonical_rpc": "https://studio-next.genlayer.com/api",
+      "incident_id": "incident-e5115f160d64",
+      "phase": "EMERGENCY",
+      "failure_class": "unauthorized-drain",
+      "status": "ACTIVE",
+      "transaction_hash": "0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860",
+      "issued_at": "2026-09-16T07:17:03.906Z",
+      "current": true,
+      "critical_signal": true,
+      "mitigation_complete": false,
+      "summary": "Authenticated chain evidence establishes a current unauthorized-drain signal for the protected protocol.",
+      "facts": [
+        {
+          "name": "transaction",
+          "value": "0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860"
+        },
+        {
+          "name": "target",
+          "value": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA"
+        }
+      ]
+    }
+  },
+  "advisoryEvidenceTx": "0xb5e9b5ddf170ee5c0813895a2bf41ec60107241ac322135124192bfe9752ab99",
+  "advisoryEvidenceId": "advisory-e5115f160d64",
+  "incidentAssessmentTx": "0x2e71cecc511fb58f9a589602b8632927c7d643158e8b553946a00ba61a9ec312",
+  "incidentVerdict": "ACTIVE_INCIDENT",
+  "pauseTx": "0x4b4ba831d175884abb17f171671f5ec52a84655cd60c65204886421fe5f9f2c6",
+  "confirmPauseTx": "0x8ef13d9952fbc4a71221dc23c26368c260334ad11c8b28b671e480e65e6e4c54",
+  "pauseConfirmedAt": "1789543293",
+  "remediationTx": "0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9",
+  "simulationFalseNegative": {
+    "status": "KNOWN_STALE_CLOCK_FALSE_NEGATIVE",
+    "exactError": "Recovery cooldown has not elapsed",
+    "simulatedGenVmNow": "1732603362",
+    "canonicalNodeNow": "1789544606",
+    "recoveryEligibleAt": "1789544193",
+    "proven": true
+  },
+  "beginRecoveryTx": "0x530b57a033cbcc8ab5fc1d1a311d1a2b0e110bc11329566d2b33095fbf7bf304",
+  "recoveryEligibleAt": "1789544193",
+  "recoveryChainEvidenceTx": "0x2dcb4b014a104ef9777001de1dd04661ae05f0f8f5e1041fd3c8b5176a6d02a5",
+  "recoveryChainEvidenceId": "recovery-chain-f5fbf8f49461",
+  "recoveryChainFacts": {
+    "consensus": "MAJORITY_AGREE",
+    "event_timestamp": 1789543342,
+    "execution": "FINISHED_WITH_RETURN",
+    "hash": "0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9",
+    "input": "DgCMAWFwcGx5X3JlbWVkaWF0aW9u",
+    "origin": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+    "sender": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+    "status": "FINALIZED",
+    "target": "0xdf9635a1e13379b2f7c25166aae1c29729b3bfda"
+  },
+  "recoveryAdvisory": {
+    "file": "C:/Users/DELL/Sentinel/_sentinel-evidence-publish/evidence/advisories/recovery-incident-e5115f160d64.json",
+    "url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/recovery-incident-e5115f160d64.json",
+    "digest": "3ba3cfbbbc6206d3cadd5cb9830a87edf19363809716136e6db320ed2d7cf0f6",
+    "bytes": 937,
+    "commit": "a8b163bd518ed100c317e1283a43db42c6bb8beb",
+    "document": {
+      "schema": "sentinel-advisory-v1",
+      "protocol_id": "sentinel-demo",
+      "protocol_address": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA",
+      "network": "Studio Next",
+      "canonical_rpc": "https://studio-next.genlayer.com/api",
+      "incident_id": "incident-e5115f160d64",
+      "phase": "RECOVERY",
+      "failure_class": "unauthorized-drain",
+      "status": "REMEDIATED",
+      "transaction_hash": "0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9",
+      "issued_at": "2026-09-16T07:46:25.757Z",
+      "current": false,
+      "critical_signal": false,
+      "mitigation_complete": true,
+      "summary": "Remediation finalized successfully; the protected target remains paused while Sentinel evaluates recovery.",
+      "facts": [
+        {
+          "name": "transaction",
+          "value": "0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9"
+        },
+        {
+          "name": "target",
+          "value": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA"
+        }
+      ]
+    }
+  },
+  "recoveryAdvisoryEvidenceTx": "0x17d51fcd541825e405733f23fc89b81a95cc342dab7b337fb2ec115a8591fc96",
+  "recoveryAdvisoryEvidenceId": "recovery-advisory-f5fbf8f49461",
+  "recoveryAssessmentTx": "0x9b3e4d5f11ed8a62cc24991f472c25afa0930f70e46f6b17f4bd4ec3b6dee809",
+  "recoveryVerdict": "SAFE_TO_RECOVER",
+  "unpauseTx": "0x801ffc548ca5da17355207685c4a927faef8350891796fd87b3b013f13247f88",
+  "confirmRecoveredTx": "0x800d8c285cc06f32a07a439adfae6ecd29d9cf54893e35ee120beead20a37f0b",
+  "finalIncidentState": "RECOVERED",
+  "postRecoveryProcessTx": "0x79a8f5121765db195bac15797a39ed088730bf47cd817ac6465a1ffeccf7fc9e",
+  "nonownerOutflowSimulation": {
+    "status": "REJECTED",
+    "error": "Outflow capability has been remediated"
+  },
+  "finalTarget": {
+    "paused": false,
+    "remediated": true,
+    "treasury": {
+      "remediated": true,
+      "total_outflow": 100,
+      "treasury_balance": 900
+    },
+    "lastOutflow": {
+      "actor": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+      "amount": 100,
+      "recipient": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8"
+    },
+    "totalProcessed": 2,
+    "counters": {
+      "pause_count": 1,
+      "unpause_count": 1
+    }
+  },
+  "backendProtocolComplete": true,
+  "finishedAt": "2026-09-16T07:57:22.123Z"
+}

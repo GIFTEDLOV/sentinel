@@ -1,0 +1,91 @@
+FINAL V5 END-TO-END PROOF — COMPLETE
+
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL: 0xd83b20EcCF5c1Ddd70aD57EF0E25a5200079c4de
+PROTECTED_DEMO: 0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA
+INCIDENT: incident-e5115f160d64
+SENTINEL_SHA256: 49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED
+PROTECTED_DEMO_SHA256: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+
+HEALTHY BASELINE
+transaction: 0xc623cb32326e9736de4a243efe96b3b067eb5fa7dd6f5ab9935422201c7069b6
+status: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+total_processed: 1
+
+CONTROLLED OUTFLOW
+transaction: 0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860
+sender: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+amount: 100
+status: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+treasury: 900
+total_outflow: 100
+
+INCIDENT AND INCIDENT EVIDENCE
+open_incident: 0x3bf4873ec650f6ec11316228c3de53d83eda5c691db93121f8256b53b313ca3c
+chain evidence bind: 0xaf270b262163354ed4cd6acf45426c4e464fa74a9aa766ac3ff4acdabc831362
+chain evidence freshness refresh: 0x8e26e2bfa08bcad3ae552bc017b79a0884265f0f30a01b8e5bdca59035bfe5a0
+incident advisory URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-incident-e5115f160d64.json
+incident advisory commit: d1bcb30e825a2c486220de2a0f4d5c7b648b7be3
+incident advisory SHA256: 62464982FADDD34E5EFF54C14E14A5CF9CAC654FFA679CD96D61E7FD74C55FCE
+incident advisory bind: 0xb5e9b5ddf170ee5c0813895a2bf41ec60107241ac322135124192bfe9752ab99
+incident assessment: 0x2e71cecc511fb58f9a589602b8632927c7d643158e8b553946a00ba61a9ec312
+incident verdict: ACTIVE_INCIDENT
+
+PAUSE AND REMEDIATION
+pause request: 0x4b4ba831d175884abb17f171671f5ec52a84655cd60c65204886421fe5f9f2c6
+pause confirmation: 0x8ef13d9952fbc4a71221dc23c26368c260334ad11c8b28b671e480e65e6e4c54
+pause_confirmed_at: 1789543293
+target paused: true
+pause_count: 1
+remediation: 0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9
+target remediated: true
+
+RECOVERY CLOCK RECONCILIATION
+recovery cooldown seconds: 900
+recovery eligible at: 1789544193
+canonical node now at broadcast gate: 1789544606
+canonical cooldown age: 1313 seconds
+60-second safety margin: MET
+GenVM simulation clock: 1732603362
+simulation result: exact false negative — Recovery cooldown has not elapsed
+simulation false negative: PROVEN by independent canonical-time gate
+
+RECOVERY
+begin_recovery: 0x530b57a033cbcc8ab5fc1d1a311d1a2b0e110bc11329566d2b33095fbf7bf304
+begin_recovery status: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+recovery chain evidence: 0x2dcb4b014a104ef9777001de1dd04661ae05f0f8f5e1041fd3c8b5176a6d02a5
+recovery advisory URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/recovery-incident-e5115f160d64.json
+recovery advisory commit: a8b163bd518ed100c317e1283a43db42c6bb8beb
+recovery advisory SHA256: 3BA3CFBBBC6206D3CADD5CB9830A87EDF19363809716136E6DB320ED2D7CF0F6
+recovery advisory bytes: 937
+recovery advisory bind: 0x17d51fcd541825e405733f23fc89b81a95cc342dab7b337fb2ec115a8591fc96
+recovery bound count: 2
+recovery fresh count: 2
+recovery distinct source count: 2
+recovery assessment: 0x9b3e4d5f11ed8a62cc24991f472c25afa0930f70e46f6b17f4bd4ec3b6dee809
+recovery verdict: SAFE_TO_RECOVER
+unpause: 0x801ffc548ca5da17355207685c4a927faef8350891796fd87b3b013f13247f88
+recovered confirmation: 0x800d8c285cc06f32a07a439adfae6ecd29d9cf54893e35ee120beead20a37f0b
+
+FINAL FUNCTIONAL PROOF
+post-recovery owner process: 0x79a8f5121765db195bac15797a39ed088730bf47cd817ac6465a1ffeccf7fc9e
+post-recovery process: SUCCESS
+player2 execute_outflow simulation: REJECTED
+rejection: Outflow capability has been remediated
+final paused: false
+final remediated: true
+final incident state: RECOVERED
+final pause_count: 1
+final unpause_count: 1
+final treasury: 900
+final total_outflow: 100
+final total_processed: 2
+
+NEW DEPLOYMENTS: 2 (one ProtectedDemo/Sentinel final pair)
+NEW INCIDENTS: 1
+NEW OUTFLOWS: 1
+NEW ADVISORIES: 2 (one incident, one recovery; each published once)
+BACKEND_PROTOCOL_COMPLETE: YES
+NO FURTHER CONTRACT CHANGES ARE AUTHORIZED FOR THIS RUN.

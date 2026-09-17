@@ -1,0 +1,13 @@
+SENTINEL POSITIVE-PROOF POLICY LOCK SUBMISSION
+===============================================
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Protocol ID: protected-demo-positive
+Command: genlayer deploy/write path via stable CLI 0.40.0-rc.3
+Method: lock_emergency_policy
+GenLayer transaction: 0x5a2acf0f44d770b9eba4db05f82c26b6a06152035f201be6e1d4fa2b21497b50
+Status at submission: ACCEPTED (reconcile same hash)
+Source SHA-256: C93668D675A21552DE16349BA6B983B007BCEA33C6EE1E242F6D480B242F87B0
+No rebroadcast is permitted for this transaction.

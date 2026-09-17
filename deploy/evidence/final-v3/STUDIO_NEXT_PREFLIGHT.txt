@@ -1,0 +1,140 @@
+SENTINEL FINAL V3 / STUDIO NEXT PREFLIGHT
+========================================
+
+MODE: diagnosis, source freeze, and frontend migration only
+DEPLOYMENTS: none
+CONTRACT WRITES: none
+INCIDENTS CREATED: none
+OUTFLOWS EXECUTED: none
+EVIDENCE PUBLISHED: none
+COMMITS: none
+PUSHES: none
+
+SOURCE FREEZE
+-------------
+STARTING_SENTINEL_SHA: 7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE
+FINAL_SENTINEL_SHA: 27D86513D161D5D324B1C5845750BFEE5C92F16467AFECDB7CFD548415994A67
+PROTECTED_DEMO_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+PROTECTED_DEMO_CHANGED: NO
+
+CONTRACT FIX
+------------
+CHAIN_VALIDATOR_WRAPPER_BUG_FIXED: YES
+ADVISORY_VALIDATOR_WRAPPER_BUG: SHARED PATH FIXED; SECURITY_ADVISORY uses _authenticate_for_binding
+OTHER_WRAPPER_BUGS_FIXED: NO OTHER CUSTOM VALIDATOR BUGS FOUND; assessment/recovery already unwrap gl.vm.Return
+GL_VM_RETURN_UNWRAPPED: YES; validator rejects non-Return Result union members, then compares leader_result.calldata
+INDEPENDENT_FETCH_PRESERVED: YES
+AUTHENTICATION_COMPARISON_PRESERVED: YES; normalized authenticated_facts, status, event timestamp, and decision flags remain compared
+CURRENT_TIMESTAMP_IN_EQ_OUTPUT: NO
+GENVM_NOW_IN_EQ_OUTPUT: NO
+OBSERVED_AT_IN_EQ_OUTPUT: NO; assigned from _now() only after successful authentication
+
+REGRESSION COVERAGE
+--------------------
+POSITIVE_WRAPPER_REGRESSION: PASS; direct harness constructed gl.vm.Return(calldata=normalized leader payload); old implementation would reject wrapper
+NEGATIVE_VALIDATOR_REGRESSIONS: PASS; gl.vm.UserError, gl.vm.VMError, malformed Return calldata, missing fields, tampered leader facts, wrong hash/sender/target/calldata, non-finalized status, unaccepted consensus, and unsuccessful execution fail closed
+VOLATILE_TIMESTAMP_REGRESSION: PASS; leader and validator current_timestamp differed while authenticated facts matched
+CLOCK_DOMAIN_REGRESSION: PASS; external event_timestamp remains metadata; observed_at is GenVM _now(); freshness uses current _now() minus stored observed_at
+PYTEST_RESULT: PASS (66 passed)
+TOTAL_CONTRACT_TESTS: 66
+AST_STATIC_LINT: PASS (contracts/sentinel.py, contracts/protected_demo.py)
+GIT_DIFF_CHECK: PASS
+
+STUDIO NEXT READ-ONLY PREFLIGHT
+-------------------------------
+STUDIO_NEXT_RPC: https://studio-next.genlayer.com/api
+STUDIO_NEXT_CHAIN_ID: 61997 (RPC returned 0xf22d)
+RPC_REACHABLE: YES
+OWNER_ACCOUNT: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+OWNER_BALANCE_WEI: 6988593058249873457
+OWNER_LATEST_NONCE: 117
+OWNER_PENDING_NONCE: 117
+OWNER_FUNDED_FOR_DEPLOYMENT: YES, balance materially exceeds the live generic deployment estimate and leaves headroom for the planned setup sequence; no funding was performed
+
+HOSTED SCHEMAS
+--------------
+STUDIO_NEXT_SENTINEL_SCHEMA: PASS; gen_getContractSchemaForCode; 16 methods
+STUDIO_NEXT_PROTECTED_DEMO_SCHEMA: PASS; gen_getContractSchemaForCode; 15 methods
+SCHEMA_AUTHORITY: Studio Next only; no Studio-dev fallback used
+
+FEE PREFLIGHT
+------------
+STUDIO_NEXT_FEE_POLICY_AVAILABLE: YES
+STUDIO_NEXT_FEE_POLICY: enabled=true; genPerTimeUnit=1; storageUnitPrice=250000000; receiptGasPrice=250000000; executionBudgetFloor=76548000000000; timeUnitOverlayBps=1500
+STUDIO_NEXT_DEPLOY_FEE_ESTIMATION_PATH: genlayer-js 2.0.0-rc.1 createClient({chain}) -> estimateTransactionFees({appealRounds, rotations}); live generic estimate returned feeValue=75000000000018429 wei
+STUDIO_NEXT_WRITE_FEE_ESTIMATION_PATH: @genlayer/transaction-kit 0.1.0-rc.2 createTransactionKit({chain, provider, account}) -> kit.estimate(...); it refreshes live policy via genlayer-js estimateTransactionFees before approval. Exact target-specific estimateTransactionFeesForWrite is deferred until each fresh target address exists.
+STUDIO_NEXT_WRITE_ESTIMATE_WITHOUT_TARGET: NOT AVAILABLE; zero/system addresses are not contracts on Studio Next. No write was attempted.
+
+FRONTEND INTEGRATION
+--------------------
+FRONTEND_FRAMEWORK: React + TypeScript + Vite (preserved)
+PACKAGE_MANAGER: npm
+GENLAYER_JS_VERSION: 2.0.0-rc.1
+TRANSACTION_KIT_VERSION: 0.1.0-rc.2
+TRANSACTION_KIT_REACT_VERSION: 0.1.0-rc.2
+SHARED_NETWORK_CONFIG_IMPLEMENTED: YES; studioDevnet base overridden to Studio Next
+WALLET_USES_SHARED_CHAIN: YES
+SDK_USES_SHARED_CHAIN: YES
+TRANSACTION_KIT_USES_SHARED_CHAIN: YES
+FINAL_SENTINEL_ENV_PLACEHOLDER: VITE_SENTINEL_CONTRACT_ADDRESS=
+FINAL_PROTECTED_DEMO_ENV_PLACEHOLDER: VITE_PROTECTED_DEMO_CONTRACT_ADDRESS=
+TRANSACTION_FLOW: precondition read -> fee estimate/review -> wallet approval -> one submission -> same-hash kit tracking -> consensus/finality -> successful execution -> state readback
+FRONTEND_TYPECHECK: PASS
+FRONTEND_TESTS: PASS (15 tests)
+FRONTEND_LINT: PASS
+FRONTEND_BUILD: PASS
+
+STALE NETWORK AUDIT
+-------------------
+ACTIVE_STUDIO_DEV_RUNTIME_REFERENCES: 0
+ACTIVE_BRADBURY_RUNTIME_REFERENCES: 0
+Historical Studio-dev evidence remains under deploy/evidence/final-v2 and is not an active runtime configuration.
+
+EXACT NEXT DEPLOYMENT PLAN (NOT EXECUTED)
+------------------------------------------
+1. Deploy fresh contracts/protected_demo.py to Studio Next.
+2. Deploy fresh corrected contracts/sentinel.py to Studio Next.
+3. On the new ProtectedDemo, configure_sentinel(new Sentinel address).
+4. On the new Sentinel, register_protected_protocol(
+   protocol_id="sentinel-demo",
+   failure_class="unauthorized-drain",
+   allowed_source_domains="studio-next.genlayer.com,raw.githubusercontent.com",
+   allowed_source_prefixes="studio-next.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+   canonical_rpc="https://studio-next.genlayer.com/api",
+   advisory_prefix="https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+   minimum_sources=2,
+   max_evidence_age_seconds=3600,
+   recovery_cooldown_seconds=900,
+   target=new ProtectedDemo address,
+   plus the required approved source/domain values.
+5. lock_emergency_policy("sentinel-demo").
+6. Refresh exact live fee estimates before every deployment/configuration write and require FINALIZED + accepted consensus + FINISHED_WITH_RETURN before each state readback.
+7. Populate final environment placeholders only with the two fresh Studio Next addresses.
+
+SAFETY STATUS
+-------------
+CONTRACT_CHANGED: Sentinel source and regression tests only; ProtectedDemo unchanged
+FRONTEND_CHANGED: Studio Next network/SDK/Transaction Kit integration; UI structure retained
+CONTRACT_TRANSACTIONS: none
+DEPLOYMENTS: none
+INCIDENTS_CREATED: none
+OUTFLOWS_EXECUTED: none
+EVIDENCE_PUBLISHED: none
+COMMITS: none
+PUSHES: none
+
+LOCAL TOOLING NOTE
+------------------
+genvm-lint static lint and Python AST checks passed. The local genvm-lint full SDK validation phase could not load a missing cached runner artifact; hosted Studio Next schemas and the direct contract suite passed. This was not used as a reason to alter either contract pin or source.
+Legacy Studio-dev deployment/incident scripts and evidence remain historical artifacts and were not executed; the active frontend, tests, environment, and final preflight use Studio Next.
+
+FINAL DECISION
+--------------
+CONTRACT_FIX_COMPLETE: YES
+CONTRACT_SOURCE_READY_TO_FREEZE: YES
+STUDIO_NEXT_RPC_READY: YES
+STUDIO_NEXT_SCHEMA_READY: YES
+STUDIO_NEXT_FEES_READY: YES
+FRONTEND_RC2_READY: YES
+FRONTEND_BUILD_READY: YES
+READY_FOR_FINAL_STUDIO_NEXT_DEPLOYMENT: YES (STOP HERE; DO NOT DEPLOY IN THIS TASK)

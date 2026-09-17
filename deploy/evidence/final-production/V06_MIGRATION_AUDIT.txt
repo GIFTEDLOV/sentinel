@@ -1,0 +1,76 @@
+SENTINEL v0.6 MIGRATION AUDIT
+=============================
+
+Scope
+-----
+Local sources audited: contracts/sentinel.py and contracts/protected_demo.py.
+Official reference: genlayerlabs/genlayer-project-boilerplate, branch v2-dev,
+merged PR #78 (a988f635eeec5c1ac89adb2b780269837345ba05; merge 76fc8c1).
+The PR documents the v0.6 API migration and a v0.6.0-rc0 runner hash. A
+read-only Studio Next compatibility matrix was required because that hash is
+rejected by the currently hosted GenVM runtime as `runner malformed`.
+
+Source changes applied
+----------------------
+* Updated both contract dependency headers to the Studio Next-compatible
+  v0.6 RC runner hash
+  5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng. The official PR hash
+  9b8kjyda2ycxyq4ea6g4yfpnydxhd52gqba5rb8dw7krkh5mn9p0 was tested read-only
+  and rejected by Studio Next with `invalid_contract runner malformed`; the
+  accepted hash was tested against both current sources and returned the full
+  expected schemas.
+* Removed wildcard genlayer imports.
+* Qualified Address and integer types through the current gl namespace.
+* Switched storage dataclass decoration to the current
+  genlayer.storage.allow spelling.
+* Preserved all business rules, evidence policy, validator comparison, clock
+  floor, target-message finalization, and state-transition checks.
+* Current source SHA-256 after the dependency-pin compatibility correction:
+  sentinel.py = 1CFA95537737B0E6B2FCC790D96379ADEBB26133F7B747391482C1C144C465A8;
+  protected_demo.py = 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD.
+
+API/security audit
+-------------------
+1. gl.nondet.web.get/post and gl.nondet.exec_prompt are called only from
+   functions invoked inside gl.vm.run_nondet leader/validator callbacks.
+2. Nondeterministic callbacks return data only. Storage writes and target
+   messages occur after run_nondet returns; no callback emits a message.
+3. Validators independently repeat web authentication and semantic judgment,
+   then compare authenticated/stable facts. Validation is not leader JSON
+   schema-only validation.
+4. No open-ended LLM value is compared with strict_eq; only bounded stable
+   fields and deterministic authenticated facts are compared.
+5. No payable methods, native-value accounting, or payout/refund paths exist in
+   either Sentinel source. The repository has no contracts/uphold.py, no
+   settle_breach, no expire_commitment, no transfer helper, and no
+   create_commitment/increase_stake implementation to audit.
+6. Demo accounting uses gl.u256/gl.u32; Sentinel policy/time/counters use
+   gl.u8/gl.u64. No native GEN transfer is attempted.
+7. Cross-contract pause/unpause is emitted with on="finalized". No
+   on="accepted" emission exists.
+8. State is updated after external target-message requests, with explicit
+   pause/unpause confirmation readbacks before the incident state advances.
+
+Validation
+----------
+Python AST compilation: PASS.
+Hosted gen_getContractSchemaForCode compatibility matrix: PASS for both
+sources with the selected 5jyc hash; FAIL with the official 9b hash as noted
+above. Direct current-SDK schema reflection: PASS for both sources.
+Full pytest: PASS (68 passed, 1 warning).
+The migration smoke runner reached only the hosted schema gate and created no
+deployment transaction; that first empty journal is retained as
+FINAL_TRANSACTION_JOURNAL.schema-gate-failure.json. A second smoke attempt
+now has a fresh pair and has completed through incident chain-evidence binding;
+it is checkpointed in HOSTED_MIGRATION_SMOKE.txt and is blocked before the
+advisory-binding transaction because the exact advisory commit is local but
+not published.
+
+Conclusion
+----------
+The legacy API mismatch was proven by the official PR and corrected locally.
+The contract's nondeterministic boundaries and security model remain intact.
+There are no EOA payout/refund paths in this Sentinel repository. The selected
+dependency pin is the one proven compatible with the current Studio Next host;
+deployment remains gated on the required linter result and the separately
+journaled migration smoke run.

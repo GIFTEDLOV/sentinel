@@ -1,0 +1,126 @@
+SENTINEL ASSESS_INCIDENT STORAGE-BOUNDARY AUDIT
+================================================
+
+SOURCE: contracts/sentinel.py
+SOURCE_SHA: 87E65CC72D41E4DCF6DFC3E93EBE80B0081A4C5E4A32C6A9435FD8C4CFC90693
+DEPLOYED_SOURCE_SHA: 87E65CC72D41E4DCF6DFC3E93EBE80B0081A4C5E4A32C6A9435FD8C4CFC90693
+DEPLOYED_SENTINEL: 0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5
+
+BOUNDARY TABLE
+--------------
+
+VALUE: incident
+STORAGE TYPE: gl.storage.TreeMap[str, IncidentRecord]
+SOURCE LINE: 1231 / _require_incident line 176
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NO
+REDUCED TO PLAIN VALUE: selected fields are read before the boundary; the
+incident object itself is not passed to the closures
+CAPTURED BY LEADER: NO
+CAPTURED BY VALIDATOR: NO
+STORAGE READ INSIDE NONDET: NO
+FIX REQUIRED: NO for the observed failure
+
+VALUE: protocol
+STORAGE TYPE: gl.storage.TreeMap[str, ProtocolConfig]
+SOURCE LINE: 1232 / _require_protocol line 171
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NO
+REDUCED TO PLAIN VALUE: target address, failure class, protocol id, and
+minimum_sources are reduced; the ProtocolConfig object is also retained in
+judge_args
+CAPTURED BY LEADER: YES, indirectly through _judge_evidence
+CAPTURED BY VALIDATOR: YES, indirectly through _independently_accepts
+STORAGE READ INSIDE NONDET: NO direct map access; a storage-backed dataclass
+handle is captured and its fields are read by the authentication helpers
+FIX REQUIRED: NOT PROVEN for this failure; hardening candidate only
+
+VALUE: evidence collection/index
+STORAGE TYPE: gl.storage.TreeMap[str, EvidenceRecord], plus incident.evidence_ids_csv
+SOURCE LINE: 963-1009
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NO on the TreeMap value itself
+REDUCED TO PLAIN VALUE: YES; every admitted EvidenceRecord is converted to a
+bounded dict before judge_args is constructed
+CAPTURED BY LEADER: only as plain evidence_items
+CAPTURED BY VALIDATOR: only as the same plain evidence_items
+STORAGE READ INSIDE NONDET: NO
+FIX REQUIRED: NO for the observed failure
+
+VALUE: evidence record
+STORAGE TYPE: EvidenceRecord dataclass returned by self.evidence[evidence_id]
+SOURCE LINE: 972
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NO, but fields are immediately materialized into a dict
+REDUCED TO PLAIN VALUE: YES
+CAPTURED BY LEADER: YES, as a dict
+CAPTURED BY VALIDATOR: YES, as a dict
+STORAGE READ INSIDE NONDET: NO
+FIX REQUIRED: NO for the observed failure
+
+VALUE: freshness clock and quorum counters
+STORAGE TYPE: ordinary u64/u8 values and local lists/strings
+SOURCE LINE: 968-1013
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NOT APPLICABLE
+REDUCED TO PLAIN VALUE: YES
+CAPTURED BY LEADER: evidence items only
+CAPTURED BY VALIDATOR: evidence items only
+STORAGE READ INSIDE NONDET: NO
+FIX REQUIRED: NO; the existing max(self._now(), newest observed_at) floor is
+the narrow clock-rollback fix
+
+VALUE: target/failure/phase context
+STORAGE TYPE: gl.Address / str / u8 / ordinary strings
+SOURCE LINE: 1237-1244
+READ BEFORE NONDET: YES
+COPY_TO_MEMORY: NOT APPLICABLE after reduction
+REDUCED TO PLAIN VALUE: YES except the captured protocol object noted above
+CAPTURED BY LEADER: YES
+CAPTURED BY VALIDATOR: YES
+STORAGE READ INSIDE NONDET: NO direct map access
+FIX REQUIRED: NO for the observed failure
+
+PRE-NONDET READ ORDER
+---------------------
+1. self.incidents[incident_id] through _require_incident.
+2. incident.protocol_id.
+3. self.protocols[incident.protocol_id] through _require_protocol.
+4. incident.state comparison against ASSESSING.
+5. incident.evidence_ids_csv split.
+6. self.evidence[evidence_id] for each indexed id.
+7. record.phase comparison.
+8. record.observed_at and protocol.max_evidence_age_seconds freshness checks.
+9. record.source_domain and local distinct-source aggregation.
+10. protocol.minimum_sources quorum check.
+11. bounded dict materialization for the admitted records.
+12. judge_args construction; only then gl.vm.run_nondet.
+
+CURRENT HOSTED RESULT
+---------------------
+The current smoke incident indexes exactly:
+chain-b2fa64830f71,advisory-b2fa64830f71
+
+Public finalized reads:
+chain observed_at     = 1789496076
+advisory observed_at  = 1789503461
+policy minimum_sources = 2
+policy max age         = 3600
+
+The deployed _copied_evidence floor selects now=max(1732603362,
+1789496076,1789503461)=1789503461. The chain record age is 7385 seconds,
+which exceeds the locked 3600-second maximum. The advisory is fresh, but the
+fresh count and distinct fresh-domain count are both 1, so the exact guard
+raises:
+
+Fresh evidence is insufficient for assessment
+
+No key is missing, no record failed decoding, and no storage representation
+mismatch was observed in individual public reads.
+
+RESULT
+------
+FIRST_FAILING_STORAGE_READ: NONE IDENTIFIED
+FIRST_FAILING_DETERMINISTIC_CHECK: freshness/quorum guard after successful
+evidence TreeMap reads
+STORAGE_READ_FAILURE_ROOT_CAUSE: NOT PROVEN / FALSIFIED AS STORAGE-BOUNDARY BUG

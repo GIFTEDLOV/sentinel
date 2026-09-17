@@ -1,0 +1,73 @@
+HOSTED V0.6 MIGRATION SMOKE CHECKPOINT
+======================================
+
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+RUNNER: py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng
+GENVM_RUNTIME_OBSERVED: v0.3.0-rc7-x86_64-linux-release
+SOURCE_SENTINEL_SHA256: 1CFA95537737B0E6B2FCC790D96379ADEBB26133F7B747391482C1C144C465A8
+SOURCE_PROTECTED_DEMO_SHA256: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+
+READ_ONLY_RUNNER_MATRIX
+-----------------------
+9b8kjyda2ycxyq4ea6g4yfpnydxhd52gqba5rb8dw7krkh5mn9p0: FAIL for both sources; invalid_contract runner malformed.
+1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6: FAIL for both sources; invalid_contract runner malformed.
+1zr6nqk597d97kg0dyxg0shhrykx5v02zjgnyrajapy4wlqvfvwh: FAIL for both sources; invalid_contract runner malformed.
+5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng: PASS for both sources; complete expected schemas returned.
+
+FRESH SMOKE DEPLOYMENT
+----------------------
+PROTECTED_DEMO_ADDRESS: 0x1eD91AA33aD5f2F30e97737ca8EA295EdAe89537
+PROTECTED_DEMO_DEPLOY_TX: 0x7c180f9837bc36e50947be0c98133338868cae56f5ee07dda77b428a506dca78
+SENTINEL_ADDRESS: 0x23F33f709e56097dee9e6EfF111bBbE0c95E56E5
+SENTINEL_DEPLOY_TX: 0x49ae2061c3a5aca7a19ac1d35d68565e32c1ab1c71b01527176af0f020bcdbd8
+CONFIGURE_TX: 0xe2122c3e70f8c4d52058627253c953e89767013d8c220835a2b7bb56fb51de3b
+REGISTER_POLICY_TX: 0xede729eea7584ca48600aa77839c5fa6f64fb19d7cfeec09a9ad2933e3205a5f
+LOCK_POLICY_TX: 0xb6df039b9c719dc5a2dc62b6557c497b857e812938525a7a516cce92654a75c9
+HEALTHY_BASELINE_TX: 0xc4fbc4194e1eb2b82e044c1e3d5d7ab35b5aabc0fb2cc4fc2dcccb3b2cb21fe9
+CONTROLLED_OUTFLOW_TX: 0x5a302b6d35aa526eab864d8a029fb88b75837493f362c9d9093b1f5f9936e982
+INCIDENT_ID: incident-5a302b6d35aa
+CREATE_INCIDENT_TX: 0xcf0f12692e4a224b4a5d371d4c0bc704c9a1763bf6cb0c3f71b047e2def3963f
+CHAIN_EVIDENCE_BIND_TX: 0x35f7550b9eaf22d8e36127a33540166e0eb1da08aa6d5b4e202a328edb4fd5b5
+
+CONFIRMED COMPLETED STEPS
+-------------------------
+Schema gate, ProtectedDemo deployment, Sentinel deployment, controller bind,
+policy registration, policy lock, healthy owner process, exactly one 100-unit
+controlled player2 outflow, incident creation, and incident chain-evidence
+binding. All recorded writes finalized with accepted consensus and successful
+execution. No pause, remediation, recovery, or final-production write was
+attempted.
+
+ADVISORY CHECKPOINT
+-------------------
+LOCAL_FILE: _sentinel-evidence-publish/evidence/advisories/incident-incident-5a302b6d35aa.json
+LOCAL_SHA256: 62744D49930577E5660962746D6E8F06CE2C6B4EA62DB791CE3BC10F45760CF3
+LOCAL_COMMIT: aaa94a3b9b27a14d52d8c8a3e9c5ac38046c54d3
+PUBLIC_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-incident-5a302b6d35aa.json
+PUBLIC_STATUS: 404; commit is not pushed.
+
+NEXT_REQUIRED_STEP: Push the existing commit aaa94a3b9b27a14d52d8c8a3e9c5ac38046c54d3 once, verify the raw URL bytes/digest, then resume by binding this existing incident advisory.
+NO_DUPLICATE_DEPLOYMENT: YES
+NO_DUPLICATE_INCIDENT: YES
+NO_DUPLICATE_OUTFLOW: YES
+NO_DUPLICATE_ADVISORY_FILE: YES
+BLOCKER: GitHub push is unavailable in this environment: configured localhost proxy is unreachable and direct Git has no credentials. Do not broadcast advisory binding until PUBLIC_STATUS is 200 and the digest matches.
+
+UPDATED RESUME RESULT
+---------------------
+The existing advisory was published through the authenticated GitHub Contents
+API at remote commit d6b48a3db358f053981ce04379b4c88d93993b92. Raw bytes and
+SHA-256 matched exactly. The single advisory-binding transaction finalized:
+0x8cdfff30989ed52d766b389f28c4742b86dc4614f98bb3e456dc1d2f476e7881.
+The single incident-assessment transaction also finalized:
+0xd6d115409203e07582d1a512b052ace42c87c8d55a596c987b925bbd8f902cd4.
+Its fail-closed result was INCONCLUSIVE; incident state is ASSESSING, target
+paused=false, target remediated=false, pause_count=0. No pause, remediation,
+recovery, or unpause write was attempted after that result.
+
+CURRENT_BLOCKER: The hosted semantic assessment returned INCONCLUSIVE despite
+the authenticated two-source quorum. Do not rebroadcast assessment blindly and
+do not proceed to pause. Diagnose the same finalized transaction/runtime result
+before any further write.

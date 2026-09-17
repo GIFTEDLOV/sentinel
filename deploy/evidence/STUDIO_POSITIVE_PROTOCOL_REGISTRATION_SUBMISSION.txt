@@ -1,0 +1,11 @@
+Controlled positive-demo protocol registration submission
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+PROTOCOL_ID: protected-demo-positive
+TARGET_ADDRESS: 0xbB956e15F58C38617CF337b0E5DeeD5B5cf2BFE3
+ALLOWED_SOURCE_DOMAINS: httpbin.org,httpbingo.org
+MINIMUM_SOURCES: 2
+GENLAYER_TRANSACTION: 0x5202f713537fc5f6dfd1b912ea2533b378acb9173c450f7a1197db94d4fcc15d
+INITIAL_STATUS: ACCEPTED (provisional; same hash is being reconciled)

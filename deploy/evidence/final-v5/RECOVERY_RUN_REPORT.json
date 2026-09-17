@@ -1,0 +1,261 @@
+{
+  "network": {
+    "rpc": "https://studio-next.genlayer.com/api",
+    "chainId": 61997
+  },
+  "sourceHashes": {
+    "sentinel": "17371D931803D6162DCC0EEE4B7188EA1DB02028E489D59C7D501A5EE61CF4C0",
+    "demo": "1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"
+  },
+  "ownerPreflight": {
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6984877455499833951",
+    "latestNonce": 163,
+    "pendingNonce": 163
+  },
+  "actorPreflight": {
+    "chainId": 61997,
+    "account": "0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8",
+    "balanceWei": "5001212620749986002",
+    "latestNonce": 10,
+    "pendingNonce": 10
+  },
+  "policy": {
+    "allowed_source_domains": "studio-next.genlayer.com,raw.githubusercontent.com",
+    "allowed_source_prefixes": "studio-next.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+    "canonical_rpc_endpoint": "https://studio-next.genlayer.com/api",
+    "critical_failure_class": "unauthorized-drain",
+    "max_evidence_age_seconds": 3600,
+    "minimum_sources": 2,
+    "owner": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "policy_locked": true,
+    "recovery_cooldown_seconds": 900,
+    "target_address": "0xbfC7DD4e7c57997F74C56175DBad234E4CA01B05"
+  },
+  "incident": {
+    "evidence_ids_csv": "chain-d2184756d671,advisory-d2184756d671",
+    "incident_verdict": "ACTIVE_INCIDENT",
+    "opened_at": 1789425296,
+    "pause_confirmed_at": 1789425721,
+    "pause_requested": true,
+    "protocol_id": "sentinel-demo",
+    "recovery_verdict": "INCONCLUSIVE",
+    "reporter": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "source_domains_csv": "studio-next.genlayer.com,raw.githubusercontent.com",
+    "state": "PAUSED",
+    "unpause_requested": false
+  },
+  "target": {
+    "paused": true,
+    "remediated": true,
+    "treasury": {
+      "remediated": true,
+      "total_outflow": 100,
+      "treasury_balance": 900
+    },
+    "totalProcessed": 1,
+    "counters": {
+      "pause_count": 1,
+      "unpause_count": 0
+    }
+  },
+  "realWriteReceipts": {
+    "incidentAssessment": {
+      "hash": "0xf7070f72830bdea0104dcb8ae32c48f383e2336586b0b41d611c2157452fd1e7",
+      "method": "eth_getTransactionByHash_fallback",
+      "timestamps": {
+        "Created": "1789425565",
+        "Pending": null,
+        "Activated": null,
+        "Proposed": null,
+        "Committed": 1789425576,
+        "LastVote": "1789425576",
+        "source": "Studio Next fallback transaction fields; gen_getTransactionReceipt unavailable"
+      },
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN"
+    },
+    "pause": {
+      "hash": "0x5705c1b2ec9302203b2b3685c5f4a96ff83e8792c5f51eef4bea45ac24b60084",
+      "method": "eth_getTransactionByHash_fallback",
+      "timestamps": {
+        "Created": "1789425642",
+        "Pending": null,
+        "Activated": null,
+        "Proposed": null,
+        "Committed": 1789425646,
+        "LastVote": "1789425646",
+        "source": "Studio Next fallback transaction fields; gen_getTransactionReceipt unavailable"
+      },
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN"
+    },
+    "remediation": {
+      "hash": "0xe4e6ed2227242260ae2efb3e1ed03c440641444d259ef57a1ced2304eee9be95",
+      "method": "eth_getTransactionByHash_fallback",
+      "timestamps": {
+        "Created": "1789426044",
+        "Pending": null,
+        "Activated": null,
+        "Proposed": null,
+        "Committed": 1789426048,
+        "LastVote": "1789426048",
+        "source": "Studio Next fallback transaction fields; gen_getTransactionReceipt unavailable"
+      },
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN"
+    }
+  },
+  "realWriteClockCurrent": true,
+  "genCallStaleClockKnown": 1732603362,
+  "canonicalNodeNow": "1789480518",
+  "pauseConfirmedAt": "1789425721",
+  "recoveryEligibleAt": "1789426621",
+  "canonicalCooldownAge": "54797",
+  "cooldownPlusMarginMet": true,
+  "checks": {
+    "policyLocked": true,
+    "target": true,
+    "controller": true,
+    "incidentState": true,
+    "incidentVerdict": true,
+    "paused": true,
+    "remediated": true,
+    "treasury": true,
+    "totalOutflow": true,
+    "sourceHashes": true
+  },
+  "beginPreflight": {
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6984877455499833951",
+    "latestNonce": 162,
+    "pendingNonce": 162
+  },
+  "beginPolicy": {
+    "allowed_source_domains": "studio-next.genlayer.com,raw.githubusercontent.com",
+    "allowed_source_prefixes": "studio-next.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+    "canonical_rpc_endpoint": "https://studio-next.genlayer.com/api",
+    "critical_failure_class": "unauthorized-drain",
+    "max_evidence_age_seconds": 3600,
+    "minimum_sources": 2,
+    "owner": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "policy_locked": true,
+    "recovery_cooldown_seconds": 900,
+    "target_address": "0xbfC7DD4e7c57997F74C56175DBad234E4CA01B05"
+  },
+  "beginCalldata": {
+    "method": "begin_recovery",
+    "encoded": "0x160074626567696e5f7265636f7665727904617267730dac01696e636964656e742d643231383437353664363731",
+    "decoded": [
+      "incident-d2184756d671"
+    ]
+  },
+  "beginFeeMethod": "existing measured Studio Next v0.6 deployment profile, feeValue 75000000000018429 with 2x measured headroom; no arbitrary estimate",
+  "beginFeeEnvelope": {
+    "leaderTimeunitsAllocation": "100",
+    "validatorTimeunitsAllocation": "200",
+    "appealRounds": "1",
+    "executionBudgetPerRound": "25000000000000000",
+    "totalMessageFees": "0",
+    "rotations": [
+      "0",
+      "0"
+    ],
+    "maxPriceGenPerTimeUnit": "2",
+    "storageFeeMaxGasPrice": "300000000",
+    "receiptFeeMaxGasPrice": "300000000",
+    "transactionHashVariant": "latest-nonfinal",
+    "feeValue": "75000000000018429"
+  },
+  "simulation": {
+    "httpStatus": 200,
+    "exactCooldownError": true,
+    "decodedError": "\u0001Recovery cooldown has not elapsed",
+    "simulatedGenVmNow": "1732603362",
+    "simulatedKeyEvidence": [
+      {
+        "path": "error.data.receipt.genvm_result.fee_accounting.genvm_message_fee_consumed",
+        "value": "0"
+      },
+      {
+        "path": "error.data.receipt.genvm_result.fee_accounting.execution_fee_report.messageFees.genvmMeteredConsumed",
+        "value": "0"
+      },
+      {
+        "path": "error.data.receipt.genvm_result.fee_accounting.execution_fee_report.executionMetering.genvmReportedExecution",
+        "value": "127878000000000"
+      },
+      {
+        "path": "error.data.receipt.genvm_result.fee_accounting.execution_fee_report.executionMetering.genvmDeltaFromChargeable",
+        "value": "49250000000000"
+      },
+      {
+        "path": "error.data.receipt.genvm_result.fee_accounting.recommended_fee_preset.observed.genvmExecutionRequired",
+        "value": "127878000000000"
+      }
+    ],
+    "rawErrorKeys": [
+      "code",
+      "message",
+      "data"
+    ],
+    "receiptKeys": [
+      "vote",
+      "execution_result",
+      "result",
+      "calldata",
+      "gas_used",
+      "mode",
+      "contract_state",
+      "contract_state_hash",
+      "node_config",
+      "eq_outputs",
+      "pending_transactions",
+      "genvm_result",
+      "processing_time",
+      "nondet_disagree",
+      "execution_stats"
+    ],
+    "normalizedError": "Recovery cooldown has not elapsed",
+    "simulatedGenVmNowSource": "same Studio Next write-context clock captured in runtime-diagnosis; current receipt omitted datetime",
+    "simulationFalseNegativeProven": true
+  },
+  "beginBroadcastPreflight": {
+    "chainId": 61997,
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "balanceWei": "6984877455499833951",
+    "latestNonce": 162,
+    "pendingNonce": 162
+  },
+  "beginBroadcastCanonicalNodeNow": "1789480488",
+  "beginBroadcastGates": {
+    "incidentPaused": true,
+    "activeIncident": true,
+    "targetPaused": true,
+    "targetRemediated": true,
+    "treasury": true,
+    "totalOutflow": true,
+    "policyLocked": true,
+    "controller": true,
+    "canonicalCooldown": true,
+    "staleSimulation": true
+  },
+  "simulationFalseNegativeProven": true,
+  "beginRecoverySubmission": {
+    "txHash": "0xa1ddf179b0cbd9a0bdecdfb810f4e5a1390170c843ba894d83538828ae3f8275",
+    "broadcastCount": 1,
+    "nonce": 162,
+    "postSubmissionLatestNonce": 163,
+    "postSubmissionPendingNonce": 163,
+    "ethGetTransactionByHash": "NOT_FOUND",
+    "ethGetTransactionReceipt": null,
+    "genGetTransactionLifecycle": "NOT_FOUND",
+    "incidentStateAfterAttempt": "PAUSED",
+    "status": "AMBIGUOUS_SUBMISSION_UNRECONCILED"
+  }
+}

@@ -1,0 +1,12 @@
+FINAL PROTECTEDDEMO DEPLOYMENT
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+SOURCE_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+TX: 0xf5ac8a327bff9df56c04eadeeeba338e045ea1c1b4373e1685a04b0fc2cb579e
+STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+ADDRESS: 0xc4C76868AA96b58C71Ef85Da3e53E96BC538984B
+SOURCE_MATCH: YES
+INITIAL_STATE: authorized_sentinel=zero; controller_configured=false; paused=false; remediated=false; treasury_balance=1000; total_outflow=0; total_processed=0; pause_count=0; unpause_count=0

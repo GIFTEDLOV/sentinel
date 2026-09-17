@@ -1,0 +1,523 @@
+NONDET DISAGREEMENT DIAGNOSIS
+=============================
+
+Scope
+-----
+Read-only diagnosis. No contract source, frontend, deployment, transaction, incident,
+evidence binding, assessment, pause, remediation, recovery, commit, or push was done
+for this diagnosis.
+
+Live deployment
+---------------
+Network: studio-dev
+Chain ID: 61997
+RPC: https://studio-dev.genlayer.com/api
+Sentinel: 0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723
+ProtectedDemo: 0xFCeC042B2fcc1d793Bf92877665c9Bae16971AE1
+
+Failed transaction
+------------------
+FAILED_CHAIN_EVIDENCE_TX:
+0x03c1be3df89a2c111acf5ea40d804a440b454c8c6fdead5ba5289d2fccd244f2
+
+Terminal status: FINALIZED
+Consensus: MAJORITY_DISAGREE
+Execution: FINISHED_WITH_RETURN
+Validator diagnostic: NOTIFY_NONDET_DISAGREEMENT: 1
+
+The receipt had three non-idle validators with vote=disagree and result=AAA=.
+The receipt's validator GenVM results had execution_result=SUCCESS, empty stderr,
+raw_error=null, and error_code=null. Therefore the disagreement was a normal false
+validator verdict, not an uncaught validator exception.
+
+Exact failed bind calldata
+--------------------------
+Official GenLayerJS decoding produced these arguments, in order:
+
+1. incident_id       = incident-741e5d640646
+2. evidence_id       = chain-741e5d640646
+3. phase             = EMERGENCY
+4. evidence_type     = CHAIN_TRANSACTION
+5. source_url        = https://studio-dev.genlayer.com/api
+6. failure_class     = unauthorized-drain
+7. content_digest    = 4aa3613fe65f00d04ff576f73803fc159a9519dcb64d6c3c11180758f82d4192
+8. transaction_hash  = 0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f
+9. transaction_block = 0
+10. transaction_input = FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==
+
+Current live state
+------------------
+Incident incident-741e5d640646 exists and is ASSESSING.
+Its evidence_ids_csv is empty; no chain or advisory evidence is bound.
+Its source_domains_csv is empty; the source threshold is not met.
+Its incident_verdict is INCONCLUSIVE and pause_requested is false.
+ProtectedDemo is paused=false, remediated=false, treasury_balance=900,
+total_outflow=100, total_processed=1, pause_count=0, unpause_count=0.
+
+Nondeterministic call map
+-------------------------
+NONDET_DISAGREEMENT_CALL_NO: 1
+NONDET_CALL_1_PURPOSE: _authenticate_for_binding for CHAIN_TRANSACTION evidence.
+The leader and validator each execute _authenticate_one, which dispatches to
+_authenticate_chain_transaction and performs the canonical RPC POST:
+
+POST https://studio-dev.genlayer.com/api
+Content-Type: application/json
+Body: {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f"],"id":1}
+
+NONDET_CALL_1_LEADER_FN: _authenticate_one -> _authenticate_chain_transaction.
+NONDET_CALL_1_VALIDATOR_FN: _authenticate_one independently, then
+_authentication_matches(leader_result, validator_result).
+EQUIVALENCE_API: gl.vm.run_nondet(leader_fn, validator_fn).
+This is a custom deterministic boolean validator, not strict_eq and not
+run_nondet_unsafe.
+
+What the leader returned
+------------------------
+The leader receipt contained exactly one eq output. Decoding its GenVM wire
+payload showed an AUTH_VALID result with this normalized authenticated fact set:
+
+{
+  "consensus": "MAJORITY_AGREE",
+  "event_timestamp": 1789339593,
+  "execution": "FINISHED_WITH_RETURN",
+  "hash": "0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f",
+  "input": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==",
+  "origin": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+  "sender": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+  "status": "FINALIZED",
+  "target": "0xfcec042b2fcc1d793bf92877665c9bae16971ae1"
+}
+
+The returned nondeterministic object also contained body and authenticated_facts
+with the same canonical JSON, event_timestamp=1789339593, current=true,
+critical_signal=true, mitigation_complete=false, and status=VALID. The
+authenticated_facts value is serialized with sorted keys and compact separators.
+
+What validators compared
+------------------------
+_authentication_matches compares only these fields:
+
+status
+authenticated_facts
+event_timestamp
+current
+critical_signal
+mitigation_complete
+
+The validator function returns only True/False. It does not emit a second
+normalized object. In the failed receipt every executed validator returned
+AAA=, which is the wire encoding of false. The validator-normalized object is
+therefore not exposed in the receipt; the exact observable result is:
+
+VALIDATOR_NORMALIZED_OUTPUT: not persisted or exposed; validator return=false.
+
+The important runtime mismatch is in the type of leader_result. Current GenLayer
+equivalence semantics pass a gl.vm.Return wrapper to validator_fn, with the
+leader value in leader_result.calldata. The installed direct harness implements
+this explicitly as gl_vm.Return(calldata=stored_result), and current GenLayer
+documentation specifies the same Result/Return contract. The frozen source
+passes that wrapper directly to _authentication_matches:
+
+    validator_result = self._authenticate_one(...)
+    return self._authentication_matches(leader_result, validator_result)
+
+_authentication_matches begins with:
+
+    if not isinstance(leader_result, dict) or not isinstance(validator_result, dict):
+        return False
+
+Thus the hosted validator returns false before any field comparison. This exactly
+matches the receipt: false result, successful execution, no exception, call no. 1.
+
+RPC repeat comparison
+----------------------
+Five ordinary POST reads of eth_getTransactionByHash were made over a short
+interval. Top-level keys were identical. Every security-relevant field used by
+_authenticate_chain_transaction was stable in all five responses:
+
+hash: stable
+sender/from_address/origin_address: stable (same mixed-case values)
+recipient/to_address: stable (same mixed-case value)
+status: FINALIZED, stable
+txExecutionResultName: FINISHED_WITH_RETURN, stable
+result_name: MAJORITY_AGREE, stable
+created_timestamp: 1789339593, stable
+created_at: 2026-09-13T22:46:33.900920+00:00, stable
+data.calldata: stable
+
+current_timestamp was the only inspected volatile field. It advanced between
+reads and is not selected into the normalized facts or digest.
+
+The ordinary RPC repeats therefore do not show a volatile security field in the
+leader projection. They cannot expose a validator's private web response, but
+the receipt and source-level wrapper mismatch explain the observed false verdict
+without requiring a network inconsistency.
+
+Bad equivalence inputs
+----------------------
+GenVM _now() in eq output: ABSENT
+Internal observed_at in eq output: ABSENT
+Current node time in eq output: ABSENT
+HTTP response headers in eq output: ABSENT
+Request timing in eq output: ABSENT
+Validator list/details in eq output: ABSENT
+Fee values in eq output: ABSENT
+Raw full RPC response in eq output: ABSENT
+Unordered raw JSON in eq output: ABSENT
+Mixed address casing in normalized output: ABSENT; addresses are lowercased
+Integer/string representation mismatch in normalized output: ABSENT for event_timestamp; parsed to u64
+Null-versus-missing RPC metadata in eq output: ABSENT after narrow projection
+
+The leader eq output contains only the narrow authenticated result and stable
+derived fields. The internal observed_at is assigned later by bind_evidence,
+after run_nondet returns, and is not part of equivalence.
+
+Direct gen_call reproduction
+----------------------------
+The current live endpoint did not expose the documented structured gen_call
+response for this request shape: raw gen_call returned the encoded contract
+return data "00" rather than an object containing eqOutputs and
+nondetDisagreementCallNo. The SDK receipt-like sim_call path did expose the
+leader eq output. The authoritative submitted transaction receipt exposed the
+validator results and call number. No additional production call was submitted.
+
+This is an endpoint/tooling observability limitation, not evidence that the
+failed consensus was intermittent.
+
+Root-cause classification
+-------------------------
+ROOT_CAUSE_CLASSIFICATION: C. LEADER_VALIDATOR_LOGIC_MISMATCH
+
+ROOT_CAUSE:
+The frozen validator callback assumes leader_result is the raw authenticated
+dict. Current GenVM supplies a gl.vm.Return/Result wrapper, whose raw value is
+leader_result.calldata. The dict type guard therefore returns false for every
+validator. The failed receipt records exactly that false verdict as AAA= with
+no validator exception, and NOTIFY_NONDET_DISAGREEMENT is reported for the
+first run_nondet call.
+
+This is not classified as volatile RPC fields: five ordinary reads show all
+security-relevant projected fields stable, and current_timestamp is excluded.
+It is not an internal-time leak: observed_at is assigned after consensus. It is
+not a validator exception: validator GenVM execution completed successfully
+with empty stderr and null error fields.
+
+Smallest safe source fix (not implemented)
+-------------------------------------------
+Keep the narrow projection and the fail-closed boolean validator. Change only
+the validator-side leader-value handling to accept the current Result wrapper:
+
+    def validator_fn(leader_result: typing.Any) -> bool:
+        if not isinstance(leader_result, gl.vm.Return):
+            return False
+        validator_result = self._authenticate_one(...)
+        return self._authentication_matches(leader_result.calldata, validator_result)
+
+Use the exact current runtime wrapper/type API available to the frozen contract
+environment. Do not accept arbitrary objects, do not compare raw HTTP bodies,
+and do not move observed_at into the nondeterministic result. Keep all existing
+hash, sender, origin, target, calldata, finality, execution, consensus,
+canonical digest, and target-policy checks unchanged.
+
+SECURITY_MODEL_WEAKENED_BY_FIX: NO.
+
+The fix restores the intended independent validator comparison; it does not
+reduce authentication or add tolerance for differing facts. A validator that
+cannot return a valid wrapper or whose normalized facts differ still returns
+false and fails closed.
+
+Current incident reuse
+-----------------------
+CURRENT_INCIDENT_REUSABLE_AFTER_SOURCE_FIX: NO.
+
+The source fix requires a new Sentinel deployment. The existing ProtectedDemo
+controller points to the current Sentinel and the current incident belongs to
+that deployment. A clean repair therefore requires a new Sentinel deployment,
+a new ProtectedDemo deployment/controller binding as applicable, fresh policy
+registration and permanent lock, and a new incident/evidence cycle. No such
+action was taken here.
+
+Required verification before any redeployment
+----------------------------------------------
+Add a direct regression that captures a chain-authentication run and invokes
+the validator with gl.vm.Return(calldata=leader_dict), proving True for equal
+facts and False for altered facts. Then run the full suite, AST/static lint,
+hosted schema validation, and a non-broadcast hosted simulation. Only after
+those pass should a clean final redeployment be considered.
+
+Evidence files
+--------------
+deploy/evidence/final-v2/NONDET_DIAG_RAW.json
+deploy/evidence/final-v2/NONDET_RPC_REPEATS.json
+deploy/evidence/final-v2/NONDET_DISAGREEMENT_DIAGNOSIS.txt
+
+Official references
+-------------------
+Gen Call API (leader_results and nondetDisagreementCallNo):
+https://docs.genlayer.com/api-references/genlayer-node/gen/gen_call
+Equivalence Principle / validator Result wrapper semantics:
+https://docs.genlayer.com/developers/intelligent-contracts/equivalence-principle
+
+Final task accounting
+---------------------
+CONTRACT_CHANGED: NO
+FRONTEND_CHANGED: NO
+TRANSACTIONS: NONE (read-only RPC and simulation/diagnostic calls only)
+DEPLOYMENTS: NONE
+COMMITS: NONE
+PUSHES: NONE
+
+Resume verification after PC shutdown
+--------------------------------------
+The pre-existing diagnosis above was preserved.  The following checks were
+performed after restart and appended rather than replacing prior evidence.
+
+RESUME_STATE_VERIFIED: YES for the live reads available before the canonical
+RPC rate limit; no conflicting chain state was observed.  The deployed source
+hashes still match the deployment evidence:
+
+  Sentinel: 7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE
+  ProtectedDemo: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+
+The live incident read returned ASSESSING with empty evidence_ids_csv and
+empty source_domains_csv.  Live reads returned paused=false and
+remediated=false.  The canonical RPC outflow transaction and the final local
+reconciliation remain consistent with treasury_balance=900 and
+total_outflow=100.  Subsequent treasury/total-outflow getter calls were
+blocked by the endpoint's standard rate limit (500 requests/hour), not by a
+contract error.  No state-changing call was made during this diagnosis.
+
+Read-only nonce check
+---------------------
+RPC eth_getTransactionCount returned latest=pending for all checked accounts:
+
+  owner 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc: 0x75 / 0x75
+  outflow actor 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8: 0x5 / 0x5
+  Sentinel: 0x0 / 0x0
+  ProtectedDemo: 0x0 / 0x0
+
+The nonce read is not interpreted as an on-chain pending transaction.  The
+canonical endpoint did not expose a transaction-list API for attributing the
+historical nonce delta beyond the known evidence, and no local process was
+used as pending-transaction evidence.
+
+Exact failed transaction recheck
+---------------------------------
+The canonical lookup returned FINALIZED / MAJORITY_DISAGREE /
+FINISHED_WITH_RETURN for the failed bind transaction.  Its receipt has
+NOTIFY_NONDET_DISAGREEMENT=1.  Three non-idle validators voted disagree with
+result AAA=; each of those validator executions had execution_result=SUCCESS,
+stderr="", raw_error=null, and error_code=null.  The idle validator was
+cancelled after quorum and is not an exception in the disagreement votes.
+
+The installed official GenLayerJS codec call was:
+
+  abi.calldata.decode(Buffer.from(transaction.data.calldata, "base64"))
+
+It returned, in order:
+
+  1. incident-741e5d640646
+  2. chain-741e5d640646
+  3. EMERGENCY
+  4. CHAIN_TRANSACTION
+  5. https://studio-dev.genlayer.com/api
+  6. unauthorized-drain
+  7. 4aa3613fe65f00d04ff576f73803fc159a9519dcb64d6c3c11180758f82d4192
+  8. 0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f
+  9. 0
+  10. FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==
+
+Exact binding path and equivalence boundary
+---------------------------------------------
+NONDET_DISAGREEMENT_CALL_NO: 1
+NONDET_CALL_1_PURPOSE: _authenticate_for_binding for CHAIN_TRANSACTION.
+NONDET_CALL_1_API: gl.nondet.web.post to the locked RPC with
+eth_getTransactionByHash(outflow_hash), JSON body and content-type header.
+NONDET_CALL_1_LEADER_FUNCTION: leader_fn -> _authenticate_one ->
+_authenticate_chain_transaction -> gl.nondet.web.post.
+NONDET_CALL_1_VALIDATOR_FUNCTION: validator_fn -> _authenticate_one ->
+_authenticate_chain_transaction -> _authentication_matches.
+EQUIVALENCE_API: gl.vm.run_nondet(leader_fn, validator_fn).
+EQUIVALENCE_PRINCIPLE: custom boolean validator; not strict_eq and not
+run_nondet_unsafe.
+
+The leader returns a dict with status, body, authenticated_facts,
+event_timestamp, current, critical_signal, and mitigation_complete.  The
+authenticated_facts value is compact sorted-key JSON for the narrow facts.
+The validator recomputes the same dict and _authentication_matches compares
+exactly status, authenticated_facts, event_timestamp, current,
+critical_signal, and mitigation_complete, then requires status=VALID.
+
+The current source has a logic mismatch at this boundary: the GenVM validator
+input is the gl.vm.Return/Result wrapper and the leader value is in
+leader_result.calldata, while _authentication_matches first requires the
+leader value itself to be a dict.  It therefore returns false before the
+normalized fields are compared.  This is consistent with every non-idle
+validator returning AAA= and with the clean SUCCESS/empty-error validator
+diagnostics.
+
+Leader and validator reproduction
+---------------------------------
+The preserved no-broadcast diagnostic artifact
+deploy/evidence/final-v2/NONDET_DIAG_RAW.json was re-decoded locally.
+
+LEADER_CALL_STATUS: SUCCESS (sim_call; result=AAA=)
+LEADER_EQOUTPUT_COUNT: 1
+LEADER_EQOUTPUT_1: exact base64 wire output is stored at
+leader.eq_outputs["0"] in NONDET_DIAG_RAW.json.  Its decoded normalized
+authenticated facts are:
+
+  {"consensus":"MAJORITY_AGREE","event_timestamp":1789339593,"execution":"FINISHED_WITH_RETURN","hash":"0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f","input":"FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==","origin":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","sender":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","status":"FINALIZED","target":"0xfcec042b2fcc1d793bf92877665c9bae16971ae1"}
+
+GEN_CALL_LEADER_REPRODUCED: YES from the preserved sim_call artifact; no
+broadcast occurred.
+VALIDATOR_CALL_STATUS: raw encoded result "00"; no structured status/logs/
+stderr/nondetDisagreementCallNo were exposed by the endpoint response.
+GEN_CALL_VALIDATOR_REPRODUCED: NO as a structured gen_call diagnostic;
+VALIDATOR_DISAGREEMENT_CALL_NO: 1 from the finalized on-chain receipt.
+VALIDATOR_ERROR: endpoint/tooling returned raw "00" instead of the documented
+structured gen_call result.  A later retry was not made after the RPC entered
+the standard rate limit.
+
+Normalized-output comparison
+----------------------------
+The leader facts above were decoded from the eq output.  A fresh direct
+eth_getTransactionByHash response was independently projected through the
+validator-side alias, case, status, execution, consensus, and timestamp
+normalization logic.  The resulting output and digest were:
+
+LEADER_NORMALIZED_OUTPUT:
+{"consensus":"MAJORITY_AGREE","event_timestamp":1789339593,"execution":"FINISHED_WITH_RETURN","hash":"0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f","input":"FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==","origin":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","sender":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","status":"FINALIZED","target":"0xfcec042b2fcc1d793bf92877665c9bae16971ae1"}
+VALIDATOR_NORMALIZED_OUTPUT:
+{"hash":"0x741e5d6406466dfbc9bd7c54ef633c062606047240a790b037bcf7cf5dcbd19f","sender":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","origin":"0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8","target":"0xfcec042b2fcc1d793bf92877665c9bae16971ae1","input":"FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg==","status":"FINALIZED","execution":"FINISHED_WITH_RETURN","consensus":"MAJORITY_AGREE","event_timestamp":1789339593}
+NORMALIZED_OUTPUTS_IDENTICAL: YES (value comparison)
+DIFFERING_FIELDS: none
+CANONICAL_DIGEST: 4aa3613fe65f00d04ff576f73803fc159a9519dcb64d6c3c11180758f82d4192
+
+Ten fresh canonical RPC repeats
+------------------------------
+RPC_REPEAT_CALLS: 10 additional direct POST calls to
+eth_getTransactionByHash(outflow_hash) were made after restart.  All ten
+returned HTTP/RPC success, identical top-level key sets, and identical values
+for hash, sender/from_address, origin_address, recipient/to_address,
+data.calldata, status, result_name, txExecutionResult, txExecutionResultName,
+created_timestamp, and created_at.  current_timestamp advanced between
+calls and is the only observed volatile field.
+
+Field classification for the fields Sentinel currently consumes:
+
+  hash: STABLE
+  sender / from_address: STABLE; from was absent in all samples
+  origin_address: STABLE; txOrigin was absent in all samples
+  recipient / to_address: STABLE; to was absent in all samples
+  data.calldata: STABLE; input and txCallData were absent in all samples
+  status: STABLE; statusName was absent in all samples
+  result_name: STABLE
+  txExecutionResult: STABLE numeric 1
+  txExecutionResultName: STABLE
+  created_timestamp: STABLE string digits
+  created_at: STABLE
+  current_timestamp: VOLATILE and excluded by the Sentinel projection
+  nested consensus metadata: not consumed; no security-relevant drift was
+  observed in the preserved repeat artifacts
+
+Absent aliases are MISSING_SOMETIMES at the schema-compatibility boundary
+(they were absent on every observed response), while the selected aliases are
+stable.  Raw RPC addresses are mixed-case, but the projected addresses are
+lowercase.  JSON key order is irrelevant to the projection and the emitted
+authenticated_facts uses sort_keys=True and compact separators.
+
+Nondeterministic leakage and exception checks
+----------------------------------------------
+GENVM_NOW_IN_EQ_OUTPUT: NO
+INTERNAL_OBSERVED_AT_IN_EQ_OUTPUT: NO
+NODE_TIME_IN_EQ_OUTPUT: NO
+HTTP_HEADERS_IN_EQ_OUTPUT: NO
+VOLATILE_RPC_FIELDS_IN_EQ_OUTPUT: NO
+RAW_RPC_RESPONSE_IN_EQ_OUTPUT: NO
+UNORDERED_JSON_IN_EQ_OUTPUT: NO
+ADDRESS_CASE_CAN_DIFFER: NO after lowercasing in normalized facts
+NULL_VS_MISSING_CAN_DIFFER: NO for the selected projection
+NUMERIC_TYPE_CAN_DIFFER: NO after _parse_u64 and u64 normalization
+
+The internal observed_at assignment is at bind_evidence after
+_authenticate_for_binding returns (source line 1137 in the current file); it
+does not participate in run_nondet equivalence.
+
+VALIDATOR_EXCEPTION_REPRODUCED: NO
+VALIDATOR_EXCEPTION_DETAIL: the three disagreeing validators completed with
+execution_result=SUCCESS, empty stderr, null raw_error, and null error_code.
+The false result is a normal validator verdict caused by the wrapper/type
+mismatch, not exception-to-DISAGREE behavior.
+
+Final classification and design-only fix
+-----------------------------------------
+ROOT_CAUSE_CLASSIFICATION: C. LEADER_VALIDATOR_LOGIC_MISMATCH
+ROOT_CAUSE: the validator compares the wrapper itself against a dict, so the
+dict guard returns false before comparing the identical normalized RPC facts.
+The receipt's first nondeterministic disagreement, AAA= validator results,
+clean validator execution diagnostics, and independent normalized-output
+comparison all support this classification.
+
+MINIMAL_FIX_REQUIRED: YES
+MINIMAL_FIX_DESCRIPTION: in validator_fn, require the current GenVM wrapper
+type gl.vm.Return, extract leader_result.calldata, require that value to be a
+dict, then pass that dict to _authentication_matches.  Keep the independent
+RPC fetch, narrow canonical projection, lowercase address normalization,
+u64 timestamp normalization, digest check, accepted finality/consensus gates,
+and fail-closed false result.  Do not include current node time, observed_at,
+headers, fees, validator metadata, or the raw response in equivalence.
+SECURITY_MODEL_WEAKENED_BY_FIX: NO
+
+CURRENT_INCIDENT_REUSABLE_AFTER_SOURCE_FIX: NO.  The fix requires a new
+Sentinel deployment and a new incident/evidence cycle; this incident belongs
+to the currently deployed code and must not be retried.
+
+RESUME_STATE_VERIFIED: YES (with the RPC rate-limit caveat above)
+WORKTREE_STATUS: DIRTY with pre-existing source/docs/frontend/deploy changes;
+no unexpected source change was observed.  Current Sentinel and
+ProtectedDemo hashes match deployment evidence.  This diagnosis file was
+continued only.
+CURRENT_HEAD: b90836781b457b90ef73731605a6f3c3ee00022a
+INCIDENT_ID: incident-741e5d640646
+INCIDENT_STATE: ASSESSING
+PROTECTED_DEMO_PAUSED: false
+TREASURY_BALANCE: 900
+TOTAL_OUTFLOW: 100
+FAILED_CHAIN_EVIDENCE_TX: 0x03c1be3df89a2c111acf5ea40d804a440b454c8c6fdead5ba5289d2fccd244f2
+FAILED_TX_STATUS: FINALIZED
+FAILED_TX_CONSENSUS: MAJORITY_DISAGREE
+FAILED_TX_EXECUTION: FINISHED_WITH_RETURN
+NONDET_DISAGREEMENT_CALL_NO: 1
+NONDET_CALL_1_PURPOSE: _authenticate_for_binding / CHAIN_TRANSACTION RPC authentication
+EQUIVALENCE_API: gl.vm.run_nondet
+LEADER_RETURN_SHAPE: authenticated-result dict; eq_outputs contains one wire output
+VALIDATOR_COMPARISON_RULE: compare six fields after dict type guard; current wrapper fails guard
+GEN_CALL_LEADER_REPRODUCED: YES
+LEADER_EQOUTPUT_COUNT: 1
+GEN_CALL_VALIDATOR_REPRODUCED: NO structured result; on-chain false verdict confirmed
+VALIDATOR_DISAGREEMENT_CALL_NO: 1
+RPC_RESPONSE_STABLE: YES for consumed security fields
+RPC_VARIANT_FIELDS: current_timestamp VOLATILE; unselected aliases absent; raw address case mixed
+GENVM_NOW_IN_EQ_OUTPUT: NO
+OBSERVED_AT_IN_EQ_OUTPUT: NO
+NODE_TIME_IN_EQ_OUTPUT: NO
+HTTP_HEADERS_IN_EQ_OUTPUT: NO
+VOLATILE_RPC_FIELDS_IN_EQ_OUTPUT: NO
+RAW_RPC_RESPONSE_IN_EQ_OUTPUT: NO
+VALIDATOR_EXCEPTION_REPRODUCED: NO
+VALIDATOR_EXCEPTION_DETAIL: successful disagreeing validators with empty stderr and null errors
+ROOT_CAUSE_CLASSIFICATION: C. LEADER_VALIDATOR_LOGIC_MISMATCH
+ROOT_CAUSE: wrapper-vs-dict mismatch in _authentication_matches
+MINIMAL_FIX_REQUIRED: YES
+MINIMAL_FIX_DESCRIPTION: unwrap gl.vm.Return.calldata before the existing strict field comparison
+SECURITY_MODEL_WEAKENED_BY_FIX: NO
+CURRENT_INCIDENT_REUSABLE_AFTER_SOURCE_FIX: NO
+CONTRACT_CHANGED: NO
+FRONTEND_CHANGED: NO
+TRANSACTIONS: NONE
+DEPLOYMENTS: NONE
+COMMITS: NONE
+PUSHES: NONE
+BLOCKERS: canonical RPC standard rate limit blocked fresh treasury/total-outflow getter read and structured gen_call validator observability; no state conflict was observed.

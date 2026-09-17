@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "network": "studio_devnet",
+  "measuredAt": "2026-09-13T21:46:38.860Z",
+  "chainId": 61997,
+  "deploy": {
+    "leaderTimeunitsAllocation": "200",
+    "validatorTimeunitsAllocation": "400",
+    "executionBudgetPerRound": "157789000000000",
+    "totalMessageFees": "0",
+    "rotationsPerRound": "3"
+  },
+  "methods": {},
+  "sourceHashes": {
+    "sentinel": "7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE",
+    "protectedDemo": "1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4"
+  },
+  "currentFeePolicy": {
+    "enabled": true,
+    "genPerTimeUnit": "1",
+    "storageUnitPrice": "250000000",
+    "receiptGasPrice": "250000000",
+    "executionBudgetFloor": "76548000000000",
+    "timeUnitOverlayBps": "1500"
+  },
+  "liveDeploymentEstimates": {
+    "protectedDemo": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "200",
+        "validatorTimeunitsAllocation": "400",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "157789000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "3",
+          "3"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "1420101000126258",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    },
+    "sentinel": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "200",
+        "validatorTimeunitsAllocation": "400",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "157789000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "3",
+          "3"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "feeValue": "1420101000126258",
+      "policy": {
+        "enabled": true,
+        "genPerTimeUnit": "1",
+        "storageUnitPrice": "250000000",
+        "receiptGasPrice": "250000000",
+        "executionBudgetFloor": "76548000000000",
+        "timeUnitOverlayBps": "1500"
+      }
+    }
+  },
+  "note": "Current Studio-dev estimates captured immediately before corrected final-pair deployment; deploy entry retains the installed measured 2x-headroom profile."
+}

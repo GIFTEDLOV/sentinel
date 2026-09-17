@@ -1,0 +1,196 @@
+ProtectedDemo deployment failure diagnosis
+============================================
+
+Scope
+-----
+This is a read-only diagnosis. No deployment, rebroadcast, contract-source
+change, fee-profile regeneration, commit, or push was performed in this task.
+
+Transaction
+-----------
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Transaction hash:
+  0x767092d654441b0db97bcf1254f7b254906ea786865059425039daa22c53852b
+
+SDK / RPC checks
+----------------
+The exact genlayer-js 2.0.0-rc.1 package was installed in an isolated
+temporary directory only; the repository was not modified. Its
+client.getTransaction({ hash }) and full waitForTransactionReceipt call both
+returned the transaction and receipt.
+
+The requested trace call was made exactly as follows:
+
+  client.debugTraceTransaction({
+    hash: "0x767092d654441b0db97bcf1254f7b254906ea786865059425039daa22c53852b",
+    round: 0,
+  })
+
+Studio-dev returned:
+
+  MethodNotFoundRpcError
+  Method not found: gen_dbg_traceTransaction
+
+Therefore the dedicated trace fields (return_data, stdout, stderr, and
+genvm_log) are not exposed by this RPC endpoint. This is an RPC capability
+limitation, not an ambiguous transaction result. The full receipt contains the
+same execution result for the leader and all agreeing validators and supplies
+the encoded result code and fee accounting used below.
+
+Consensus and execution result
+------------------------------
+Top-level receipt fields:
+
+  status: 7
+  status name: FINALIZED
+  result: 1
+  result name: MAJORITY_AGREE
+  txExecutionResult: 2
+  txExecutionResultName: FINISHED_WITH_ERROR
+  num_of_rounds: 0
+  actual_final_round: 0
+  settlement round: 0, Accepted
+
+There was one consensus round only. No later deciding round exists.
+
+Leader receipt:
+
+  execution_result: ERROR
+  result status: contract_error
+  result payload: "out_of receipt message"
+  gas_used: 0
+  stdout: ""
+  stderr: ""
+  raw_error: null
+  error_code: null
+  data_fees_consumed: [0, 0, 0, 0]
+  data_fees_remaining: [98321562500000, 0, MAX_U256, MAX_U256]
+  execution_stats.call_counts: {}
+
+Agreeing validators (3):
+
+  Each returned the same contract_error payload: "out_of receipt message".
+  Each had empty stdout/stderr, gas_used 0, call_counts {}, and
+  data_fees_consumed [0, 0, 0, 0].
+
+Idle validators (2):
+
+  Their result was base64 "AmlkbGU=" ("\\x02idle") and stderr was
+  "Validator execution cancelled after quorum" with
+  raw_error.causes ["VALIDATOR_QUORUM_REACHED"]. They were not independent
+  execution failures.
+
+Result-code decoding
+--------------------
+The agreeing validator/leader receipt result is base64:
+
+  Am91dF9vZiByZWNlaXB0IG1lc3NhZ2U=
+
+Decoded bytes:
+
+  02 6f 75 74 5f 6f 66 20 72 65 63 65 69 70 74 20 6d 65 73 73 61 67 65
+
+Decoded value:
+
+  0x02 + "out_of receipt message"
+
+The official GenVM SDK result-code enum defines 0=Return, 1=UserError,
+2=VmError, and 3=InternalError. Thus this receipt proves:
+
+  result_code: 2 (VmError)
+  return/error payload: "out_of receipt message"
+
+The payload is not an unknown or merely truncated error. It is the VM error
+for the receipt-message fee bucket running out during startup.
+
+Fee profile and accounting
+--------------------------
+Profile used: deploy/fee-profile.json
+
+  feeValue: 884894062578911
+  distribution.leader: 125
+  distribution.validator: 250
+  distribution.appealRounds: 1
+  distribution.executionBudgetPerRound: 98321562500000
+  distribution.rotations: [3, 3]
+
+Full receipt fee accounting:
+
+  fee_accounting.status: settled
+  required/paid: 884894062578911
+  primary spent: 78628000001029
+  refunded: 806266062577882
+  execution_fee_consumed: 78628000000000
+  storage fee consumed: 0
+  message fees consumed: 0
+  genvm_fee_bucket_report.execution: 0
+  genvm_fee_bucket_report.message: 0
+  executionBudgetExceeded: false
+  executionBudgetRemaining: 98321562500000
+  proposal receipt estimatedGas: 314512
+  proposal receipt bytes: 1032
+  leader timeunits: 1
+  validator timeunits: 3
+
+The 78628000000000 outer execution-fee charge is proposal/receipt accounting;
+it is not user-code execution. GenVM reported execution was 0 and no contract
+call was recorded.
+
+Current Studio-dev fee configuration returned by sim_getFeeConfig:
+
+  genPerTimeUnit: 1
+  storageUnitPrice: 250000000
+  receiptGasPrice: 250000000
+  intrinsicGas: 21000
+  bootloaderOverhead: 60000
+  gasPerChangedSlot: 1000
+  calldataGasPerByte: 16
+  fixedProposeReceiptGas: 210000
+  fixedMessageRevealGas: 100000
+  messageFeeParamsBudgetFloor: 76548000000000
+  genvmStartBudgetFloor: 127878000000000
+
+The current runtime startup floor is 127878000000000, while the profile
+allocated 98321562500000. Exact shortfall:
+
+  127878000000000 - 98321562500000 = 29556437500000
+
+The current GenLayer Studio fee-policy source computes this floor from the
+propose/reveal receipt startup gas and nondeterministic-output startup charge.
+The GenVM executor consumes that startup charge from data bucket 0. If the
+bucket cannot cover it, the executor returns the receipt-message OOM VM error
+before user code begins.
+
+Conclusion
+----------
+Exact root cause:
+
+  The deployment profile's executionBudgetPerRound was below the current
+  Studio-dev GenVM startup floor. The message_receipt startup charge exhausted
+  fee/data bucket 0 before contract execution. This produced result code 2
+  (VmError) and the exact payload "out_of receipt message".
+
+This is confirmed as:
+
+  - not out of ordinary EVM gas;
+  - not a fee deposit/payment exhaustion (fee accounting settled and most of
+    the supplied fee was refunded);
+  - not an execution-budget overrun after entering contract code;
+  - not a constructor exception;
+  - not calldata or address decoding;
+  - not a runner failure.
+
+Recommended correction (not applied)
+-------------------------------------
+No contract change is required based on this evidence. The fee profile must
+be regenerated or freshly estimated with current Studio-dev v0.6 tooling so
+that its measured deploy execution budget covers the live startup floor and
+any measured deployment work, with the tool's recommended headroom. Do not
+hand-edit or blindly hardcode feeValue. A receipt-embedded simulation
+recommendation reported feeValue 1150902000078911 and
+executionBudgetPerRound 127878000000000 with the same distribution, but a
+fresh live estimate/profile should be obtained before any future broadcast.
+
+No retry was performed.

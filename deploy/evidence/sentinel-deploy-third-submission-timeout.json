@@ -1,0 +1,34 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "source_sha256": "D5A3A1FC40466E8694BC6A1C1ED1D752CF65B9E43A294A64381B2141E44C45F3",
+  "evm_submission_hash": "0x5418e895888d2b68f43a9c8a1b3e21ca552163b8e0355d64604b3789dadb9439",
+  "cli_result": "WaitForTransactionReceiptTimeoutError",
+  "same_hash_reconciliation": [
+    {
+      "time_utc": "2026-09-11T04:52:52.0831306Z",
+      "eth_getTransactionByHash": null,
+      "eth_getTransactionReceipt": null,
+      "account_latest_nonce": "0x6",
+      "account_pending_nonce": "0x6"
+    },
+    {
+      "time_utc": "2026-09-11T04:54:09.5620781Z",
+      "eth_getTransactionByHash": null,
+      "eth_getTransactionReceipt": null,
+      "account_latest_nonce": "0x6",
+      "account_pending_nonce": "0x7"
+    },
+    {
+      "time_utc": "2026-09-11T04:54:19.2884818Z",
+      "eth_getTransactionByHash": null,
+      "eth_getTransactionReceipt": null,
+      "account_latest_nonce": "0x6",
+      "account_pending_nonce": "0x7"
+    }
+  ],
+  "genlayer_transaction_id": null,
+  "sentinel_address": null,
+  "interpretation": "The conditional normal stable-CLI retry was not included and did not emit a GenLayer transaction identity or contract address. No further deployment attempt is authorized or will be made in this run."
+}

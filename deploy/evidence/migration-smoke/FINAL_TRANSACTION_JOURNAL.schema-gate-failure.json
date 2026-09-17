@@ -1,0 +1,10 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sourceHashes": {
+    "sentinel": "A95877702F7F3238435E46AFA452ECE2ED39B5F26B95A4E64530B8CCDE788BF0",
+    "protectedDemo": "BDE7596270580CA286D47C9DA87C7DA5F0561F6E9B30DA1918DEE5D9AD6A1219"
+  },
+  "entries": []
+}

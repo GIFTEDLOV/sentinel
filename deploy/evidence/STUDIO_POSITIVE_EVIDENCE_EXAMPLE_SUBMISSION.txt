@@ -1,0 +1,16 @@
+Positive incident evidence binding submission (example source)
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+INCIDENT_ID: studio-positive-20260911
+EVIDENCE_ID: evidence-example
+PHASE: EMERGENCY
+EVIDENCE_TYPE: SECURITY_ADVISORY
+SOURCE_URL: https://example.com/evidence/positive
+CONTENT_DIGEST: ff67a9d764d6a2367a187734e697f6a53217db9a21c101d410a113ca871a299d
+OBSERVED_AT: 1789155600
+TRANSACTION_HASH: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+TRANSACTION_BLOCK: 1
+GENLAYER_TRANSACTION: 0x87b514eb13aa2f76eb8aa213f452c0f5c58b834e86b898b53e0aa005cd94d677
+INITIAL_STATUS: ACCEPTED (provisional; same hash is being reconciled)

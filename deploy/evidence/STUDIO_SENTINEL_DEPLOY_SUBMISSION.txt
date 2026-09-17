@@ -1,0 +1,19 @@
+Studio-dev Sentinel deployment submission
+
+Deployment attempt count: 1
+Command:
+  npx --yes genlayer@0.40.0-rc.3 deploy --rpc https://studio-dev.genlayer.com/api --contract contracts\\sentinel.py --fee-profile deploy\\fee-profile.json --fee-preset standard
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Returned transaction hash:
+  0xdf0b208a723c3d1acb274d4372980ad8cfc4f82e80d833b66443ba1f5a01be13
+
+Separate EVM hash: not emitted by the CLI; the returned hash is retained as the canonical GenLayer transaction identifier.
+Initial CLI status: ACCEPTED
+Initial CLI result: Contract deployed successfully (terminal reconciliation pending)
+
+No second submission will be made.

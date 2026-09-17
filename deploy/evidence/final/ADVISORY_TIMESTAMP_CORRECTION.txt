@@ -1,0 +1,89 @@
+ADVISORY TIMESTAMP CORRECTION DIAGNOSIS
+
+INCIDENT_ID: incident-254762469c
+FAILED_ADVISORY_BIND_TX: 0x0bdb8dc5982b0bde2369b045310ba6f82b76353e628505cb431f96a604495c92
+
+FAILED_OBSERVED_AT: 1732601000
+FAILED_BIND_TX_TIMESTAMP_SECONDS: 1789257596
+FAILED_BIND_TX_DATETIME_ISO: 2026-09-12T23:59:56.960445+00:00
+CLOCK_SKEW_SECONDS: -56656596
+
+RUNTIME_FUTURE_BOUND_INFERENCE: The future-timestamp error proves that the
+actual GenVM _now during the failed execution was below 1732600700. The outer
+canonical transaction created_timestamp is recorded separately and is not
+substituted for the contract's runtime _now in that comparison.
+
+The failed transaction calldata was decoded with the installed GenLayerJS calldata
+decoder. The advisory bind observed_at argument was 1732601000. The canonical
+Studio-dev transaction response reports created_timestamp 1789257596 and
+created_at 2026-09-12T23:59:56.960445+00:00.
+
+CONTRACT_TIME_SOURCE: gl.message.datetime, parsed by _transaction_timestamp();
+contract-side datetime is the GenLayer transaction datetime, not the Windows clock.
+FUTURE_TIMESTAMP_CHECK: observed_at > _now() + 300 raises
+"Evidence timestamp is in the future".
+STALE_TIMESTAMP_CHECK: _now() > observed_at and _now() - observed_at >
+max_evidence_age_seconds raises "Evidence is stale".
+
+ADVISORY_ISSUED_AT: 2026-09-12T23:27:10Z
+ADVISORY_ISSUED_AT_VALIDATED_BY_CONTRACT: NO
+OBSERVED_AT_INDEPENDENT_OF_ADVISORY_JSON_ISSUED_AT: YES
+ADVISORY_JSON_ISSUED_AT_PARSED_DURING_BIND: NO
+ADVISORY_JSON_ISSUED_AT_USED_FOR_FRESHNESS: NO
+
+OUTFLOW_TX: 0x254762469ce4095a74f4449691ccc2ea8af2beab41a35ef5d311a5fafc5f9202
+OUTFLOW_TIMESTAMP_SECONDS: 1789254937
+OUTFLOW_DATETIME_ISO: 2026-09-12T23:15:37.305199+00:00
+CHAIN_EVIDENCE_TX: 0xa9f0b8f4c27e3d012c046eb9de6827170c9244d2cc16baa703502ab2bb98713c
+CHAIN_EVIDENCE_TIMESTAMP_SECONDS: 1789255942
+CHAIN_EVIDENCE_DATETIME_ISO: 2026-09-12T23:32:22.834848+00:00
+FAILED_BIND_CURRENT_CANONICAL_TIME_SECONDS: 1789324576
+FAILED_BIND_CURRENT_CANONICAL_TIME_SOURCE: eth_getTransactionByHash current_timestamp
+
+OUTFLOW_AGE_SECONDS: 69639
+MAX_EVIDENCE_AGE_SECONDS: 3600
+EVIDENCE_OVER_BUDGET_SECONDS: 66039
+CHAIN_EVIDENCE_REMAINS_FRESH: NO
+SAFE_REMAINING_WINDOW_SECONDS: 0
+INCIDENT_FRESHNESS_WINDOW_EXPIRED: YES
+
+CORRECTED_OBSERVED_AT_CANDIDATE: 1789257596
+CORRECTED_OBSERVED_AT_APPLIED: NO
+CORRECTED_OBSERVED_AT_REASON: The candidate is the failed bind transaction's
+canonical timestamp, but the objective outflow is already stale relative to the
+same canonical time domain. A corrected advisory bind cannot make the existing
+chain evidence fresh for assessment.
+
+ADVISORY_REPUBLICATION_REQUIRED: NO
+ADVISORY_REPUBLICATION_REASON: The frozen contract does not parse or compare the
+advisory JSON issued_at during bind; the existing published advisory remains
+immutable and its digest/linkage are unchanged. Republishing cannot repair an
+expired objective-evidence freshness window.
+ADVISORY_FILE: evidence/advisories/incident-254762469c.json
+ADVISORY_URL: https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-254762469c.json
+ADVISORY_SHA256: 00271088c87cb739ab63a38288cf07b2f60bedc702a7c413f24cb2a80bad78ad
+ADVISORY_BYTES: 888
+ADVISORY_REPOSITORY_COMMIT: a6e8eab52d93ebd8d224fa917dc402f87b187479
+
+CALLDATA_ROUNDTRIP: NOT RUN; no corrected call was constructed after freshness expiry
+SIMULATION_RESULT: NOT RUN; task stopped before retry because the locked objective
+evidence freshness window is expired
+CORRECTED_BIND_ATTEMPTED: NO
+CORRECTED_BIND_COUNT: 0
+CORRECTED_BIND_TX: NONE
+
+CURRENT_INCIDENT_STATE: ASSESSING
+CHAIN_EVIDENCE_BOUND: YES
+ADVISORY_EVIDENCE_BOUND: NO
+DISTINCT_APPROVED_SOURCES: 1 attached onchain (studio-dev.genlayer.com)
+SOURCE_THRESHOLD_MET: NO
+ASSESSMENT_ATTEMPTED: NO
+PAUSE_ATTEMPTED: NO
+
+PROTECTED_DEMO_PAUSED: false
+PROTECTED_DEMO_REMEDIATED: false
+PROTECTED_DEMO_TREASURY_BALANCE: 900
+PROTECTED_DEMO_TOTAL_OUTFLOW: 100
+
+DECISION: STOP WITHOUT RETRY. A fresh incident/outflow and advisory cycle is
+required for a valid final proof; no production source or live state was changed.

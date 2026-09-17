@@ -1,0 +1,15 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "source_sha256": "D5A3A1FC40466E8694BC6A1C1ED1D752CF65B9E43A294A64381B2141E44C45F3",
+  "evm_submission_hash": "0x2c519c72f1759270937d64401312447d352d291317bda021a04f65e6cd96a8cc",
+  "cli_result": "WaitForTransactionReceiptTimeoutError",
+  "last_observed": {
+    "eth_getTransactionByHash": null,
+    "eth_getTransactionReceipt": null,
+    "account_latest_nonce": "0x6",
+    "account_pending_nonce": "0x6"
+  },
+  "interpretation": "The EVM submission was not mined and no GenLayer transaction id was emitted. No replacement or rebroadcast was made because a submission hash already existed."
+}

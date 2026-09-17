@@ -1,0 +1,12 @@
+Positive incident semantic assessment submission (final evidence-shape test)
+
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+INCIDENT_ID: studio-active-20260911b
+METHOD: assess_incident
+EVIDENCE_IDS: active3-httpbin,active3-httpbingo
+GENLAYER_TRANSACTION: 0xc0b9bbee0562a232775a0b9b2f739366d746a8fc13868ff44f8806e3fbb145aa
+STATUS_AT_SUBMISSION: ACCEPTED_OR_PENDING
+NO_REBROADCAST: true

@@ -1,0 +1,14 @@
+CORRECTED PROTECTEDDEMO DEPLOYMENT
+SOURCE_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+TRANSACTION_HASH: 0xd8c2ef6318b5d0683de5dee4f71372c7dff38bce947e88bc6391e5c5614bddce
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+ADDRESS: 0xFCeC042B2fcc1d793Bf92877665c9Bae16971AE1
+SOURCE_PARITY: {"sha256":"1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4","bytes":5682}
+INITIAL_STATE: {"owner":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc","authorized":"0x0000000000000000000000000000000000000000","configured":false,"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":0,"treasury_balance":1000},"totalProcessed":0,"counters":{"pause_count":0,"unpause_count":0}}
+FEE_ESTIMATE: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"157789000000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1420101000126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"}}

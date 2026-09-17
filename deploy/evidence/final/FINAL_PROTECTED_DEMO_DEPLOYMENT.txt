@@ -1,0 +1,80 @@
+FINAL PROTECTEDDEMO DEPLOYMENT EVIDENCE
+=======================================
+
+Scope: final contract-pair deployment task. No policy registration, incident,
+outflow, remediation, or frontend action is included.
+
+Source / preflight
+------------------
+Local source: contracts/protected_demo.py
+Local SHA256: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+Hosted schema: PASS
+Constructor: authorized_sentinel: address
+Constructor argument: 0x0000000000000000000000000000000000000000
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Balance before: 1.993127975749923689 GEN
+Latest nonce before: 87
+Pending nonce before: 87
+Unknown pending transaction: NONE OBSERVED (latest equals pending)
+
+Fee profile
+-----------
+Path: deploy/fee-profile.json
+Measured at: 2026-09-12T05:55:19Z
+Profile provenance: installed gltest FeeProfileCollector, 2.0x measured-headroom profile from current Studio-dev receipt observations.
+Direct-mode refresh attempt: produced no observations because the backend did not expose consumed fee data; the empty candidate was not used.
+Leader allocation: 200
+Validator allocation: 400
+Execution budget per round: 157789000000000
+Total message fees: 0
+Appeal rounds: 1 (standard)
+Rotations: [3,3]
+Live estimate feeValue: 1420101000126258
+Live estimate execution budget: 157789000000000
+Live estimate policy floor: 76548000000000
+
+Deployment
+----------
+Attempt count: 1
+Transaction hash: 0x815f779351d2b910f17e6ee14b8b17f4fc760a24801ba1c41352c772cd2af969
+Transaction nonce: 87
+Final status: FINALIZED
+Consensus: MAJORITY_AGREE / ACCEPTED
+Execution: FINISHED_WITH_RETURN
+Deployed address: 0x38f38591A2835e2e9b467FBAc94D4b613Ce27584
+Same-hash reconciliation: receipt command queried the exact broadcast hash at finalized state; no rebroadcast.
+
+Final receipt fee accounting
+----------------------------
+Fee deposit: 1420101000126258
+Execution consumed: 78675750000000
+GenVM execution bucket consumed: 127925750000000
+GenVM execution budget remaining: 29863250000000
+Storage fee used: 47750000000
+Message fees consumed: 0
+Leader timeunits used: 1
+Validator timeunits used: 3
+Execution budget exceeded: false
+
+Source parity and initial readback
+----------------------------------
+Deployed code bytes: 5682
+Deployed SHA256: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+Exact source parity: YES
+Owner: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Authorized sentinel: 0x0000000000000000000000000000000000000000
+Controller configured: false
+Paused: false
+Remediated: false
+Treasury balance: 1000
+Total outflow: 0
+Total processed: 0
+Pause count: 0
+Unpause count: 0
+Last outflow actor: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Last outflow recipient: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Last outflow amount: 0

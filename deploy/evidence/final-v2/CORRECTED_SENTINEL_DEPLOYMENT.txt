@@ -1,0 +1,16 @@
+CORRECTED SENTINEL DEPLOYMENT
+SOURCE_SHA: 7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+TRANSACTION_HASH: 0xd3ca675492e768ba4ea4e7ddacde56b81c13f100f98c1f5bb334937a91ccad76
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+ADDRESS: 0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723
+SOURCE_PARITY: {"sha256":"7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE","bytes":56863}
+CORRECTED_BIND_EVIDENCE_ABI: {"params":[["incident_id","string"],["evidence_id","string"],["phase","string"],["evidence_type","string"],["source_url","string"],["failure_class","string"],["content_digest","string"],["transaction_hash","string"],["transaction_block","int"],["transaction_input","string"]],"kwparams":{},"readonly":false,"ret":"null","payable":false}
+EMPTY_STATE: UNKNOWN_PROTECTED_PROTOCOL
+FEE_ESTIMATE: {"distribution":{"leaderTimeunitsAllocation":"200","validatorTimeunitsAllocation":"400","appealRounds":"1","executionBudgetPerRound":"157789000000000","executionConsumed":"0","totalMessageFees":"0","rotations":["3","3"],"maxPriceGenPerTimeUnit":"2","storageFeeMaxGasPrice":"300000000","receiptFeeMaxGasPrice":"300000000"},"feeValue":"1420101000126258","policy":{"enabled":true,"genPerTimeUnit":"1","storageUnitPrice":"250000000","receiptGasPrice":"250000000","executionBudgetFloor":"76548000000000","timeUnitOverlayBps":"1500"}}
+PRE_SENTINEL_REPREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989632546999893574","latestNonce":107,"pendingNonce":107,"unknownPendingTransactions":"not exposed by the canonical RPC; latest equals pending is the available gate"}

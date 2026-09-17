@@ -1,0 +1,42 @@
+ProtectedDemo retry submission — single authorized broadcast
+==============================================================
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Contract: contracts/protected_demo.py
+Constructor argument: 0x0000000000000000000000000000000000000000
+
+Command:
+  npx --yes genlayer@0.40.0-rc.3 deploy --rpc https://studio-dev.genlayer.com/api --contract contracts\\protected_demo.py --args 0x0000000000000000000000000000000000000000 --fee-profile deploy\\fee-profile.json --fee-preset standard
+
+Preflight:
+  ProtectedDemo raw-byte SHA256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+  Sentinel raw-byte SHA256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  Hosted ProtectedDemo schema: PASS
+  Hosted Sentinel schema: PASS
+  latest nonce: 76
+  pending nonce: 76
+  balance: 1.993915629249937657 GEN
+  profile executionBudgetPerRound: 157314500000000
+  live startup floor: 127878000000000
+  startup headroom: 29436500000000
+  live standard feeValue: 1415830500126258
+
+Profile:
+  path: deploy/fee-profile.json
+  leaderTimeunitsAllocation: 200
+  validatorTimeunitsAllocation: 400
+  appealRounds: 1 (CLI standard preset)
+  rotations: [3, 3]
+  executionBudgetPerRound: 157314500000000
+  totalMessageFees: 0
+  headroom policy: 2.0x in the installed gltest FeeProfileCollector
+
+Broadcast result:
+  Deployment Transaction Hash:
+  0x1d12fbc362a679c3fd1e00392b8e10292470dfdfcb7378a0ca7a0db2d42437b8
+
+This hash was persisted immediately after the single broadcast. Reconciliation
+must continue using this same hash. No second broadcast is authorized.

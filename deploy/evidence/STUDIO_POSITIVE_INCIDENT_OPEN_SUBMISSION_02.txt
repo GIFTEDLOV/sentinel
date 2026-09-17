@@ -1,0 +1,13 @@
+Sentinel positive incident open submission
+
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+PROTOCOL_ID: protected-demo-positive
+INCIDENT_ID: studio-active-20260911
+METHOD: open_incident
+GENLAYER_TRANSACTION: 0x3f7b9ba65228feb77eca942459b86e48314c1ed4106726ee0aae3c33126641e1
+STATUS_AT_SUBMISSION: ACCEPTED
+NO_REBROADCAST: true

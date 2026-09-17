@@ -1,0 +1,92 @@
+Studio-dev hosted receipt probe typed-string qualification
+DATE: 2026-09-12
+
+DIAGNOSTIC_ADDRESS: 0xBfA0d297b455Cc2EB6Ee8E629cdAb14411855d07
+DIAGNOSTIC_DEPLOYMENT_TX: 0xc233a1bfa11ba10f0b41076da6f95f52f75ba001647de2d048a1ffda9f30bf2b
+DIAGNOSTIC_DEPLOYMENT_STATUS: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+PREVIOUS_MALFORMED_PROBE_TX: 0xc574b5f430fc23d9f4543f4e77544f07af19ea04ac9064218a725dbb483d079c
+PREVIOUS_PROBE_RETRY: NOT PERFORMED
+
+METHOD_SCHEMA
+=============
+METHOD: probe
+PARAMETER_NAME: transaction_hash
+PARAMETER_ABI_TYPE: string
+READONLY: false
+RETURN_TYPE: any
+SCHEMA_SOURCE: gen_getContractSchemaForCode against Studio-dev
+SCHEMA_RESULT: PASS
+
+LOCAL_CALLDATA_ROUNDTRIP
+=======================
+ENCODER_USED: installed genlayer-js 1.1.8 abi.calldata codec
+ENCODING: abi.calldata.makeCalldataObject + abi.calldata.encode
+INPUT_STRING: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+ENCODED_ARGUMENT_TYPE: GenLayer string
+ENCODED_CALLDATA_HEX: 0x1604617267730d9404307831303138313630323664343134343137303932393362376639343639363364643839343236326264656463383861373838656139333432393066666335303939066d6574686f642c70726f6265
+ROUNDTRIP_DECODED_VALUE: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+STRING_ENCODING_CONFIRMED: YES
+CLI_AUTO_TYPING_AVOIDED: YES
+
+The installed CLI's bare --args parser treats a 64-hex 0x value as BigInt.
+The local round-trip used the installed SDK codec with an explicit JavaScript
+string and did not use the CLI heuristic.
+
+NETWORK_PREFLIGHT
+=================
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+BALANCE_BEFORE: 1.993364856749928693 GEN
+LATEST_NONCE_BEFORE: 83
+PENDING_NONCE_BEFORE: 83
+NONCE_EQUAL: YES
+UNKNOWN_PENDING_TX: NONE OBSERVED; eth_pendingTransactions is unsupported, so latest/pending equality is the available gate
+
+EXACT_SIMULATION
+================
+RPC_METHOD: sim_estimateTransactionFees
+TARGET: 0xBfA0d297b455Cc2EB6Ee8E629cdAb14411855d07
+FUNCTION: probe
+ARGUMENT: explicit string encoded by installed genlayer-js codec
+INITIAL_FEE_VALUE: 1420101000126258
+INITIAL_DISTRIBUTION: leader=200, validator=400, executionBudgetPerRound=157789000000000, totalMessageFees=0, appealRounds=1, rotations=[3,3]
+SIMULATION_RESULT: FAIL
+SIMULATION_ERROR: execution failed
+SIMULATION_RESULT_CODE: exit_code 1
+SIMULATION_TRACE: gl.nondet.web.request -> gl_call_generic -> SystemError: 2: inval
+SIMULATION_FEE_EXHAUSTION: NOT CONFIRMED
+SIMULATION_HOSTED_HTTP_RESPONSE_PARSED: NO
+
+The simulation request contained the correctly encoded string calldata. The
+hosted runtime still rejected the nondeterministic web-call payload before the
+contract could parse an HTTP response. This is a hosted runtime/request-path
+blocker, distinct from the previous BigInt argument mistake.
+
+BROADCAST
+=========
+PROBE_ATTEMPTED: NO
+PROBE_ATTEMPT_COUNT: 0 new probes in this qualification
+PROBE_TX: NONE
+REASON: mandatory simulation gate failed; the task requires stopping without broadcast
+
+DECISION
+========
+CANONICAL_RPC_HOSTED_VALIDATORS: FAIL / NOT QUALIFIED
+ETH_GET_TRANSACTION_BY_HASH: PASS outside GenVM; current installed CLI/SDK receipt path returns full receipt data
+STRING_ENCODING_PROBLEM_FIXED: YES locally
+OBJECTIVE_TRANSACTION_LOOKUP_QUALIFIED: NO
+TRANSACTION_EXECUTION_STATUS_AVAILABLE_FROM_THIS_METHOD: YES in the full RPC receipt returned outside GenVM; not proven inside hosted GenVM
+ADDITIONAL_RPC_REQUIRED_FOR_EXECUTION_STATUS: NO for the full Studio-dev compatibility receipt; it exposes status, txExecutionResultName, and result_name. Hosted access to those fields remains unproven.
+SAFE_TO_IMPLEMENT_SENTINEL_RECEIPT_ADAPTER: NO for immediate production implementation; requalify hosted POST first
+
+REMAINING BLOCKER
+=================
+The correctly typed request reaches hosted GenVM but fails in
+gl_call_generic with SystemError: 2: inval before an HTTP response is
+available. No new hosted probe was broadcast after this failed mandatory gate.
+The next qualification must isolate the current v0.6 POST request encoding /
+runtime compatibility (including the exact body representation) using a new
+diagnostic version or an officially supported hosted simulation path. It must
+not be inferred from the malformed prior probe.

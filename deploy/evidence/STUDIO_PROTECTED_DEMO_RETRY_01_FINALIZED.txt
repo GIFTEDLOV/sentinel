@@ -1,0 +1,101 @@
+ProtectedDemo retry finalization and readback
+==============================================
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+
+Profile
+-------
+Path: deploy/fee-profile.json
+Generated with the installed gltest FeeProfileCollector from measured
+Studio-dev receipt data, using 2.0x fee-profile headroom. The direct-mode
+representative suite also ran 15/15, but direct/sim receipts do not expose
+consumed-fee observations; no manual fee number was inserted.
+
+  leaderTimeunitsAllocation: 200
+  validatorTimeunitsAllocation: 400
+  appealRounds: 1 (CLI standard preset)
+  executionBudgetPerRound: 157314500000000
+  totalMessageFees: 0
+  rotations: [3, 3]
+  message allocations: none
+
+Live estimate immediately before broadcast:
+
+  feeValue: 1415830500126258
+  distribution.leaderTimeunitsAllocation: 200
+  distribution.validatorTimeunitsAllocation: 400
+  distribution.appealRounds: 1
+  distribution.executionBudgetPerRound: 157314500000000
+  distribution.executionConsumed: 0
+  distribution.totalMessageFees: 0
+  distribution.rotations: [3, 3]
+  maxPriceGenPerTimeUnit: 2
+  storageFeeMaxGasPrice: 300000000
+  receiptFeeMaxGasPrice: 300000000
+
+  current Studio-dev genvmStartBudgetFloor: 127878000000000
+  startup headroom: 29436500000000
+
+Preflight
+---------
+  latest nonce: 76
+  pending nonce: 76
+  balance: 1.993915629249937657 GEN
+  source SHA256 ProtectedDemo: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+  source SHA256 Sentinel: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  hosted ProtectedDemo schema: PASS
+  hosted Sentinel schema: PASS
+  network/account/chain/nonce gates: PASS
+
+Deployment
+----------
+  attempt count: 1
+  contract: contracts/protected_demo.py
+  constructor argument: 0x0000000000000000000000000000000000000000
+  canonical transaction: 0x1d12fbc362a679c3fd1e00392b8e10292470dfdfcb7378a0ca7a0db2d42437b8
+  transaction nonce: 76
+  lifecycle: FINALIZED
+  consensus result: MAJORITY_AGREE
+  execution result: FINISHED_WITH_RETURN
+  contract address: 0xba51Ee9C0bA22e751EBa5eCa7E1b68B71306e6cc
+
+Final receipt fee accounting:
+
+  deposit: 1415830500126258
+  executionConsumed: 78657250000000
+  storageFeeUsed: 29250000000
+  messageFeesConsumed: 0
+  leaderTimeunitsUsed: 1
+  validatorTimeunitsUsed: 3
+
+Source/deployed-code parity:
+
+  local source bytes: 3449
+  receipt contract_code bytes: 3449
+  local SHA256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+  receipt contract_code SHA256: AA6AE78F77FD2549EE89E6D0FCA0198F69168DAB933EADC4A15B435299E4D1DD
+  exact byte match: YES
+
+Readback from the finalized deployment
+----------------------------------------
+
+  get_owner(): 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+  is_paused(): false
+  get_authorized_sentinel(): 0x0000000000000000000000000000000000000000
+  is_controller_configured(): false
+  get_total_processed(): 0
+  get_pause_counters(): { pause_count: 0, unpause_count: 0 }
+
+Post-deployment account state
+-----------------------------
+
+  balance: 1.99383697199993601 GEN
+  latest nonce: 77
+  pending nonce: 77
+  unknown pending transaction: none indicated by latest == pending
+
+No Sentinel deployment, configuration, protocol registration, process call,
+commit, or push was performed after this deployment.

@@ -1,0 +1,280 @@
+{
+  "ctor": {
+    "params": [],
+    "kwparams": {}
+  },
+  "methods": {
+    "assess_incident": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "assess_recovery": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "begin_recovery": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "bind_evidence": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ],
+        [
+          "evidence_id",
+          "string"
+        ],
+        [
+          "phase",
+          "string"
+        ],
+        [
+          "evidence_type",
+          "string"
+        ],
+        [
+          "source_url",
+          "string"
+        ],
+        [
+          "failure_class",
+          "string"
+        ],
+        [
+          "observed_at",
+          "int"
+        ],
+        [
+          "content_digest",
+          "string"
+        ],
+        [
+          "transaction_hash",
+          "string"
+        ],
+        [
+          "transaction_block",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "confirm_pause": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "confirm_recovered": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "execute_pause": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "execute_unpause": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "get_evidence": {
+      "params": [
+        [
+          "evidence_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "any"
+    },
+    "get_incident": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "any"
+    },
+    "get_protocol": {
+      "params": [
+        [
+          "protocol_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "any"
+    },
+    "get_state": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "string"
+    },
+    "lock_emergency_policy": {
+      "params": [
+        [
+          "protocol_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "open_incident": {
+      "params": [
+        [
+          "incident_id",
+          "string"
+        ],
+        [
+          "protocol_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "register_protected_protocol": {
+      "params": [
+        [
+          "protocol_id",
+          "string"
+        ],
+        [
+          "target_address",
+          "string"
+        ],
+        [
+          "critical_failure_class",
+          "string"
+        ],
+        [
+          "allowed_source_domains",
+          "string"
+        ],
+        [
+          "minimum_sources",
+          "int"
+        ],
+        [
+          "max_evidence_age_seconds",
+          "int"
+        ],
+        [
+          "recovery_cooldown_seconds",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "update_emergency_policy": {
+      "params": [
+        [
+          "protocol_id",
+          "string"
+        ],
+        [
+          "critical_failure_class",
+          "string"
+        ],
+        [
+          "allowed_source_domains",
+          "string"
+        ],
+        [
+          "minimum_sources",
+          "int"
+        ],
+        [
+          "max_evidence_age_seconds",
+          "int"
+        ],
+        [
+          "recovery_cooldown_seconds",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    }
+  }
+}

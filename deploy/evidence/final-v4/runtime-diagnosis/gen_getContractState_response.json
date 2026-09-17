@@ -1,0 +1,3 @@
+{
+  "error": "MethodNotFoundRpcError: The method \"gen_getContractState\" does not exist / is not available.\n\nDetails: Method not found: gen_getContractState\nVersion: viem@2.56.3"
+}

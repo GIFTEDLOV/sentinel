@@ -1,0 +1,52 @@
+Studio-dev Sentinel deployment final evidence
+
+Transaction:
+  hash: 0xdf0b208a723c3d1acb274d4372980ad8cfc4f82e80d833b66443ba1f5a01be13
+  nonce: 77
+  lifecycle: finalized
+  outcome: accepted
+  consensus result: MAJORITY_AGREE
+  execution result: FINISHED_WITH_RETURN
+  contract address: 0xb7385835D950fdE5F43c95b252759701E6287Ffe
+
+Fee accounting:
+  fee deposit/value: 1420101000126258
+  leaderTimeunitsAllocation: 200
+  validatorTimeunitsAllocation: 400
+  appealRounds: 1
+  executionBudgetPerRound: 157789000000000
+  totalMessageFees: 0
+  rotations: [3,3]
+  executionConsumed: 78894500000000
+  storageFeeUsed: 266500000000
+  messageFeesConsumed: 0
+  leaderTimeunitsUsed: 1
+  validatorTimeunitsUsed: 3
+  per-round result: round 0, Accepted, leader 1, validators 3
+
+Consensus votes:
+  three validators agree; two validators idle
+  final result: MAJORITY_AGREE
+
+Source parity:
+  local Sentinel SHA256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  deployed Sentinel SHA256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+  local bytes: 33859
+  deployed bytes: 33859
+  exact byte match: YES
+
+Safe readback:
+  get_protocol("bootstrap-probe"): executed; expected empty-state guard "Unknown protected protocol"
+  get_incident("bootstrap-probe"): executed; expected empty-state guard "Unknown incident"
+  No protocol or incident was created.
+
+Post-deployment account state:
+  balance: 1.993758077499934363 GEN
+  latest nonce: 78
+  pending nonce: 78
+  unknown pending transaction: NONE
+
+ProtectedDemo configured: NO
+Protocol registered: NO
+Lifecycle writes attempted: NO
+Sentinel deployment attempts: 1

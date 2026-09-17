@@ -1,0 +1,22 @@
+FINAL PRODUCTION RESUME CHECKPOINT — COMPLETE
+
+The prior output loss was reconstructed from FINAL_RUN_STATE.json and
+FINAL_TRANSACTION_JOURNAL.json. The single persisted begin_recovery submission
+was reconciled by its original hash; no retry was broadcast.
+
+BEGIN_RECOVERY_TX:
+0x530b57a033cbcc8ab5fc1d1a311d1a2b0e110bc11329566d2b33095fbf7bf304
+
+The recovery advisory was published once at commit
+a8b163bd518ed100c317e1283a43db42c6bb8beb and verified from raw GitHub before
+the advisory bind and recovery assessment.
+
+BACKEND_PROTOCOL_COMPLETE: YES
+INCIDENT_STATE: RECOVERED
+TARGET_PAUSED: false
+TARGET_REMEDIATED: true
+TREASURY: 900
+TOTAL_OUTFLOW: 100
+TOTAL_PROCESSED: 2
+PERMANENT_FIX_PROVED: YES
+NEXT_REQUIRED_STEP: NONE

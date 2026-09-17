@@ -1,0 +1,45 @@
+Sentinel Studio-dev v2 deployed schema verification
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Runtime observed during hosted validation: v0.3.0-rc7-x86_64-linux-release
+
+Sentinel address: 0x5a965B5089878fB1DE519001350eb33664eb6995
+Schema result: PASS
+Constructor: no arguments
+Methods (16):
+  assess_incident
+  assess_recovery
+  begin_recovery
+  bind_evidence
+  confirm_pause
+  confirm_recovered
+  execute_pause
+  execute_unpause
+  get_evidence
+  get_incident
+  get_protocol
+  get_state
+  lock_emergency_policy
+  open_incident
+  register_protected_protocol
+  update_emergency_policy
+
+ProtectedDemo address: 0xC786C9a28997cdD42483A45Bc60961D673a36969
+Schema result: PASS
+Constructor: authorized_sentinel: address
+Methods (10):
+  configure_sentinel
+  emergency_pause
+  emergency_unpause
+  get_authorized_sentinel
+  get_owner
+  get_pause_counters
+  get_total_processed
+  is_controller_configured
+  is_paused
+  process
+
+The deployed method surfaces match the hosted gen_getContractSchemaForCode
+validation recorded in STUDIO_SCHEMA_VALIDATION.json.

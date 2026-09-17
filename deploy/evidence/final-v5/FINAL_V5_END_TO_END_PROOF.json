@@ -1,0 +1,103 @@
+{
+  "status": "BACKEND_PROTOCOL_COMPLETE",
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "owner": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+  "controlledSecondary": "0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8",
+  "sentinel": "0xd83b20EcCF5c1Ddd70aD57EF0E25a5200079c4de",
+  "protectedDemo": "0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA",
+  "incidentId": "incident-e5115f160d64",
+  "sourceHashes": {
+    "sentinel": "49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED",
+    "protectedDemo": "7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD"
+  },
+  "policy": {
+    "protocolId": "sentinel-demo",
+    "failureClass": "unauthorized-drain",
+    "minimumSources": 2,
+    "maxEvidenceAgeSeconds": 3600,
+    "recoveryCooldownSeconds": 900,
+    "canonicalRpc": "https://studio-next.genlayer.com/api",
+    "locked": true
+  },
+  "setupTransactions": {
+    "protectedDemoDeploy": "0x011d4d32e88fe4ffa41c909908886b7b4fed34561e6ce0046f1977bf25948812",
+    "sentinelDeploy": "0x922859bfb7ba291ca099beeaddabc0f616fd0544528ad9e05e599d4bf39d6108",
+    "configureSentinel": "0x318700b877897a084c29f05d93ad9f6531ce5b9d223a8c5185c6ddea439bc43e",
+    "registerPolicy": "0xa701e19a0a920f676130ee1c25342d5e153c25ae17a8c52c1cc4a3f30a8ed9a7",
+    "lockPolicy": "0x93a99c7586585848feab2df32f48167c02e27a713d3ae352f9ec2ea2a4cd4e33"
+  },
+  "lifecycle": {
+    "healthyBaseline": "0xc623cb32326e9736de4a243efe96b3b067eb5fa7dd6f5ab9935422201c7069b6",
+    "controlledOutflow": "0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860",
+    "incidentCreate": "0x3bf4873ec650f6ec11316228c3de53d83eda5c691db93121f8256b53b313ca3c",
+    "incidentChainEvidence": "0xaf270b262163354ed4cd6acf45426c4e464fa74a9aa766ac3ff4acdabc831362",
+    "incidentChainEvidenceRefresh": "0x8e26e2bfa08bcad3ae552bc017b79a0884265f0f30a01b8e5bdca59035bfe5a0",
+    "incidentAdvisoryBind": "0xb5e9b5ddf170ee5c0813895a2bf41ec60107241ac322135124192bfe9752ab99",
+    "incidentAssessment": "0x2e71cecc511fb58f9a589602b8632927c7d643158e8b553946a00ba61a9ec312",
+    "pause": "0x4b4ba831d175884abb17f171671f5ec52a84655cd60c65204886421fe5f9f2c6",
+    "pauseConfirmation": "0x8ef13d9952fbc4a71221dc23c26368c260334ad11c8b28b671e480e65e6e4c54",
+    "remediation": "0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9"
+  },
+  "recoveryClock": {
+    "pauseConfirmedAt": 1789543293,
+    "eligibleAt": 1789544193,
+    "canonicalNodeNow": 1789544606,
+    "canonicalCooldownAge": 1313,
+    "marginSeconds": 60,
+    "marginMet": true,
+    "genvmSimulationNow": 1732603362,
+    "simulationError": "Recovery cooldown has not elapsed",
+    "falseNegativeProven": true
+  },
+  "recovery": {
+    "beginRecovery": "0x530b57a033cbcc8ab5fc1d1a311d1a2b0e110bc11329566d2b33095fbf7bf304",
+    "chainEvidenceBind": "0x2dcb4b014a104ef9777001de1dd04661ae05f0f8f5e1041fd3c8b5176a6d02a5",
+    "advisoryUrl": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/recovery-incident-e5115f160d64.json",
+    "advisoryCommit": "a8b163bd518ed100c317e1283a43db42c6bb8beb",
+    "advisorySha256": "3ba3cfbbbc6206d3cadd5cb9830a87edf19363809716136e6db320ed2d7cf0f6",
+    "advisoryBytes": 937,
+    "advisoryBind": "0x17d51fcd541825e405733f23fc89b81a95cc342dab7b337fb2ec115a8591fc96",
+    "boundCount": 2,
+    "freshCount": 2,
+    "distinctSourceCount": 2,
+    "assessment": "0x9b3e4d5f11ed8a62cc24991f472c25afa0930f70e46f6b17f4bd4ec3b6dee809",
+    "verdict": "SAFE_TO_RECOVER",
+    "unpause": "0x801ffc548ca5da17355207685c4a927faef8350891796fd87b3b013f13247f88",
+    "recoveredConfirmation": "0x800d8c285cc06f32a07a439adfae6ecd29d9cf54893e35ee120beead20a37f0b"
+  },
+  "finalProof": {
+    "postRecoveryProcess": "0x79a8f5121765db195bac15797a39ed088730bf47cd817ac6465a1ffeccf7fc9e",
+    "postRecoveryProcessSucceeded": true,
+    "nonOwnerOutflowSimulation": "REJECTED",
+    "nonOwnerRejection": "Outflow capability has been remediated",
+    "paused": false,
+    "remediated": true,
+    "incidentState": "RECOVERED",
+    "treasury": 900,
+    "totalOutflow": 100,
+    "totalProcessed": 2,
+    "pauseCount": 1,
+    "unpauseCount": 1
+  },
+  "advisories": {
+    "incident": {
+      "url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-incident-e5115f160d64.json",
+      "commit": "d1bcb30e825a2c486220de2a0f4d5c7b648b7be3",
+      "sha256": "62464982faddd34e5eff54c14e14a5cf9cac654ffa679cd96d61e7fd74c55fce",
+      "bytes": 931
+    },
+    "recovery": {
+      "url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/recovery-incident-e5115f160d64.json",
+      "commit": "a8b163bd518ed100c317e1283a43db42c6bb8beb",
+      "sha256": "3ba3cfbbbc6206d3cadd5cb9830a87edf19363809716136e6db320ed2d7cf0f6",
+      "bytes": 937
+    }
+  },
+  "duplicateDeployments": 0,
+  "duplicateIncidents": 0,
+  "duplicateOutflows": 0,
+  "duplicateAdvisories": 0,
+  "backendProtocolComplete": true
+}

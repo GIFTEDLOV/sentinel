@@ -1,0 +1,37 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "transaction": {
+    "hash": "0xd36b1bd5520e12275987930cb4a944cb30267351cbbc3998ac3287beccb4361a",
+    "status": "FINALIZED",
+    "result": "AGREE",
+    "execution": "FINISHED_WITH_RETURN",
+    "contract_address": "0x1409EB321C669647015AcD12eec737D4a104508a",
+    "tx_execution_hash": "0xb4c2ed50d0f929af04509866f070addc2e81e4595c58ee081a20fd03da03bda5"
+  },
+  "source": {
+    "local_sha256": "D2B0B1BF2F1E52F6183180B85CCFEE107EBC377CBC7D9AD4DE8507F0ABE8C00D",
+    "deployed_sha256": "D2B0B1BF2F1E52F6183180B85CCFEE107EBC377CBC7D9AD4DE8507F0ABE8C00D",
+    "parity": true
+  },
+  "schema_methods": [
+    "configure_sentinel",
+    "emergency_pause",
+    "emergency_unpause",
+    "get_authorized_sentinel",
+    "get_owner",
+    "get_pause_counters",
+    "get_total_processed",
+    "is_controller_configured",
+    "is_paused",
+    "process"
+  ],
+  "initial_readback": {
+    "owner": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+    "authorized_sentinel": "0x0000000000000000000000000000000000000000",
+    "controller_configured": false,
+    "paused": false,
+    "total_processed": 0
+  }
+}

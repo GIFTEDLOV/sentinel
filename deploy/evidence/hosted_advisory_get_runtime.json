@@ -1,0 +1,60 @@
+{
+  "network": "studio-dev",
+  "rpc": "https://studio-dev.genlayer.com/api",
+  "chainId": 61997,
+  "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+  "profile": {
+    "leaderTimeunitsAllocation": "200",
+    "validatorTimeunitsAllocation": "400",
+    "executionBudgetPerRound": "157789000000000",
+    "totalMessageFees": "0",
+    "rotationsPerRound": "3"
+  },
+  "currentPolicy": {
+    "enabled": true,
+    "genPerTimeUnit": "1",
+    "storageUnitPrice": "250000000",
+    "receiptGasPrice": "250000000",
+    "executionBudgetFloor": "76548000000000",
+    "timeUnitOverlayBps": "1500"
+  },
+  "diagnosticAddress": "0xb53Bc3307491Ac7f9557daA472bc196fF4b6c6A7",
+  "diagnosticDeployment": {
+    "evmHash": "0x329ddab477269527a338f6be11797efba5dcd0400cfc3601f8275cb8e254d83c",
+    "status": "FINALIZED",
+    "consensus": "MAJORITY_AGREE",
+    "execution": "FINISHED_WITH_RETURN"
+  },
+  "probe": {
+    "targetUrl": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-template.json",
+    "preflight": {
+      "balanceWei": "1992498202999911691",
+      "latestNonce": 95,
+      "pendingNonce": 95
+    },
+    "feeEstimate": {
+      "feeValue": "1392141600126258",
+      "leaderTimeunitsAllocation": "200",
+      "validatorTimeunitsAllocation": "400",
+      "appealRounds": "1",
+      "executionBudgetPerRound": "154682400000000",
+      "totalMessageFees": "0",
+      "rotations": [
+        "3",
+        "3"
+      ]
+    },
+    "evmHash": "0xfceb46509fdd0ecec8faebf4cd3a03a25fda3335a394ff1d6798650e8b50c123",
+    "status": "FINALIZED",
+    "consensus": "MAJORITY_AGREE",
+    "execution": "FINISHED_WITH_RETURN",
+    "normalizedResult": {
+      "status": "HTTP_200",
+      "bodySha256": "ae15c55049e883e8f3d623eb21ef3ce818c56ed563d5afc38e5d5734ba781c57",
+      "bodyBytes": 825,
+      "schema": "sentinel-advisory-v1",
+      "protocolId": "sentinel-demo"
+    }
+  },
+  "result": "PASS"
+}

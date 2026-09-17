@@ -1,0 +1,136 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sentinel": "0x8e7B0387F1C527d0cd14cCA9E76420952B5B483c",
+  "incident": "incident-studio-next-v4-mu1ocbh7",
+  "evidenceIds": [
+    "chain-50de89d7215d",
+    "advisory-incident-mu1ocbh7"
+  ],
+  "deployedCode": {
+    "bytes": 57881,
+    "sha256": "7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5"
+  },
+  "rawStateRpc": {
+    "error": "MethodNotFoundRpcError: The method \"gen_getContractState\" does not exist / is not available.\n\nDetails: Method not found: gen_getContractState\nVersion: viem@2.56.3"
+  },
+  "variants": {
+    "latest-final": {
+      "incident": {
+        "evidence_ids_csv": "chain-50de89d7215d,advisory-incident-mu1ocbh7",
+        "incident_verdict": "INCONCLUSIVE",
+        "opened_at": 1789416781,
+        "pause_confirmed_at": 0,
+        "pause_requested": false,
+        "protocol_id": "sentinel-demo",
+        "recovery_verdict": "INCONCLUSIVE",
+        "reporter": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+        "source_domains_csv": "studio-next.genlayer.com,raw.githubusercontent.com",
+        "state": "ASSESSING",
+        "unpause_requested": false
+      },
+      "chainEvidence": {
+        "content_digest": "0b0794e0f4f70af26d44e1d77e164b1826a7b60b3b6645c4411a892f287af383",
+        "event_timestamp": 1789416720,
+        "evidence_type": "CHAIN_TRANSACTION",
+        "failure_class": "unauthorized-drain",
+        "incident_id": "incident-studio-next-v4-mu1ocbh7",
+        "observed_at": 1789416986,
+        "phase": "EMERGENCY",
+        "source_domain": "studio-next.genlayer.com",
+        "source_url": "https://studio-next.genlayer.com/api",
+        "transaction_block": 0,
+        "transaction_hash": "0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7",
+        "transaction_input": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg=="
+      },
+      "advisoryEvidence": {
+        "content_digest": "00e47d64d2e145341e2abd4dd8a2d5c9ab09cb6cb94c5eefcd0622ebc1ac464b",
+        "event_timestamp": 0,
+        "evidence_type": "SECURITY_ADVISORY",
+        "failure_class": "unauthorized-drain",
+        "incident_id": "incident-studio-next-v4-mu1ocbh7",
+        "observed_at": 1789417134,
+        "phase": "EMERGENCY",
+        "source_domain": "raw.githubusercontent.com",
+        "source_url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-studio-next-v4-mu1ocbh7.json",
+        "transaction_block": 1,
+        "transaction_hash": "0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7",
+        "transaction_input": ""
+      },
+      "policy": {
+        "allowed_source_domains": "studio-next.genlayer.com,raw.githubusercontent.com",
+        "allowed_source_prefixes": "studio-next.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+        "canonical_rpc_endpoint": "https://studio-next.genlayer.com/api",
+        "critical_failure_class": "unauthorized-drain",
+        "max_evidence_age_seconds": 3600,
+        "minimum_sources": 2,
+        "owner": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+        "policy_locked": true,
+        "recovery_cooldown_seconds": 900,
+        "target_address": "0x7F3F78291C3bE65d924C3e18bc65F7500E93c590"
+      },
+      "state": {
+        "error": "InvalidInputRpcError: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.56.3"
+      }
+    },
+    "latest-nonfinal": {
+      "incident": {
+        "evidence_ids_csv": "chain-50de89d7215d,advisory-incident-mu1ocbh7",
+        "incident_verdict": "INCONCLUSIVE",
+        "opened_at": 1789416781,
+        "pause_confirmed_at": 0,
+        "pause_requested": false,
+        "protocol_id": "sentinel-demo",
+        "recovery_verdict": "INCONCLUSIVE",
+        "reporter": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+        "source_domains_csv": "studio-next.genlayer.com,raw.githubusercontent.com",
+        "state": "ASSESSING",
+        "unpause_requested": false
+      },
+      "chainEvidence": {
+        "content_digest": "0b0794e0f4f70af26d44e1d77e164b1826a7b60b3b6645c4411a892f287af383",
+        "event_timestamp": 1789416720,
+        "evidence_type": "CHAIN_TRANSACTION",
+        "failure_class": "unauthorized-drain",
+        "incident_id": "incident-studio-next-v4-mu1ocbh7",
+        "observed_at": 1789416986,
+        "phase": "EMERGENCY",
+        "source_domain": "studio-next.genlayer.com",
+        "source_url": "https://studio-next.genlayer.com/api",
+        "transaction_block": 0,
+        "transaction_hash": "0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7",
+        "transaction_input": "FgB8ZXhlY3V0ZV9vdXRmbG93BGFyZ3MV1AIweDYzMTFkZTk4OWFiMDFhZTRkYTc3ZDM2Y2M0NWQ0OTVmYmNkNGI3YTihBg=="
+      },
+      "advisoryEvidence": {
+        "content_digest": "00e47d64d2e145341e2abd4dd8a2d5c9ab09cb6cb94c5eefcd0622ebc1ac464b",
+        "event_timestamp": 0,
+        "evidence_type": "SECURITY_ADVISORY",
+        "failure_class": "unauthorized-drain",
+        "incident_id": "incident-studio-next-v4-mu1ocbh7",
+        "observed_at": 1789417134,
+        "phase": "EMERGENCY",
+        "source_domain": "raw.githubusercontent.com",
+        "source_url": "https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-studio-next-v4-mu1ocbh7.json",
+        "transaction_block": 1,
+        "transaction_hash": "0x50de89d7215d2241fc337fa77301bb3cb632f557604eece0cfaf02344dcb2dd7",
+        "transaction_input": ""
+      },
+      "policy": {
+        "allowed_source_domains": "studio-next.genlayer.com,raw.githubusercontent.com",
+        "allowed_source_prefixes": "studio-next.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/",
+        "canonical_rpc_endpoint": "https://studio-next.genlayer.com/api",
+        "critical_failure_class": "unauthorized-drain",
+        "max_evidence_age_seconds": 3600,
+        "minimum_sources": 2,
+        "owner": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+        "policy_locked": true,
+        "recovery_cooldown_seconds": 900,
+        "target_address": "0x7F3F78291C3bE65d924C3e18bc65F7500E93c590"
+      },
+      "state": {
+        "error": "InvalidInputRpcError: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.56.3"
+      }
+    }
+  }
+}

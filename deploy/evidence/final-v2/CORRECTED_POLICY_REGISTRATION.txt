@@ -1,0 +1,21 @@
+CORRECTED POLICY REGISTRATION
+SENTINEL_ADDRESS: 0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723
+PROTECTED_DEMO_ADDRESS: 0xFCeC042B2fcc1d793Bf92877665c9Bae16971AE1
+SENTINEL_SHA: 7C1AAA1E2BAF4E30FDE3F9CB329F17FCBB5860AFE3A3F66BA4A6D6D58A2F53EE
+PROTECTED_DEMO_SHA: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+PREFLIGHT: {"network":"studio-dev","rpc":"https://studio-dev.genlayer.com/api","chainId":61997,"account":"0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc","balanceWei":"1989396212749888633","latestNonce":110,"pendingNonce":110}
+REGISTERED_POLICY: {"target_address":"0xfcec042b2fcc1d793bf92877665c9bae16971ae1","critical_failure_class":"unauthorized-drain","allowed_source_domains":"studio-dev.genlayer.com,raw.githubusercontent.com","allowed_source_prefixes":"studio-dev.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/","canonical_rpc_endpoint":"https://studio-dev.genlayer.com/api","minimum_sources":"2","max_evidence_age_seconds":"3600","recovery_cooldown_seconds":"900","policy_locked":false}
+POLICY_LOCKED_AFTER_REGISTER: false
+REGISTER_TX: 0xe827c57dac9a958ab414f5f82f2e5e4f8d52b61ec3830e4b3bd266048a8b8c07
+REGISTER_BROADCAST_COUNT: 1
+REGISTER_FINAL_STATUS: FINALIZED
+REGISTER_CONSENSUS: MAJORITY_AGREE
+REGISTER_EXECUTION: FINISHED_WITH_RETURN
+REGISTER_FEE_VALUE: 1381120200126258
+REGISTER_SETTLED_PRIMARY_FEE: 78631500001647
+FEE_PROFILE: deploy/fee-profile.json
+EXECUTION_BUDGET_PER_ROUND: 157789000000000

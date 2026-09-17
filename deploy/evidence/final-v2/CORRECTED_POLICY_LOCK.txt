@@ -1,0 +1,27 @@
+CORRECTED POLICY LOCK
+SENTINEL_ADDRESS: 0x5a2a5288C7213d60EC9C92ffa504Ef8FA64fc723
+PROTECTED_DEMO_ADDRESS: 0xFCeC042B2fcc1d793Bf92877665c9Bae16971AE1
+TRANSACTION_HASH: 0x0fd418874184043b96da33ce920283b6c2dc3c1550a1f02bb52957864766ef5f
+BROADCAST_COUNT: 1
+NETWORK: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+CHAIN_ID: 61997
+ACCOUNT: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+FEE_PROFILE: deploy/fee-profile.json
+LOCK_FEE_VALUE: 1381114800126258
+LOCK_SETTLED_PRIMARY_FEE: 78631000001647
+FINAL_STATUS: FINALIZED
+CONSENSUS: MAJORITY_AGREE
+EXECUTION: FINISHED_WITH_RETURN
+FINAL_POLICY_LOCKED: true
+FINAL_POLICY: {"target_address":"0xfcec042b2fcc1d793bf92877665c9bae16971ae1","critical_failure_class":"unauthorized-drain","allowed_source_domains":"studio-dev.genlayer.com,raw.githubusercontent.com","allowed_source_prefixes":"studio-dev.genlayer.com|/api;raw.githubusercontent.com|/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/","canonical_rpc_endpoint":"https://studio-dev.genlayer.com/api","minimum_sources":"2","max_evidence_age_seconds":"3600","recovery_cooldown_seconds":"900","policy_locked":true}
+UPDATE_AFTER_LOCK_SIMULATION: REJECTED
+SECOND_LOCK_SIMULATION: REJECTED
+FINAL_PROTECTED_STATE: {"owner":"0xb1e3ea743df2b006b66751d57337c2bb10e23ecc","authorized":"0x5a2a5288c7213d60ec9c92ffa504ef8fa64fc723","configured":true,"paused":false,"remediated":false,"treasury":{"remediated":false,"total_outflow":0,"treasury_balance":1000},"totalProcessed":0,"counters":{"pause_count":0,"unpause_count":0}}
+BALANCE_AFTER_WEI: 1989317581749886986
+LATEST_NONCE_AFTER: 111
+PENDING_NONCE_AFTER: 111
+INCIDENT_CREATED: NO
+EVIDENCE_BOUND: NO
+ADVISORY_TOOL_HARDCODES_OLD_TARGET: YES
+ADVISORY_TEMPLATES_REFERENCE_OLD_TARGET: YES

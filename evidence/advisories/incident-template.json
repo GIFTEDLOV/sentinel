@@ -1,0 +1,31 @@
+{
+  "schema": "sentinel-advisory-v1",
+  "protocol_id": "sentinel-demo",
+  "protocol_address": "0xbfC7DD4e7c57997F74C56175DBad234E4CA01B05",
+  "network": "Studio Next",
+  "canonical_rpc": "https://studio-next.genlayer.com/api",
+  "incident_id": "<INCIDENT_ID>",
+  "phase": "EMERGENCY",
+  "failure_class": "unauthorized-drain",
+  "status": "CONFIRMED",
+  "transaction_hash": "<INCIDENT_TX_HASH>",
+  "issued_at": "<ISSUED_AT_UTC>",
+  "current": true,
+  "critical_signal": true,
+  "mitigation_complete": false,
+  "summary": "<OWNER_AUTHORED_INCIDENT_SUMMARY>",
+  "facts": [
+    {
+      "name": "authorization",
+      "value": "<OWNER_CONFIRMATION_THAT_THE_REFERENCED_OUTFLOW_WAS_NOT_AUTHORIZED>"
+    },
+    {
+      "name": "affected_protocol",
+      "value": "<PROTECTEDDEMO_IDENTITY_AND_SCOPE>"
+    },
+    {
+      "name": "containment",
+      "value": "<OWNER_RECOMMENDATION_FOR_EMERGENCY_CONTAINMENT>"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+FINAL V4 STUDIO NEXT DEPLOYMENT
+
+Network: Studio Next
+RPC: https://studio-next.genlayer.com/api
+Chain ID: 61997
+Owner: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Sentinel SHA256: 7780D346ECCC497AE54DC93268FC42FD87B2266DB73168EDF07ACEA1E393A1E5
+ProtectedDemo SHA256: 1A091C8541DF3FBEDEE2B31D22AFFE7E2C3AF515D9584C31EEA576625D2F74F4
+
+V4 Sentinel: 0x8e7B0387F1C527d0cd14cCA9E76420952B5B483c
+V4 ProtectedDemo: 0x7F3F78291C3bE65d924C3e18bc65F7500E93c590
+
+Setup writes, each broadcast once and reconciled by the same hash:
+ProtectedDemo deployment: 0x306559e9da9187695ee0d2573ccdae0396e506a0d6877f7c4512da9b08e51a57
+Sentinel deployment: 0x8ffc02808bc328c2eaf7473bfbde0f8f142b1fd12efbdc65fd343334ee5fb512
+configure_sentinel: 0xa74217dc08f60c1a8b8c5a9e69c5d96b6888d4ba339e414ed6f74440eb01045a
+register_protected_protocol: 0x2afbb60fdb498486c63745b294b9b5b0f7f2da2f4b4b6b1ec6391114decd960a
+lock_emergency_policy: 0x2f062f0404705ad890cf9cf1fd8680335cf6abe91bb9b38096ba55f57247953f
+
+All five setup writes: FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN.
+Final policy: locked=true; target=0x7F3F78291C3bE65d924C3e18bc65F7500E93c590; failure_class=unauthorized-drain; canonical_rpc=https://studio-next.genlayer.com/api; minimum_sources=2; max_evidence_age_seconds=3600; recovery_cooldown_seconds=900.
+Initial ProtectedDemo state: owner correct; controller configured; paused=false; remediated=false; treasury=1000; total_outflow=0; total_processed=0; pause_count=0; unpause_count=0.
+
+Deployment complete. End-to-end proof stopped at the first genuine V4 blocker: assessment simulation returned “Fresh evidence is insufficient for assessment” after both chain and advisory evidence were bound. No assessment or recovery writes were broadcast.

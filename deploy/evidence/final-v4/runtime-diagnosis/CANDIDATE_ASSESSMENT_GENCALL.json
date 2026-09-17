@@ -1,0 +1,42 @@
+{
+  "rpc": "https://studio-next.genlayer.com/api",
+  "candidate": "0x408367CD10Ba3Bb311E2dD6dd97253a74e89b4cE",
+  "incident": "incident-studio-next-v4-mu1ocbh7",
+  "broadcast": false,
+  "http_status": 200,
+  "request": {
+    "type": "write",
+    "to": "0x408367CD10Ba3Bb311E2dD6dd97253a74e89b4cE",
+    "from": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+    "data": "0xf83db83a16007c6173736573735f696e636964656e7404617267730d8402696e636964656e742d73747564696f2d6e6578742d76342d6d75316f6362683700",
+    "transaction_hash_variant": "latest-final",
+    "fees": {
+      "distribution": {
+        "leaderTimeunitsAllocation": "100",
+        "validatorTimeunitsAllocation": "200",
+        "appealRounds": "1",
+        "executionBudgetPerRound": "300000000000000",
+        "executionConsumed": "0",
+        "totalMessageFees": "0",
+        "rotations": [
+          "0",
+          "0"
+        ],
+        "maxPriceGenPerTimeUnit": "2",
+        "storageFeeMaxGasPrice": "300000000",
+        "receiptFeeMaxGasPrice": "300000000"
+      },
+      "messageAllocations": [],
+      "feeValue": "1000000000000000"
+    }
+  },
+  "top_level_keys": [
+    "jsonrpc",
+    "result",
+    "id"
+  ],
+  "rpc_error": null,
+  "result": "00",
+  "receipt_summary": null,
+  "genvm_result": null
+}

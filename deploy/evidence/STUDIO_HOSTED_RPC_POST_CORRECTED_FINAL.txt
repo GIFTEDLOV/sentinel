@@ -1,0 +1,155 @@
+Studio-dev corrected JSON-string RPC POST qualification
+DATE: 2026-09-12
+SCOPE: one temporary diagnostic deployment and one hosted probe authorized; no production contract or frontend changes
+
+DIAGNOSTIC_SOURCE: diagnostics/hosted_rpc_post_probe.py
+DIAGNOSTIC_SOURCE_SHA256: ADCB4A3B0346126FD3440E423138030C8AEBA551C5CA01FACDA16E8DC11366DA
+PRODUCTION_CONTRACTS_CHANGED: NO
+
+HOSTED_SCHEMA
+=============
+RPC: https://studio-dev.genlayer.com/api
+METHOD: gen_getContractSchemaForCode
+RESULT: PASS
+PUBLIC_METHOD: probe_transaction
+PARAMETER_ABI_TYPE: string
+
+LOCAL_DIRECT_AND_CALLDATA_GATES
+===============================
+DIRECT_TEST: python diagnostics/hosted_rpc_post_probe_test.py
+RESULT: PASS
+PROVED: JSON body is UTF-8 bytes at the web boundary; content-type is application/json; JSON-RPC method and one string hash parameter are exact; missing result, RPC error, wrong hash, and malformed JSON fail closed.
+CALLDATA_ENCODER: installed genlayer-js abi.calldata
+CALLDATA_ROUNDTRIP: PASS
+CALLDATA_DECODED_HASH: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+
+POST_REQUEST
+============
+API: gl.nondet.web.post
+ENDPOINT: https://studio-dev.genlayer.com/api
+BODY_TYPE_AT_SOURCE: JSON string
+BODY_TYPE_AT_RUNTIME_BOUNDARY: bytes
+CONTENT_TYPE: application/json
+BODY: {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099"],"id":1}
+
+DEPLOYMENT_FEE_PROFILE
+=====================
+PATH: deploy/fee-profile.json
+PROFILE_MEASURED_AT: 2026-09-12T05:55:19Z
+NETWORK: studio_devnet
+CHAIN_ID: 61997
+LEADER_TIMEUNITS_ALLOCATION: 200
+VALIDATOR_TIMEUNITS_ALLOCATION: 400
+EXECUTION_BUDGET_PER_ROUND: 157789000000000
+OBSERVED_STARTUP_FLOOR: 127878000000000
+STARTUP_HEADROOM: 29911000000000
+APPEAL_ROUNDS: 1
+ROTATIONS: [3,3]
+TOTAL_MESSAGE_FEES: 0
+DEPLOYMENT_FEE_VALUE: 1420101000126258
+PROFILE_SELECTION: existing measured current Studio-dev profile; budget exceeds the known startup floor with measured 2x profiling headroom provenance
+
+DEPLOYMENT
+==========
+COMMAND: npx --yes genlayer@0.40.0-rc.3 deploy --rpc https://studio-dev.genlayer.com/api --contract diagnostics\\hosted_rpc_post_probe.py --fee-profile deploy\\fee-profile.json --fee-preset standard
+DEPLOYMENT_ATTEMPT_COUNT: 1
+DEPLOYMENT_TX: 0x7b2e49d7b5808e5736218a7fcaf35b9bed4486c98e3e1d6b0bf2835fc97cf164
+DIAGNOSTIC_ADDRESS: 0x689129b4B2f3Df4D6764C9D5E04480AaC4Ca689A
+DEPLOYMENT_RECONCILIATION: same hash reconciled before probe
+DEPLOY_FINAL_STATUS: FINALIZED
+DEPLOY_CONSENSUS_RESULT: MAJORITY_AGREE / ACCEPTED
+DEPLOY_EXECUTION_RESULT: FINISHED_WITH_RETURN
+DEPLOY_EXECUTION_CONSUMED: 78653000000000
+DEPLOY_GENVM_BUCKET_CONSUMED: 127903000000000
+DEPLOY_STARTUP_HEADROOM_REMAINING: 29886000000000
+DEPLOY_RECONCILIATION_RESULT: same hash reconciled after broadcast; no second deployment
+
+PROBE
+=====
+TARGET_TRANSACTION_HASH: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+METHOD: probe_transaction
+ARGUMENT_ENCODING: explicit string via installed GenLayerJS codec
+PROBE_SIMULATION_RESULT: PASS
+PROBE_SIMULATION_METHOD: sim_estimateTransactionFees
+PROBE_SIMULATION_EXECUTION: SUCCESS
+PROBE_SIMULATION_EXECUTION_CONSUMED: 79600000000000
+PROBE_SIMULATION_GENVM_REQUIRED: 129158000000000
+PROBE_SIMULATION_FEE_VALUE: 1394906400126258
+PROBE_SIMULATION_EXECUTION_BUDGET: 154989600000000
+PROBE_SIMULATION_STARTUP_HEADROOM: 25831600000000
+PROBE_SIMULATION_DISTRIBUTION: leader=200 validator=400 appealRounds=1 rotations=[3,3]
+PROBE_SIMULATION_TOTAL_MESSAGE_FEES: 0
+PROBE_SIMULATION_LIMIT: read-only; no nonce consumed
+
+The authorized probe broadcast uses the current GenLayerJS write path with
+args=[TARGET_TRANSACTION_HASH] as a JavaScript string and the fee preset
+returned by the live simulation. The CLI positional argument parser is not
+used because it heuristically converts bare 0x values to BigInt.
+
+PROBE_BROADCAST
+===============
+PROBE_ATTEMPT_COUNT: 1
+PROBE_TX: 0x694d26322b04182d136f329e672771cdb3bae1a2ab04964a12f5b41c791e4444
+PROBE_SUBMISSION_PATH: installed current GenLayerJS SDK writeContract with explicit string args
+PROBE_FEE_VALUE: 1394906400126258
+PROBE_FEE_DISTRIBUTION: leader=200 validator=400 appealRounds=1 executionBudgetPerRound=154989600000000 totalMessageFees=0 rotations=[3,3]
+PROBE_FINAL_STATUS: FINALIZED
+PROBE_CONSENSUS_RESULT: MAJORITY_AGREE / ACCEPTED
+PROBE_EXECUTION_RESULT: FINISHED_WITH_RETURN
+PROBE_EXECUTION_FEE_CONSUMED: 79600000000000
+PROBE_GENVM_EXECUTION_CONSUMED: 129158000000000
+PROBE_GENVM_EXECUTION_BUDGET_REMAINING: 25831600000000
+PROBE_NONDETERMINISTIC_OUTPUT_BYTES: 240
+PROBE_RECONCILIATION: same hash reconciled; no second probe
+
+POST_PROBE_ACCOUNT_STATE
+=======================
+CHAIN_ID: 61997
+BALANCE_AFTER_PROBE_WEI: 1993206603749925306
+LATEST_NONCE_AFTER_PROBE: 85
+PENDING_NONCE_AFTER_PROBE: 85
+UNKNOWN_PENDING_TRANSACTION: none observable; latest equals pending
+
+HOSTED_NORMALIZED_RPC_RESULT
+============================
+RPC_METHOD: eth_getTransactionByHash
+RPC_ENDPOINT: https://studio-dev.genlayer.com/api
+REQUESTED_HASH: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+RETURNED_HASH: 0x101816026d41441709293b7f946963dd894262bdedc88a788ea934290ffc5099
+RETURNED_FROM: 0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc
+RETURNED_TO: 0xb7385835D950fdE5F43c95b252759701E6287Ffe
+RETURNED_INPUT: FgCsAWxvY2tfZW1lcmdlbmN5X3BvbGljeQRhcmdzDSRkZW1v
+RETURNED_BLOCK_NUMBER: null (field absent in the compatibility response)
+
+OBJECTIVE_LOOKUP_CLASSIFICATION
+===============================
+TRANSACTION_EXISTENCE_PROVEN: YES (returned hash matched requested hash)
+SENDER_PROVEN: YES (returned from_address)
+TARGET_PROVEN: YES (returned to_address/recipient)
+CALLDATA_PROVEN: YES (returned data.calldata; the normalized input above)
+BLOCK_INCLUSION_PROVEN: NO (blockNumber was absent/null)
+EXECUTION_SUCCESS_PROVEN_BY_CURRENT_NORMALIZED_RETURN: NO
+GENLAYER_CONSENSUS_FINALITY_PROVEN_BY_CURRENT_NORMALIZED_RETURN: NO
+PROBE_TRANSACTION_PROVES_HOSTED_VALIDATOR_FETCH: YES (the finalized probe's
+normalized consensus output was produced by the hosted GenVM web POST)
+EXECUTION_SUCCESS_FIELD_AVAILABLE_IN_FULL_RPC_RESPONSE: YES,
+txExecutionResultName=FINISHED_WITH_RETURN (txExecutionResult=1)
+GENLAYER_FINALITY_FIELDS_AVAILABLE_IN_FULL_RPC_RESPONSE: YES,
+status=FINALIZED and result_name=MAJORITY_AGREE
+TARGET_EXECUTION_AND_FINALITY: these fields were observed in the same
+Studio-dev eth_getTransactionByHash compatibility response, but were not
+included in this diagnostic's minimal normalized return and must not be
+inferred from the hash alone.
+
+ADAPTER_DECISION
+================
+CANONICAL_RPC_HOSTED_VALIDATORS: PASS
+OBJECTIVE_TRANSACTION_LOOKUP_QUALIFIED: YES, for existence, sender, target,
+and calldata under the normalized response model
+SAFE_TO_IMPLEMENT_SENTINEL_RECEIPT_ADAPTER: YES, with a separate receipt /
+execution-status projection using the explicit full-response fields above
+when finality and execution success are required
+
+LIMITATIONS
+==========
+eth_getTransactionByHash is a transaction lookup, not a receipt/finality proof by itself. The diagnostic returns hash, sender, target, API calldata, and blockNumber when present; blockNumber is explicitly null in the known compatibility response. Execution status and GenLayer consensus finality must be sourced from the reconciled GenLayer receipt, not inferred from this transaction lookup.

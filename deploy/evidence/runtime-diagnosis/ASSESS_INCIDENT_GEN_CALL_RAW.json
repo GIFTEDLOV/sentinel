@@ -1,0 +1,90 @@
+{
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "runner": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng",
+  "sentinel": "0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5",
+  "from": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+  "incident": "incident-b2fa64830f71",
+  "method": "gen_call",
+  "broadcast": false,
+  "calldata": "0xf1af16007c6173736573735f696e636964656e7404617267730dac01696e636964656e742d62326661363438333066373100",
+  "encodedCalldataSha256": "a18a679acf574f58c3267efc25d5f5d08697efabf538468450f18bb02187c168",
+  "accepted": {
+    "status": "accepted",
+    "transactionHashVariant": "latest-nonfinal",
+    "httpStatus": 200,
+    "request": {
+      "type": "write",
+      "to": "0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5",
+      "from": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+      "data": "0xf1af16007c6173736573735f696e636964656e7404617267730dac01696e636964656e742d62326661363438333066373100",
+      "status": "accepted",
+      "transaction_hash_variant": "latest-nonfinal",
+      "fees": {
+        "distribution": {
+          "leaderTimeunitsAllocation": "100",
+          "validatorTimeunitsAllocation": "200",
+          "appealRounds": "1",
+          "executionBudgetPerRound": "160221000000000",
+          "executionConsumed": "0",
+          "totalMessageFees": "0",
+          "rotations": [
+            "0",
+            "0"
+          ],
+          "maxPriceGenPerTimeUnit": "2",
+          "storageFeeMaxGasPrice": "300000000",
+          "receiptFeeMaxGasPrice": "300000000"
+        },
+        "messageAllocations": [],
+        "feeValue": "480663000018429"
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "error": {
+        "code": -32602,
+        "message": "Invalid status: must be 'decided' or 'finalized'",
+        "data": {}
+      },
+      "id": 1
+    }
+  },
+  "finalized": {
+    "status": "finalized",
+    "transactionHashVariant": "latest-final",
+    "httpStatus": 200,
+    "request": {
+      "type": "write",
+      "to": "0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5",
+      "from": "0xb1e3ea743df2b006b66751d57337c2bb10e23ecc",
+      "data": "0xf1af16007c6173736573735f696e636964656e7404617267730dac01696e636964656e742d62326661363438333066373100",
+      "status": "finalized",
+      "transaction_hash_variant": "latest-final",
+      "fees": {
+        "distribution": {
+          "leaderTimeunitsAllocation": "100",
+          "validatorTimeunitsAllocation": "200",
+          "appealRounds": "1",
+          "executionBudgetPerRound": "160221000000000",
+          "executionConsumed": "0",
+          "totalMessageFees": "0",
+          "rotations": [
+            "0",
+            "0"
+          ],
+          "maxPriceGenPerTimeUnit": "2",
+          "storageFeeMaxGasPrice": "300000000",
+          "receiptFeeMaxGasPrice": "300000000"
+        },
+        "messageAllocations": [],
+        "feeValue": "480663000018429"
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "result": "00",
+      "id": 1
+    }
+  }
+}

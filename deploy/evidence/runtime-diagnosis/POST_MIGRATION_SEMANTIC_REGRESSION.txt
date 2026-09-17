@@ -1,0 +1,101 @@
+POST-MIGRATION SEMANTIC REGRESSION — 2026-09-15
+
+Scope
+-----
+This diagnosis covers the migrated Sentinel source and the separately authorized
+regression-fix smoke deployment. The existing migration-smoke incident
+incident-5a302b6d35aa was not mutated.
+
+Source recovery and comparison
+------------------------------
+The pre-migration working source was recovered from the embedded contract bytes
+in deploy/evidence/final-v5/FINAL_STUDIO_NEXT_DEPLOYMENT_RAW.json.
+
+OLD_MIGRATED_SHA: 1CFA95537737B0E6B2FCC790D96379ADEBB26133F7B747391482C1C144C465A8
+FIXED_SENTINEL_SHA: 87E65CC72D41E4DCF6DFC3E93EBE80B0081A4C5E4A32C6A9435FD8C4CFC90693
+PROTECTED_DEMO_SHA: 7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+
+The assessment authentication, evidence construction, prompt, validator
+re-execution, and bounded comparison bodies were unchanged by the migration.
+The only assessment-path semantic difference found in the migration diff was
+the migrated integer namespace spelling in the returned count fields.
+
+Hosted observation
+------------------
+Existing migrated assessment transaction:
+  0xd6d115409203e07582d1a512b052ace42c87c8d55a596c987b925bbd8f902cd4
+  FINALIZED / MAJORITY_AGREE / FINISHED_WITH_RETURN
+  leader and validators executed the LLM boundary, but every returned packet
+  was the bounded INCONCLUSIVE empty packet:
+  authenticated_count=0, source_count=0, criteria_met=false.
+
+The recovered pre-migration working assessment transaction was:
+  0xf7070f72830bdea0104dcb8ae32c48f383e2336586b0b41d611c2157452fd1e7
+Its leader result decoded to authenticated_count=2, source_count=2,
+criteria_met=true, and ACTIVE_INCIDENT.
+
+The receipt does not expose the model's raw text. Therefore the exact observed
+failure path is parser/validation fallback to _empty_packet(INCONCLUSIVE), but
+the raw malformed shape cannot be distinguished further from the receipt alone.
+Classification: B (parser fallback; D-shaped output cannot be proven from raw
+model text). This is not classified as authentication failure because the
+hosted receipt proves LLM execution occurred.
+
+Fix applied
+----------
+_parse_judgment_result was added to accept only a mapping, UTF-8 JSON text,
+UTF-8 JSON bytes, or a fenced JSON object, with exact lower-case boolean-string
+normalization for criteria_met. Ambiguous truthy coercions and free-form prose
+remain rejected. Contract source was not modified after the fixed smoke pair
+was deployed.
+
+Local verification: 70 passed; AST parse passed; genvm-lint passed individually
+for sentinel.py and protected_demo.py; hosted runner schema passed for runner
+py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng.
+
+Regression-fix smoke checkpoint
+--------------------------------
+Smoke Sentinel: 0xCdd1e472AFD0EE301C1981a6abe1208f55B730f5
+Smoke ProtectedDemo: 0xb31a879d7e6929c1c8F6Fd5ba5cAdA89BD210eC1
+Smoke incident: incident-b2fa64830f71
+
+Finalized writes completed without duplication:
+  deploy demo: 0x29ebebdd62e01e944e274d4b7d8bb0d8f02054e6f3ff0b688b0aa3f1b4f145e6
+  deploy sentinel: 0x6ee9a387565a5f3d03568b8aee08b65b062e5ae0f2cf384a3d9292cb6c5c9072
+  configure: 0xc0948a904dc0e0e8dd721acaff3f49167a03ec5880eab5b080a4db6c90a54c76
+  register: 0x6cd865367aba4415962b3480cd60ffaaa8d2560a6913d209d7c618ba88ee572b
+  lock: 0x4297ef1b494ea1a40893675fc9bf1a5446840cbbe679f482c3bb925a912c3896
+  baseline: 0xee416c3bfc2866691906da0efb059716841a40a471d292a564c4ed21139c585d
+  outflow 100: 0xb2fa64830f71ba05395dd82e651880dd47726ab3456ad85eb4ae5f99c6cd741c
+  incident: 0x01fffc988de86943fa1b2459a7b225797b236fbf12ff9bbea881bf38a043e369
+  chain evidence: 0xfb75d864f2550dc34b5dfcd4d8382a45ac9304c222ec27022985485d55b53324
+  incident advisory bind: 0x2a6113215f03346ac5d99b053e378a0937cf1b6c14294a1cd07ee6bc0f65dee4
+
+The one incident advisory was published once at
+https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/incident-incident-b2fa64830f71.json
+with commit 1e27c04818a763716adb14d85626ea1d490b8857 and digest
+bd3065df30f5b562c6b6bb07298dd75fb20ad72f6eb754316beb07ca77261611.
+
+Stop point and blocker
+----------------------
+The smoke is stopped before ASSESS_INCIDENT. No assessment, pause, remediation,
+recovery, unpause, or post-recovery write was broadcast for this smoke pair.
+The latest owner nonce is 194 and pending nonce is 194.
+
+Both current SDK fee estimation and a measured same-chain envelope simulation
+fail with execution failed before any LLM/equivalence output (STORAGE_READ only,
+no GenVM error and no transaction hash). The persisted raw no-broadcast probe
+decodes the exact deterministic error as "Fresh evidence is insufficient for
+assessment". The chain and advisory observations are 7385 seconds apart, over
+the locked 3600-second maximum. The deployed monotonic clock-floor fix is
+present and correctly prevents the stale gen_call datetime from making both
+records future-dated; it does not and must not waive the configured age bound.
+The resume runner was not allowed to broadcast through that failed simulation.
+This is not a storage-index or storage-decoding failure, and is not evidence to
+change the contract again. Two fresh evidence records were then bound to this
+existing partial incident using the already-finalized outflow and already
+published advisory, producing observed_at values in the same current time
+window without creating another incident, outflow, or advisory. A no-broadcast
+SDK simulation subsequently succeeded with LLM token accounting and
+nondeterministic output bytes, proving the deployed source passes the pre-LLM
+gate. The current smoke remains diagnostic only and is not final lifecycle proof.

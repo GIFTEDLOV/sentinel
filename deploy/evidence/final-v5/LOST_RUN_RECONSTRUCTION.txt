@@ -1,0 +1,102 @@
+LOST RUN RECONSTRUCTION — FINAL PAYLOAD-FIX V5
+
+RECONSTRUCTED / COMPLETED: 2026-09-16
+NETWORK: Studio Next
+RPC: https://studio-next.genlayer.com/api
+CHAIN_ID: 61997
+OWNER: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+CONTROLLED_SECONDARY: 0x6311de989ab01ae4da77d36cc45d495fbcd4b7a8
+
+PREVIOUS_PROCESS_STATUS
+The previous runner had completed or exited; no useful Sentinel transaction
+worker remained. The persisted journal and state were used as authoritative
+records. No process was killed while it could have been reconciling a hash.
+
+SOURCE / WORKTREE RECONSTRUCTION
+The working tree was intentionally dirty and was preserved. Current fixed
+source hashes were verified before continuation:
+contracts/sentinel.py:
+  49E50797E3201B09F9EABDBF21EDF61C532887687E049CC6371E63BCF0BE45ED
+contracts/protected_demo.py:
+  7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD
+No contract source was modified during resumption.
+
+DISCOVERED FINAL PAIR
+Sentinel: 0xd83b20EcCF5c1Ddd70aD57EF0E25a5200079c4de
+ProtectedDemo: 0xDf9635A1E13379b2F7c25166aAE1C29729b3bFDA
+This pair was the only fixed-source final pair in the payload-fix output and
+was reused. No second pair was created during resumption.
+
+RECOVERED DEPLOYMENT / SETUP HASHES
+ProtectedDemo deploy: 0x011d4d32e88fe4ffa41c909908886b7b4fed34561e6ce0046f1977bf25948812
+Sentinel deploy: 0x922859bfb7ba291ca099beeaddabc0f616fd0544528ad9e05e599d4bf39d6108
+configure_sentinel: 0x318700b877897a084c29f05d93ad9f6531ce5b9d223a8c5185c6ddea439bc43e
+register_protected_protocol: 0xa701e19a0a920f676130ee1c25342d5e153c25ae17a8c52c1cc4a3f30a8ed9a7
+lock_emergency_policy: 0x93a99c7586585848feab2df32f48167c02e27a713d3ae352f9ec2ea2a4cd4e33
+
+WHAT THE LOST RUN HAD COMPLETED BEFORE OUTPUT LOSS
+Healthy baseline: 0xc623cb32326e9736de4a243efe96b3b067eb5fa7dd6f5ab9935422201c7069b6
+Controlled 100-unit player2 outflow: 0xe5115f160d6450567949b567dd1638417af2f94bf55a738ba5714c783a8da860
+Incident create: 0x3bf4873ec650f6ec11316228c3de53d83eda5c691db93121f8256b53b313ca3c
+Incident chain evidence: 0xaf270b262163354ed4cd6acf45426c4e464fa74a9aa766ac3ff4acdabc831362
+Incident chain evidence refresh: 0x8e26e2bfa08bcad3ae552bc017b79a0884265f0f30a01b8e5bdca59035bfe5a0
+Incident advisory bind: 0xb5e9b5ddf170ee5c0813895a2bf41ec60107241ac322135124192bfe9752ab99
+Incident assessment: 0x2e71cecc511fb58f9a589602b8632927c7d643158e8b553946a00ba61a9ec312
+Pause: 0x4b4ba831d175884abb17f171671f5ec52a84655cd60c65204886421fe5f9f2c6
+Pause confirmation: 0x8ef13d9952fbc4a71221dc23c26368c260334ad11c8b28b671e480e65e6e4c54
+Remediation: 0xf5fbf8f4946122c04b433e290141a6688996c58192c40ac3d66dd3b221e82fa9
+
+RESUMED STEPS AND SAME-HASH RECONCILIATION
+The first unfinished step was begin_recovery. Its single submitted hash was:
+  0x530b57a033cbcc8ab5fc1d1a311d1a2b0e110bc11329566d2b33095fbf7bf304
+It was reconciled by hash and verified FINALIZED / MAJORITY_AGREE /
+FINISHED_WITH_RETURN. The simulation false negative was recorded as the exact
+cooldown error with GenVM time 1732603362 while the independent canonical node
+time was 1789544606 and eligible time was 1789544193.
+
+Recovery chain evidence bind:
+  0x2dcb4b014a104ef9777001de1dd04661ae05f0f8f5e1041fd3c8b5176a6d02a5
+Recovery advisory was created once, published once, and verified from raw:
+  commit a8b163bd518ed100c317e1283a43db42c6bb8beb
+  URL https://raw.githubusercontent.com/GIFTEDLOV/sentinel-evidence/main/evidence/advisories/recovery-incident-e5115f160d64.json
+Recovery advisory bind:
+  0x17d51fcd541825e405733f23fc89b81a95cc342dab7b337fb2ec115a8591fc96
+Recovery assessment:
+  0x9b3e4d5f11ed8a62cc24991f472c25afa0930f70e46f6b17f4bd4ec3b6dee809
+Unpause:
+  0x801ffc548ca5da17355207685c4a927faef8350891796fd87b3b013f13247f88
+Recovered confirmation:
+  0x800d8c285cc06f32a07a439adfae6ecd29d9cf54893e35ee120beead20a37f0b
+Post-recovery owner process:
+  0x79a8f5121765db195bac15797a39ed088730bf47cd817ac6465a1ffeccf7fc9e
+
+FINAL RECONCILED STATE
+Incident: incident-e5115f160d64
+State: RECOVERED
+Incident verdict: ACTIVE_INCIDENT
+Recovery verdict: SAFE_TO_RECOVER
+Target paused: false
+Target remediated: true
+Pause count / unpause count: 1 / 1
+Treasury / total outflow: 900 / 100
+Total processed: 2
+Player2 outflow after remediation: simulation rejected — Outflow capability has been remediated
+
+WHY NO DUPLICATE WRITES OCCURRED
+The runner loaded the persisted state and journal, checked for submitted hashes,
+and resumed from the first absent state field. When output was lost after the
+begin_recovery broadcast, the exact submitted hash was reconciled before any
+later action. The already-published incident advisory was reused by commit;
+the recovery advisory was published only after a raw 200 and byte/digest check.
+No deployment, incident, 100-unit outflow, or advisory was repeated.
+The incident chain refresh was an intentional separate evidence ID for freshness,
+not a duplicate incident or outflow.
+
+DUPLICATE_DEPLOYMENTS: 0
+DUPLICATE_INCIDENTS: 0
+DUPLICATE_OUTFLOWS: 0
+DUPLICATE_ADVISORIES: 0
+LAST_CONFIRMED_COMPLETED_STEP: POST_RECOVERY_PROCESS
+NEXT_REQUIRED_STEP: NONE
+SAFE_TO_RESUME: COMPLETE
+BACKEND_PROTOCOL_COMPLETE: YES

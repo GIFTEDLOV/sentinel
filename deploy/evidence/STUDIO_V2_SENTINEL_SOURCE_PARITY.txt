@@ -1,0 +1,19 @@
+Sentinel Studio-dev v2 deployed source parity
+
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Contract address: 0x5a965B5089878fB1DE519001350eb33664eb6995
+GenLayer deployment transaction: 0x92b395ea0c75702591eab2d498ccb4fa89a38db759b493f6a6102607e1f9621a
+Final status: FINALIZED
+Execution result: FINISHED_WITH_RETURN
+Consensus result: MAJORITY_AGREE
+
+Retrieval method: gen_getContractCode via the Studio-dev RPC
+Expected local SHA-256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+Local source bytes: 33859
+Deployed source SHA-256: 81E19727F469365D2EBADD5EAEF1C855C335A016D7389928EEA86A7F7319D4EA
+Deployed source bytes: 33859
+
+HASH_PARITY: PASS
+BYTE_FOR_BYTE_PARITY: PASS

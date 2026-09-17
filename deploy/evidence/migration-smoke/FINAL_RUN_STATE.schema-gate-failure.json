@@ -1,0 +1,31 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sourceHashes": {
+    "sentinel": "A95877702F7F3238435E46AFA452ECE2ED39B5F26B95A4E64530B8CCDE788BF0",
+    "protectedDemo": "BDE7596270580CA286D47C9DA87C7DA5F0561F6E9B30DA1918DEE5D9AD6A1219"
+  },
+  "ownerPreflight": {
+    "role": "owner",
+    "account": "0xB1E3ea743DF2b006b66751D57337C2bb10e23eCc",
+    "rpc": "https://studio-next.genlayer.com/api",
+    "chainId": 61997,
+    "balanceWei": "6983795311499823252",
+    "latestNonce": 175,
+    "pendingNonce": 175
+  },
+  "actorPreflight": {
+    "role": "actor",
+    "account": "0x6311dE989ab01Ae4Da77d36CC45d495fbCd4B7a8",
+    "rpc": "https://studio-next.genlayer.com/api",
+    "chainId": 61997,
+    "balanceWei": "5001133991499985179",
+    "latestNonce": 11,
+    "pendingNonce": 11
+  },
+  "canonicalSourceHashes": {
+    "sentinel": "A95877702F7F3238435E46AFA452ECE2ED39B5F26B95A4E64530B8CCDE788BF0",
+    "protectedDemo": "BDE7596270580CA286D47C9DA87C7DA5F0561F6E9B30DA1918DEE5D9AD6A1219"
+  }
+}

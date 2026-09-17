@@ -1,0 +1,90 @@
+FINAL PROTECTEDDEMO CONTROLLER BINDING EVIDENCE
+===============================================
+
+Scope: one irreversible configure_sentinel write only. No policy, incident,
+outflow, remediation, or lifecycle write is included.
+
+Precondition
+------------
+Network: studio-dev
+RPC: https://studio-dev.genlayer.com/api
+Chain ID: 61997
+Account: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+ProtectedDemo: 0x38f38591A2835e2e9b467FBAc94D4b613Ce27584
+Final Sentinel: 0x2dF0E12D4CE46f0312B7461972351F3cD074b3c9
+Owner before: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Authorized Sentinel before: 0x0000000000000000000000000000000000000000
+Controller configured before: false
+Paused before: false
+Latest nonce before: 89
+Pending nonce before: 89
+Unknown pending transaction: NONE OBSERVED (latest equals pending)
+
+Exact method: configure_sentinel
+Exact argument: 0x2dF0E12D4CE46f0312B7461972351F3cD074b3c9
+ABI parameter type: string (the implementation accepts the CLI's canonical address value and normalizes it through _as_address)
+
+Exact-write simulation / fee quote
+----------------------------------
+Simulation: PASS
+Fee source: current genlayer-js estimate-fees simulation path; no manual fee fields.
+Leader allocation: 100
+Validator allocation: 200
+Execution budget per round: 188707800000000
+Total message fees: 0
+Appeal rounds: 0
+Rotations: [3]
+Fee value: 754831200010352
+
+Binding
+-------
+Two local CLI argument-transport attempts were rejected before submission
+because Windows stripped JSON quotes; neither produced a hash or consumed a
+nonce. The one actual broadcast below is the only state-changing attempt.
+Broadcast attempt count: 1
+Transaction hash: 0xc61722175f76ba8e6768183ec16c23911737c4def643336b4437ca2b6dd6a175
+Transaction nonce: 89
+Final status: FINALIZED
+Consensus: MAJORITY_AGREE / ACCEPTED
+Execution: FINISHED_WITH_RETURN
+Same-hash reconciliation: receipt command queried the exact broadcast hash at finalized state; no rebroadcast.
+
+Final receipt fee accounting
+----------------------------
+Fee deposit: 754831200010352
+Execution consumed: 78628500000000
+GenVM execution bucket consumed: 127878500000000
+GenVM execution budget remaining: 60829300000000
+Storage fee used: 500000000
+Message fees consumed: 0
+Leader timeunits used: 1
+Validator timeunits used: 4
+Execution budget exceeded: false
+
+Post-bind readback
+------------------
+Owner: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Authorized Sentinel: 0x2df0e12d4ce46f0312b7461972351f3cd074b3c9
+Controller configured: true
+Paused: false
+Remediated: false
+Treasury balance: 1000
+Total outflow: 0
+Total processed: 0
+Pause count: 0
+Unpause count: 0
+Last outflow actor: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Last outflow recipient: 0xb1e3ea743df2b006b66751d57337c2bb10e23ecc
+Last outflow amount: 0
+
+Second configuration simulation
+--------------------------------
+Simulation: REJECTED by execution failure after controller was configured.
+Broadcast: NO. No second configure_sentinel transaction was submitted.
+
+Post-bind account state
+-----------------------
+Balance: 1.992891625499919572 GEN
+Latest nonce: 90
+Pending nonce: 90
+Unknown pending transaction: NONE OBSERVED (latest equals pending)

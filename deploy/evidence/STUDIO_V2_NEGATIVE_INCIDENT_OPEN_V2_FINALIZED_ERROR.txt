@@ -1,0 +1,10 @@
+NETWORK: studio-dev
+CHAIN_ID: 61997
+INCIDENT_ID: studio-v2-negative-20260912
+GENLAYER_TRANSACTION: 0x4de83becd3ccae914d3933ea3f124fc3b312acdd70a904bbd1ee0a537cb5304b
+STATUS: FINALIZED
+EXECUTION: FINISHED_WITH_ERROR
+CONSENSUS: MAJORITY_AGREE
+ERROR: Unknown protected protocol
+CAUSE: CLI argument order was incident_id, protocol_id; no state change
+NO_REBROADCAST: true

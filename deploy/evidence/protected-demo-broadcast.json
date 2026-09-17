@@ -1,0 +1,9 @@
+{
+  "network": "testnet-bradbury",
+  "chain_id": 4221,
+  "operation": "ProtectedDemo deployment",
+  "transaction_hash": "0x3e2423df900399852241527e200919d6195fca9b5bf40603528030f1e2dfaa6f",
+  "source_sha256": "4090BCB19A77C6017DFD17D8C08DC3685A5182D9C762D72A1F2D177F977156A5",
+  "status_at_broadcast": "SUBMITTED",
+  "reconciliation": "The same hash must be reconciled to FINALIZED before accepting any address or state claim."
+}

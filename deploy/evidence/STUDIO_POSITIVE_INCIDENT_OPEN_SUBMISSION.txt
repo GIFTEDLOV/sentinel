@@ -1,0 +1,10 @@
+Positive incident open submission
+
+NETWORK: studio-dev
+CHAIN_ID: 61997
+SENTINEL: 0x239e04bA80769852e5BC257d91E5C2A58fB1959c
+PROTOCOL_ID: protected-demo
+INCIDENT_ID: studio-positive-20260911
+METHOD: open_incident
+GENLAYER_TRANSACTION: 0x9c32b771ac146237b0a1c879e2dfbb83de7ad0492d0fb9570a5fb5e5440e393b
+INITIAL_STATUS: ACCEPTED (provisional; same hash is being reconciled)
