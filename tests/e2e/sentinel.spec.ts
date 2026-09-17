@@ -101,12 +101,16 @@ test.describe("Sentinel Studio Next application shell", () => {
     await expect(wallet).toContainText(/Switch to Studio Next/i);
   });
 
-  test("current shell exposes a recoverable live-data notification", async ({ page }) => {
+  test("passive read failures stay silent without interrupting the shell", async ({ page }) => {
     await page.route("**/api**", (route) => route.abort());
     await page.goto("/app");
-    const toast = page.locator(".read-toast");
-    await expect(toast).toContainText("Live state delayed");
-    await expect(toast.getByRole("button", { name: "Retry", exact: true })).toBeVisible();
-    await expect(toast.getByRole("button", { name: "Dismiss live data notification" })).toBeVisible();
+    await expect(page.locator(".app-header")).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "Application navigation" })).toBeVisible();
+    await expect(page.locator(".app-header-tools").getByRole("button", { name: "Connect wallet" })).toBeVisible();
+    await expect(page.locator(".read-toast")).toHaveCount(0);
+    await expect(page.locator(".read-unavailable")).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Retry", exact: true })).toHaveCount(0);
+    await expect(page.getByText("Details", { exact: true })).toHaveCount(0);
+    await expect(page.getByText(/Live state delayed|Live data delayed|Studio Next is taking longer than usual|could not refresh/i)).toHaveCount(0);
   });
 });

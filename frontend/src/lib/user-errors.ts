@@ -8,7 +8,7 @@ export interface UserFacingError {
   tone: UserErrorTone;
 }
 
-type ErrorContext = "read" | "wallet" | "transaction" | "state";
+type ErrorContext = "wallet" | "transaction" | "state";
 
 function errorMessage(reason: unknown): string {
   if (reason instanceof Error) return reason.message;
@@ -20,7 +20,7 @@ function errorMessage(reason: unknown): string {
   return "Unknown Sentinel error.";
 }
 
-export function normalizeUserError(reason: unknown, context: ErrorContext = "read"): UserFacingError {
+export function normalizeUserError(reason: unknown, context: ErrorContext = "transaction"): UserFacingError {
   const technical = errorMessage(reason);
   const message = technical.toLowerCase();
 
@@ -96,9 +96,9 @@ export function normalizeUserError(reason: unknown, context: ErrorContext = "rea
     };
   }
   return {
-    title: context === "read" ? "Authoritative state could not be verified" : "Sentinel needs attention",
-    message: context === "read" ? "The latest chain read did not return a verified result." : "Sentinel could not complete this action.",
-    action: context === "read" ? "Try the read again" : "Review technical details",
+    title: "Sentinel needs attention",
+    message: "Sentinel could not complete this action.",
+    action: "Review technical details",
     technical,
     tone: "error",
   };
@@ -106,9 +106,6 @@ export function normalizeUserError(reason: unknown, context: ErrorContext = "rea
 
 /** Presentation copy for normal users; technical classification remains intact. */
 export function presentUserError(error: UserFacingError): UserFacingError {
-  if (error.title === "Authoritative state could not be verified") {
-    return { ...error, title: "Live data temporarily unavailable", message: "Studio Next could not return the latest verified state." };
-  }
   if (error.title === "Transaction did not execute successfully") {
     return { ...error, title: "Transaction could not be completed", message: "The network finalized the request, but the contract operation did not succeed." };
   }
