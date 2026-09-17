@@ -1284,3 +1284,948 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .transparency-grid, .developer-grid { grid-template-columns: 1fr; }
   .transparency-grid > .panel:nth-child(n), .developer-grid > .panel:nth-child(n) { grid-column: 1; grid-row: auto; }
 }
+
+/* --------------------------------------------------------------------------
+   Authenticated app shell refinement — compact navigation, continuous canvas.
+   Landing rules remain intentionally outside this scope.
+   -------------------------------------------------------------------------- */
+
+.app-shell.console-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--ink);
+}
+
+.app-shell.console-shell::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  min-height: 100%;
+  pointer-events: none;
+  content: "";
+  background-image: url("/sentinel-sites-texture.png");
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: min(1200px, 100vw) auto;
+  opacity: .13;
+}
+
+.app-shell.console-shell .main-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.app-shell.console-shell .app-header {
+  top: 12px;
+  width: min(calc(100% - 32px), 1440px);
+  min-height: 60px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 20px;
+  padding: 4px 6px 4px 10px;
+  border: 1px solid rgba(246, 243, 232, .07);
+  border-radius: 7px;
+  background: rgba(10, 11, 11, .88);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .18);
+}
+
+.app-shell.console-shell .app-header::before { display: none; }
+.app-shell.console-shell .app-header-brand { gap: 8px; }
+.app-shell.console-shell .app-brand { gap: 8px; }
+.app-shell.console-shell .app-brand .brand-mark-image { width: 31px; height: 31px; }
+.app-shell.console-shell .app-brand .brand-wordmark { width: 94px; }
+.app-shell.console-shell .app-header-tools { gap: 8px; }
+
+.app-shell.console-shell .app-nav {
+  justify-self: center;
+  gap: 0;
+  min-width: 0;
+  padding: 3px;
+  border: 1px solid rgba(246, 243, 232, .05);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .028);
+}
+
+.app-shell.console-shell .app-nav-group { gap: 0; }
+.app-shell.console-shell .app-nav-divider { display: none; }
+
+.app-shell.console-shell .app-nav-link {
+  min-height: 35px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 5px;
+  gap: 5px;
+  color: #92968e;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.app-shell.console-shell .app-nav-link:hover {
+  transform: none;
+  border-color: transparent;
+  background: rgba(246, 243, 232, .045);
+  color: var(--white);
+}
+
+.app-shell.console-shell .app-nav-link.active {
+  border: 0;
+  background: rgba(242, 200, 75, .075);
+  box-shadow: none;
+  color: var(--white);
+}
+
+.app-shell.console-shell .app-nav-link.active::after {
+  bottom: 1px;
+  width: 14px;
+  height: 2px;
+}
+
+.app-shell.console-shell .app-nav-link .nav-glyph {
+  display: grid;
+  width: 14px;
+  color: #747b72;
+}
+
+.app-shell.console-shell .app-nav-link.active .nav-glyph { color: var(--yellow); }
+
+.app-shell.console-shell .app-network-chip {
+  gap: 6px;
+  padding: 3px 1px 3px 0;
+  border-right: 0;
+}
+
+.app-shell.console-shell .app-network-chip strong {
+  color: var(--white);
+  font-size: 10px;
+}
+
+.app-shell.console-shell .app-network-chip small { font-size: 10px; }
+.app-shell.console-shell .network-dot { width: 7px; height: 7px; }
+
+.app-shell.console-shell .wallet-button {
+  min-height: 38px;
+  padding-inline: 13px;
+  border: 1px solid rgba(242, 200, 75, .26);
+  border-radius: 7px;
+  background: rgba(242, 200, 75, .055);
+  box-shadow: none;
+  font-size: 10px;
+}
+
+.app-shell.console-shell .wallet-button:hover {
+  background: rgba(242, 200, 75, .1);
+  box-shadow: 2px 3px 0 rgba(242, 200, 75, .12);
+}
+
+.app-shell.console-shell .main-shell > main { padding-top: 84px; }
+
+.app-shell.console-shell .page-intro {
+  min-height: 0;
+  margin-bottom: 24px;
+  padding: 16px 0 20px;
+}
+
+.app-shell.console-shell .page-intro::after { display: none; }
+
+@media (max-width: 1180px) {
+  .app-shell.console-shell .app-header { gap: 12px; }
+  .app-shell.console-shell .app-nav-link { padding-inline: 7px; font-size: 11px; }
+  .app-shell.console-shell .app-network-chip { display: none; }
+}
+
+@media (max-width: 900px) {
+  .app-shell.console-shell .app-header {
+    top: 8px;
+    width: calc(100% - 20px);
+    min-height: 58px;
+    padding: 3px 7px;
+  }
+
+  .app-shell.console-shell .app-header-brand { gap: 7px; }
+  .app-shell.console-shell .app-brand .brand-mark-image { width: 29px; height: 29px; }
+  .app-shell.console-shell .app-brand .brand-wordmark { width: 88px; }
+  .app-shell.console-shell .main-shell > main { padding-top: 76px; }
+
+  .app-shell.console-shell .app-nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
+    display: none;
+    justify-content: stretch;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid rgba(246, 243, 232, .1);
+    border-radius: 7px;
+    background: rgba(10, 11, 11, .97);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
+  }
+
+  .app-shell.console-shell .app-nav.mobile-open { display: grid; }
+  .app-shell.console-shell .app-nav-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; }
+  .app-shell.console-shell .app-nav-link { min-height: 40px; justify-content: flex-start; padding-inline: 10px; }
+}
+
+@media (max-width: 620px) {
+  .app-shell.console-shell .app-header { width: calc(100% - 16px); }
+  .app-shell.console-shell .app-brand .brand-wordmark { width: 82px; }
+  .app-shell.console-shell .wallet-button { min-height: 36px; max-width: 8rem; padding-inline: 10px; overflow: hidden; text-overflow: ellipsis; font-size: 9px; }
+  .app-shell.console-shell .main-shell > main { padding-top: 74px; }
+  .app-shell.console-shell .page-intro { margin-bottom: 18px; padding-block: 12px 16px; }
+}
+
+/* Verified activity response record: four readable stages, one explicit flow. */
+.app-shell.console-shell .main-shell:has(.posture-hero) .activity-preview {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  width: 100%;
+}
+
+.app-shell.console-shell .activity-preview {
+  padding: 24px 24px 26px;
+}
+
+.app-shell.console-shell .activity-preview .activity-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-shell.console-shell .activity-preview .activity-chip {
+  position: relative;
+  min-width: 0;
+  min-height: 122px;
+  padding: 22px 24px 24px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+}
+
+.app-shell.console-shell .activity-preview .activity-chip:last-child { border-right: 0; }
+
+.app-shell.console-shell .activity-preview .activity-chip:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -7px;
+  display: grid;
+  width: 14px;
+  height: 20px;
+  place-items: center;
+  transform: translateY(-50%);
+  color: var(--yellow);
+  background: var(--ink);
+  font: 700 14px/1 var(--mono);
+  pointer-events: none;
+}
+
+.app-shell.console-shell .activity-preview .activity-chip > span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: #7f8997;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell.console-shell .activity-preview .activity-chip > strong {
+  display: block;
+  min-width: 0;
+  margin-top: 14px;
+  overflow: hidden;
+  color: #e1e5ea;
+  font: 750 clamp(12px, .9vw, 15px)/1.25 var(--mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 1100px) and (min-width: 721px) {
+  .app-shell.console-shell .activity-preview .activity-chip {
+    padding: 18px 16px 20px;
+  }
+
+  .app-shell.console-shell .activity-preview .activity-chip > strong {
+    font-size: clamp(11px, .95vw, 14px);
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell.console-shell .activity-preview .activity-strip { grid-template-columns: 1fr; }
+
+  .app-shell.console-shell .activity-preview .activity-chip,
+  .app-shell.console-shell .activity-preview .activity-chip + .activity-chip {
+    min-height: 0;
+    padding: 16px 0 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    border-top: 0;
+  }
+
+  .app-shell.console-shell .activity-preview .activity-chip:last-child { border-bottom: 0; }
+
+  .app-shell.console-shell .activity-preview .activity-chip:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -8px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%);
+    content: "↓";
+    font-size: 13px;
+  }
+}
+
+/* Draw connectors with borders so the flow marker stays crisp and encoding-safe. */
+.app-shell.console-shell .activity-preview .activity-chip:not(:last-child)::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--yellow);
+  border-right: 1px solid var(--yellow);
+  background: var(--ink);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@media (max-width: 720px) {
+  .app-shell.console-shell .activity-preview .activity-chip:not(:last-child)::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-top: 0;
+    border-right: 1px solid var(--yellow);
+    border-bottom: 1px solid var(--yellow);
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+/* Internal app cleanup: keep the atmospheric canvas, remove the header frame, and give
+   read-first screens a compact field-level loading state. Landing styles remain untouched. */
+.app-shell.console-shell .app-header {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell.console-shell .loading-state {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(140px, 240px) minmax(100px, 180px) minmax(72px, 110px);
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0 28px;
+}
+
+.app-shell.console-shell .loading-rule { display: none; }
+
+.app-shell.console-shell .loading-columns {
+  display: contents;
+}
+
+.app-shell.console-shell .loading-columns span {
+  display: block;
+  height: 9px;
+  border-radius: 2px;
+  background: rgba(246, 243, 232, .11);
+}
+
+.app-shell.console-shell .loading-state small {
+  grid-column: 1 / -1;
+  display: none;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+.app-shell.console-shell .verified-meta {
+  display: block;
+  margin-top: 9px;
+  color: #7f8997;
+  font: 11px/1.2 var(--mono);
+  letter-spacing: .03em;
+}
+
+/* Activity ledger: the rail owns the dot and connector so text never shares that space. */
+.app-shell.console-shell .ledger-panel { overflow: visible; }
+
+.app-shell.console-shell .ledger-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1.55fr) minmax(150px, 1fr) minmax(120px, .9fr) minmax(150px, .9fr) auto;
+  align-items: center;
+  min-width: 0;
+  min-height: 104px;
+  gap: 16px;
+  padding: 22px 18px 22px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.app-shell.console-shell .ledger-row::before { display: none; }
+.app-shell.console-shell .ledger-row > * { min-width: 0; }
+
+.app-shell.console-shell .ledger-row > div {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 5px;
+}
+
+.app-shell.console-shell .ledger-row strong {
+  min-width: 0;
+  color: #e1e5ea;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.app-shell.console-shell .ledger-row small {
+  margin-top: 4px;
+  color: #7f8997;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.app-shell.console-shell .ledger-rail {
+  position: relative;
+  display: grid;
+  align-self: stretch;
+  min-width: 24px;
+  place-items: center;
+}
+
+.app-shell.console-shell .ledger-rail::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(137, 148, 163, .18);
+  content: "";
+}
+
+.app-shell.console-shell .ledger-row:last-child .ledger-rail::before { bottom: 50%; }
+
+.app-shell.console-shell .ledger-rail i {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(93, 207, 151, .1);
+}
+
+.app-shell.console-shell .ledger-row .hash-line,
+.app-shell.console-shell .ledger-row .ledger-value,
+.app-shell.console-shell .ledger-row .badge {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell.console-shell .panel-heading > *,
+.app-shell.console-shell .fact > *,
+.app-shell.console-shell .proof-table-row > *,
+.app-shell.console-shell .response-gate > *,
+.app-shell.console-shell .target-grid > * {
+  min-width: 0;
+}
+
+.app-shell.console-shell .fact dd,
+.app-shell.console-shell .technical-value,
+.app-shell.console-shell .address-line,
+.app-shell.console-shell .hash-line {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 1100px) and (min-width: 721px) {
+  .app-shell.console-shell .ledger-row {
+    grid-template-columns: 24px minmax(0, 1.35fr) minmax(125px, 1fr) minmax(100px, .85fr) minmax(120px, .9fr) auto;
+    gap: 12px;
+    min-height: 96px;
+    padding: 18px 12px 18px 14px;
+  }
+
+  .app-shell.console-shell .ledger-row strong { font-size: 14px; }
+  .app-shell.console-shell .ledger-row small { font-size: 12px; }
+}
+
+@media (max-width: 650px) {
+  .app-shell.console-shell .loading-state {
+    grid-template-columns: minmax(110px, 1fr) minmax(80px, .8fr);
+  }
+
+  .app-shell.console-shell .loading-columns span:last-child { display: none; }
+
+  .app-shell.console-shell .ledger-row {
+    grid-template-columns: 24px minmax(0, 1fr);
+    min-height: 0;
+    gap: 8px 14px;
+    padding: 20px 0;
+  }
+
+  .app-shell.console-shell .ledger-row > div { grid-column: 2; grid-row: 1; }
+  .app-shell.console-shell .ledger-row .hash-line { grid-column: 2; grid-row: 2; }
+  .app-shell.console-shell .ledger-row .ledger-value { display: none; }
+  .app-shell.console-shell .ledger-row .badge { grid-column: 2; grid-row: 3; justify-self: start; }
+  .app-shell.console-shell .ledger-rail { grid-column: 1; grid-row: 1 / span 3; }
+  .app-shell.console-shell .ledger-row strong { font-size: 15px; }
+  .app-shell.console-shell .ledger-row small { font-size: 12px; }
+}
+
+/* Authenticated product-surface system.
+   This block is deliberately scoped to the internal console; the landing page remains frozen. */
+.app-shell.console-shell {
+  --console-card-border: rgba(115, 145, 160, .2);
+  --console-card-border-strong: rgba(130, 167, 181, .3);
+  --console-card: rgba(7, 14, 19, .94);
+  --console-card-raised: rgba(10, 19, 24, .96);
+  --console-card-muted: rgba(10, 17, 21, .88);
+  --console-divider: rgba(137, 164, 174, .17);
+  --console-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+}
+
+.app-shell.console-shell .panel,
+.app-shell.console-shell .protocol-card,
+.app-shell.console-shell .data-card,
+.app-shell.console-shell .posture-hero,
+.app-shell.console-shell .incident-hero,
+.app-shell.console-shell .evidence-card,
+.app-shell.console-shell .response-gate,
+.app-shell.console-shell .technical-details,
+.app-shell.console-shell .technical-drawer,
+.app-shell.console-shell .advanced-options,
+.app-shell.console-shell .derived-context,
+.app-shell.console-shell .table-panel,
+.app-shell.console-shell .ledger-panel,
+.app-shell.console-shell .activity-limit,
+.app-shell.console-shell .code-block {
+  border: 1px solid var(--console-card-border);
+  border-radius: 16px;
+  background: var(--console-card);
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .panel h2,
+.app-shell.console-shell .panel-heading h2,
+.app-shell.console-shell .section-heading h2 {
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+
+.app-shell.console-shell .panel-heading,
+.app-shell.console-shell .section-heading,
+.app-shell.console-shell .workflow-heading,
+.app-shell.console-shell .guardian-heading,
+.app-shell.console-shell .derived-context-heading {
+  align-items: flex-start;
+}
+
+.app-shell.console-shell .panel-caption {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+/* Stable Sentinel buttons: substantial, low-radius, quiet depth. */
+.app-shell.console-shell .button {
+  min-height: 46px;
+  padding-inline: 22px;
+  border: 1px solid rgba(130, 167, 181, .28);
+  border-radius: 11px;
+  background: rgba(17, 28, 33, .96);
+  color: var(--white);
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  transition: transform 150ms var(--ease), border-color 150ms var(--ease), background 150ms var(--ease), box-shadow 150ms var(--ease);
+}
+
+.app-shell.console-shell .button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--console-card-border-strong);
+  background: rgba(24, 39, 45, .98);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .16);
+}
+
+.app-shell.console-shell .button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.app-shell.console-shell .button.primary,
+.app-shell.console-shell .workflow-panel > .button {
+  border-color: #c59a23;
+  border-radius: 11px;
+  background: var(--yellow);
+  color: #11120e;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, .18);
+}
+
+.app-shell.console-shell .button.primary:hover:not(:disabled),
+.app-shell.console-shell .workflow-panel > .button:hover:not(:disabled) {
+  border-color: #d2aa31;
+  background: #f5ce5d;
+  box-shadow: 0 7px 14px rgba(0, 0, 0, .2);
+}
+
+.app-shell.console-shell .button.ghost,
+.app-shell.console-shell .button-quiet {
+  min-height: 38px;
+  padding-inline: 3px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--white);
+  box-shadow: none;
+}
+
+.app-shell.console-shell .button.ghost:hover:not(:disabled),
+.app-shell.console-shell .button-quiet:hover:not(:disabled) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--yellow);
+  box-shadow: none;
+  transform: translateX(3px);
+}
+
+.app-shell.console-shell .copy-button {
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(130, 167, 181, .25);
+  border-radius: 8px;
+  background: rgba(17, 28, 33, .9);
+  color: var(--muted);
+  box-shadow: none;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  transition: border-color 150ms var(--ease), color 150ms var(--ease), background 150ms var(--ease);
+}
+
+.app-shell.console-shell .copy-button:hover {
+  border-color: var(--console-card-border-strong);
+  background: rgba(24, 39, 45, .98);
+  color: var(--white);
+}
+
+.app-shell.console-shell .badge,
+.app-shell.console-shell .source-chip,
+.app-shell.console-shell .quorum-label,
+.app-shell.console-shell .workflow-count {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid rgba(130, 167, 181, .25);
+  border-radius: 999px;
+  background: rgba(17, 28, 33, .72);
+  color: var(--muted);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.app-shell.console-shell .badge-good {
+  border-color: rgba(143, 209, 141, .34);
+  background: rgba(73, 129, 85, .14);
+  color: var(--green);
+}
+
+.app-shell.console-shell .badge-warn {
+  border-color: rgba(242, 200, 75, .34);
+  background: rgba(145, 111, 28, .14);
+  color: var(--yellow);
+}
+
+.app-shell.console-shell .badge-danger {
+  border-color: rgba(236, 117, 109, .34);
+  background: rgba(137, 55, 62, .16);
+  color: var(--red);
+}
+
+/* Fact rows are the shared internal-card rhythm. */
+.app-shell.console-shell .fact-list .fact,
+.app-shell.console-shell .decision-facts .fact,
+.app-shell.console-shell .incident-facts .fact,
+.app-shell.console-shell .posture-target .fact,
+.app-shell.console-shell .technical-grid .fact {
+  min-width: 0;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--console-divider);
+}
+
+.app-shell.console-shell .fact-list .fact:last-child,
+.app-shell.console-shell .decision-facts .fact:last-child,
+.app-shell.console-shell .incident-facts .fact:last-child,
+.app-shell.console-shell .posture-target .fact:last-child,
+.app-shell.console-shell .technical-grid .fact:last-child { border-bottom: 0; }
+
+.app-shell.console-shell .fact dt {
+  color: #849aa3;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.app-shell.console-shell .fact dd {
+  color: var(--white);
+  font-size: 14px;
+}
+
+/* Home: the existing information architecture becomes a family of stable surfaces. */
+.app-shell.console-shell .posture-hero {
+  padding: 28px;
+  border-color: rgba(143, 209, 141, .3);
+  background: linear-gradient(145deg, rgba(10, 22, 20, .96), rgba(7, 14, 19, .96));
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .posture-hero::before { width: 2px; height: 42%; top: 29%; }
+.app-shell.console-shell .posture-topline { margin-bottom: 2px; }
+.app-shell.console-shell .posture-body { gap: 28px; margin-top: 28px; }
+.app-shell.console-shell .posture-title {
+  max-width: 100%;
+  font-size: clamp(48px, 4vw, 64px);
+  letter-spacing: -0.065em;
+}
+.app-shell.console-shell .posture-copy { color: #c0cbc9; }
+.app-shell.console-shell .posture-target { border-top-color: var(--console-divider); }
+.app-shell.console-shell .posture-summary,
+.app-shell.console-shell .posture-target { min-width: 0; }
+
+.app-shell.console-shell .main-shell:has(.posture-hero) .posture-hero,
+.app-shell.console-shell .main-shell:has(.posture-hero) .dashboard-split > .panel:last-child {
+  align-self: start;
+}
+
+.app-shell.console-shell .main-shell:has(.posture-hero) .dashboard-split > .panel:first-child,
+.app-shell.console-shell .main-shell:has(.posture-hero) .dashboard-split > .panel:last-child,
+.app-shell.console-shell .main-shell:has(.posture-hero) .activity-preview {
+  padding: 24px;
+  border: 1px solid var(--console-card-border);
+  border-radius: 16px;
+  background: var(--console-card);
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .main-shell:has(.posture-hero) .dashboard-split > .panel:first-child {
+  border-top: 1px solid var(--console-card-border);
+}
+
+.app-shell.console-shell .main-shell:has(.posture-hero) .activity-preview {
+  border-top: 1px solid var(--console-card-border);
+}
+
+.app-shell.console-shell .dashboard-grid {
+  gap: 16px;
+  margin: 4px 0 8px;
+  border: 0;
+}
+
+.app-shell.console-shell .dashboard-grid .metric {
+  min-height: 104px;
+  padding: 20px 20px;
+  border: 1px solid var(--console-card-border);
+  border-radius: 14px;
+  background: var(--console-card-muted);
+  box-shadow: none;
+}
+
+.app-shell.console-shell .dashboard-grid .metric strong { font-size: clamp(21px, 2.2vw, 30px); }
+
+/* Directory and profile cards use the same calm dossier geometry. */
+.app-shell.console-shell .protocol-card {
+  min-height: 0;
+  padding: 26px;
+  border-left: 1px solid var(--console-card-border);
+  background: linear-gradient(145deg, rgba(10, 23, 28, .96), rgba(7, 14, 19, .96));
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .protocol-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--console-card-border-strong);
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .protocol-card .card-topline { display: grid; grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) auto; }
+.app-shell.console-shell .protocol-card .card-topline h2 { margin: 6px 0 0; font-size: clamp(27px, 3vw, 40px); }
+.app-shell.console-shell .protocol-card .card-meta { gap: 10px; }
+
+.app-shell.console-shell .profile-hero,
+.app-shell.console-shell .profile-grid > .panel:not(.profile-hero) {
+  border-radius: 16px;
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .profile-hero {
+  min-height: 235px;
+  padding: 28px;
+  background: linear-gradient(145deg, rgba(10, 22, 20, .96), rgba(7, 14, 19, .96));
+}
+
+.app-shell.console-shell .profile-hero::after { display: none; }
+.app-shell.console-shell .profile-grid > .panel:not(.profile-hero) { padding: 26px; }
+
+/* Incident and evidence surfaces: semantic accents stay subtle and live on the border. */
+.app-shell.console-shell .incident-hero {
+  min-height: 360px;
+  padding: 32px;
+  border-color: rgba(143, 209, 141, .3);
+  background: linear-gradient(145deg, rgba(10, 22, 20, .96), rgba(7, 14, 19, .96));
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .incident-hero:has(.badge-good)::after { display: none; }
+.app-shell.console-shell .incident-hero h1 { font-size: clamp(58px, 7vw, 94px); }
+.app-shell.console-shell .decision-panel,
+.app-shell.console-shell .target-panel,
+.app-shell.console-shell .evidence-section,
+.app-shell.console-shell .response-panel,
+.app-shell.console-shell .recovery-guardian,
+.app-shell.console-shell .permanent-proof {
+  padding: 28px;
+  border-left: 1px solid var(--console-card-border);
+  border-radius: 16px;
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .evidence-section { border-color: rgba(130, 220, 229, .28); }
+.app-shell.console-shell .recovery-evidence { border-color: rgba(242, 200, 75, .32); }
+.app-shell.console-shell .recovery-guardian { border-color: rgba(242, 200, 75, .3); }
+.app-shell.console-shell .response-gate,
+.app-shell.console-shell .evidence-card,
+.app-shell.console-shell .rejection-proof {
+  border-radius: 12px;
+  background: var(--console-card-raised);
+  box-shadow: none;
+}
+
+.app-shell.console-shell .response-gate { min-height: 86px; padding: 16px; }
+.app-shell.console-shell .technical-drawer,
+.app-shell.console-shell .technical-details,
+.app-shell.console-shell .advanced-options { border-radius: 12px; background: var(--console-card-muted); box-shadow: none; }
+
+.app-shell.console-shell .incident-page:has(.incident-hero .badge-good)::after {
+  border-radius: 16px;
+  box-shadow: var(--console-shadow);
+}
+
+/* New incident, activity, proof, and docs use broad product surfaces rather than fragments. */
+.app-shell.console-shell .workflow-panel,
+.app-shell.console-shell .side-note,
+.app-shell.console-shell .activity-limit,
+.app-shell.console-shell .transparency-grid .panel,
+.app-shell.console-shell .developer-grid .panel {
+  border-radius: 16px;
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .workflow-panel { padding: 28px; }
+.app-shell.console-shell .side-note { padding: 24px; border: 1px solid var(--console-card-border); background: var(--console-card-muted); }
+.app-shell.console-shell .derived-context { padding: 20px; background: var(--console-card-raised); box-shadow: none; }
+
+.app-shell.console-shell .ledger-panel {
+  overflow: hidden;
+  background: var(--console-card);
+  box-shadow: var(--console-shadow);
+}
+
+.app-shell.console-shell .ledger-head {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--console-divider);
+  background: rgba(10, 19, 24, .72);
+}
+
+.app-shell.console-shell .ledger-row { padding-inline: 20px; border-color: var(--console-divider); }
+.app-shell.console-shell .ledger-row:hover { transform: none; background: rgba(130, 167, 181, .045); }
+.app-shell.console-shell .activity-limit { margin-top: 24px; padding: 22px 24px; border-left: 1px solid rgba(242, 200, 75, .32); }
+
+.app-shell.console-shell .transparency-grid .panel,
+.app-shell.console-shell .developer-grid .panel {
+  padding: 26px;
+  background: var(--console-card);
+}
+
+.app-shell.console-shell .transparency-grid .span-2:first-child,
+.app-shell.console-shell .developer-hero {
+  min-height: 0;
+  background: linear-gradient(145deg, rgba(10, 23, 28, .96), rgba(7, 14, 19, .96));
+  color: var(--white);
+}
+
+.app-shell.console-shell .transparency-grid .span-2:first-child .eyebrow,
+.app-shell.console-shell .transparency-grid .span-2:first-child .fact dt,
+.app-shell.console-shell .transparency-grid .span-2:first-child .fact dd,
+.app-shell.console-shell .developer-hero .eyebrow { color: inherit; }
+
+.app-shell.console-shell .transparency-grid .span-2:first-child .fact { border-color: var(--console-divider); }
+.app-shell.console-shell .developer-hero h2 { margin: 30px 0 32px; font-size: clamp(32px, 3.5vw, 48px); }
+.app-shell.console-shell .code-block { box-shadow: inset 3px 0 var(--cyan); }
+
+@media (max-width: 760px) {
+  .app-shell.console-shell .panel,
+  .app-shell.console-shell .protocol-card,
+  .app-shell.console-shell .data-card,
+  .app-shell.console-shell .posture-hero,
+  .app-shell.console-shell .incident-hero,
+  .app-shell.console-shell .evidence-card,
+  .app-shell.console-shell .response-gate,
+  .app-shell.console-shell .technical-details,
+  .app-shell.console-shell .technical-drawer,
+  .app-shell.console-shell .advanced-options,
+  .app-shell.console-shell .derived-context,
+  .app-shell.console-shell .table-panel,
+  .app-shell.console-shell .ledger-panel,
+  .app-shell.console-shell .activity-limit,
+  .app-shell.console-shell .code-block { border-radius: 14px; }
+
+  .app-shell.console-shell .posture-hero,
+  .app-shell.console-shell .workflow-panel,
+  .app-shell.console-shell .decision-panel,
+  .app-shell.console-shell .target-panel,
+  .app-shell.console-shell .evidence-section,
+  .app-shell.console-shell .response-panel,
+  .app-shell.console-shell .recovery-guardian,
+  .app-shell.console-shell .permanent-proof,
+  .app-shell.console-shell .transparency-grid .panel,
+  .app-shell.console-shell .developer-grid .panel { padding: 20px; }
+
+  .app-shell.console-shell .panel-heading,
+  .app-shell.console-shell .section-heading,
+  .app-shell.console-shell .workflow-heading,
+  .app-shell.console-shell .guardian-heading,
+  .app-shell.console-shell .derived-context-heading { gap: 12px; }
+
+  .app-shell.console-shell .panel-heading h2,
+  .app-shell.console-shell .section-heading h2 { font-size: 22px; }
+  .app-shell.console-shell .button { min-height: 44px; padding-inline: 18px; }
+  .app-shell.console-shell .dashboard-grid .metric { min-height: 92px; padding: 17px; }
+  .app-shell.console-shell .protocol-card { padding: 20px; }
+  .app-shell.console-shell .protocol-card .card-topline { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .app-shell.console-shell .protocol-card .card-topline .badge { justify-self: start; }
+  .app-shell.console-shell .ledger-head { display: none; }
+  .app-shell.console-shell .ledger-row { padding-inline: 16px; }
+}

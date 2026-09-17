@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useState, type ReactElement, type ReactNode } from "react";
 import type { EvidenceMetadata, IncidentDossier, IncidentRecord, ProofActivity, ProtocolConfig, ProtectedDemoState } from "./models";
 import { FINAL_DEPLOYMENT } from "./config/finalDeployment";
-import { hasSentinelDeployment, readDashboard, readIncident, readIncidentDossier, readProofActivity, readProtectedDemoState, readProtocol } from "./lib/app-data";
+import { getCachedDashboard, getCachedIncidentDossier, getCachedProofActivity, getCachedProtectedDemoState, getCachedProtocol, hasSentinelDeployment, invalidateVerifiedReadCaches, readIncident, readProtectedDemoState, readProtocol, refreshDashboard, refreshIncidentDossier, refreshProofActivity, refreshProtectedDemoState, refreshProtocol } from "./lib/app-data";
 import { GENLAYER_CHAIN_NAME, getEthereumProvider, sentinelClientConfig, switchWalletToGenLayerNetwork } from "./lib/genlayer-client";
 import { mapIncidentStateToLabel } from "./lib/decoders";
 import { StudioNextTransaction, studioNextOperationId } from "./lib/StudioNextTransaction";
@@ -149,8 +149,8 @@ function Shell({ children }: { children: ReactElement }): ReactElement {
   </div>;
 }
 
-function PageIntro({ kicker, title, body, action }: { kicker: string; title: string; body: string; action?: ReactNode }): ReactElement {
-  return <section className="page-intro page-width"><div><p className="eyebrow">{kicker}</p><h1>{title}</h1><p>{body}</p></div>{action ? <div className="intro-action">{action}</div> : null}</section>;
+function PageIntro({ kicker, title, body, action, verifiedAt }: { kicker: string; title: string; body: string; action?: ReactNode; verifiedAt?: number | null }): ReactElement {
+  return <section className="page-intro page-width"><div><p className="eyebrow">{kicker}</p><h1>{title}</h1><p>{body}</p>{verifiedAt ? <small className="verified-meta">Verified {new Date(verifiedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</small> : null}</div>{action ? <div className="intro-action">{action}</div> : null}</section>;
 }
 
 function Metric({ label, value, detail, emphasis }: { label: string; value: ReactNode; detail: string; emphasis?: Tone }): ReactElement {
@@ -181,9 +181,9 @@ function IncidentRow({ incident }: { incident: IncidentRecord }): ReactElement {
 }
 
 function useDashboard() {
-  const [data, setData] = useState<{ protocol: ProtocolConfig | null; incidents: IncidentRecord[]; target: ProtectedDemoState | null } | null>(null);
-  useEffect(() => { let active = true; void readDashboard().then((next) => { if (active) setData(next); }).catch(() => undefined); return () => { active = false; }; }, []);
-  return { data, loading: !data };
+  const [snapshot, setSnapshot] = useState(() => getCachedDashboard());
+  useEffect(() => { let active = true; void refreshDashboard().then((next) => { if (active) setSnapshot(next); }).catch(() => undefined); return () => { active = false; }; }, []);
+  return { data: snapshot?.data ?? null, verifiedAt: snapshot?.verifiedAt ?? null, loading: !snapshot };
 }
 
 const LANDING_FEATURES = [
@@ -221,7 +221,7 @@ function ControlCenter(): ReactElement {
   return <><PageIntro kicker="COMMAND CENTER / LIVE" title="Protocol posture" body="A chain-derived command view for the protected surface, current incident, and recovery proof." action={<div className="intro-actions"><a className="button primary" href="/app/incidents/new">Report incident</a><a className="button button-quiet" href={`/app/incidents/${incident?.incidentId ?? FINAL_DEPLOYMENT.incidentId}`}>Open live proof →</a></div>} /><main className="page-width"><section className="posture-hero"><div className="posture-topline"><p className="eyebrow">PROTOCOL STATUS</p><span className="panel-caption">LIVE PROTOCOL POSTURE</span></div><div className="posture-body"><div className="posture-summary"><div className="posture-title">{incident?.state ?? "NORMAL"}</div><p className="posture-copy">{incident?.state === "RECOVERED" ? "Recovered and operational. Remediation remains permanently active." : "Current posture is derived from the incident and target readbacks."}</p></div><dl className="posture-target"><Fact label="Target" value="ProtectedDemo" /><Fact label="State" value={target?.paused ? "Paused" : "Operational"} /><Fact label="Address" value={<span className="technical-value" title={FINAL_DEPLOYMENT.protectedDemoAddress}>{short(FINAL_DEPLOYMENT.protectedDemoAddress)}</span>} mono copy copyValue={FINAL_DEPLOYMENT.protectedDemoAddress} /><Fact label="Paused" value={target?.paused ? "True" : "False"} /><Fact label="Remediated" value={target?.remediated ? "True" : "False"} /></dl></div></section><section className="dashboard-grid"><Metric label="Target state" value={target?.paused ? "PAUSED" : "OPERATIONAL"} detail={target?.remediated ? "remediation retained" : "direct readback"} emphasis={target?.paused ? "danger" : "good"} /><Metric label="Evidence quorum" value="2 / 2 / 2" detail="bound · fresh · distinct" emphasis="good" /><Metric label="Treasury" value={`${target?.treasuryBalance ?? 0} units`} detail={`${target?.totalOutflow ?? 0} total outflow`} /><Metric label="Policy" value={protocol.policyLocked ? "LOCKED" : "OPEN"} detail={`${protocol.minimumSources} sources · ${protocol.recoveryCooldownSeconds}s cooldown`} emphasis={protocol.policyLocked ? "good" : "warn"} /></section><section className="panel"><div className="panel-heading"><div><p className="eyebrow">LIFECYCLE</p><h2>Full incident governance</h2></div><span className="panel-caption">Every gate is separately verified</span></div><Lifecycle state={incident?.state ?? "NORMAL"} /></section><div className="dashboard-split"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">PROTECTED SURFACE</p><h2>{protocol.protocolId}</h2></div><Link href={`/app/protocols/${protocol.protocolId}`}>Profile →</Link></div><dl className="fact-list"><Fact label="Failure class" value={protocol.criticalFailureClass} /><Fact label="Target" value={<span className="technical-value" title={protocol.targetAddress}>{short(protocol.targetAddress)}</span>} mono copy copyValue={protocol.targetAddress} /><Fact label="Controller" value={target?.controllerConfigured ? "Configured" : "Not configured"} /><Fact label="Processed" value={target?.totalProcessed ?? "—"} /><Fact label="Remediation" value={target?.remediated ? "Retained" : "Not active"} /></dl></section><section className="panel latest-incident"><div className="panel-heading"><div><p className="eyebrow">LATEST INCIDENT</p><h2 className="technical-value" title={incident?.incidentId}>{incident?.incidentId ?? "No incident"}</h2></div>{incident ? <Badge value={incident.state}>{mapIncidentStateToLabel(incident.state)}</Badge> : null}</div>{incident ? <dl className="incident-facts"><Fact label="Protocol" value={incident.protocolId} /><Fact label="Incident verdict" value={incident.incidentVerdict} mono /><Fact label="Recovery verdict" value={incident.recoveryVerdict} mono /><Fact label="Final state" value={incident.state} mono /></dl> : <p className="panel-copy">No configured incident record. Sentinel does not fabricate a feed.</p>}<div className="proof-note"><span>✓</span><p><strong>Live proof available.</strong> Final evidence, consensus, and target state are inspectable.</p></div>{incident ? <a className="button primary latest-incident-action" href={`/app/incidents/${incident.incidentId}`}>Open incident →</a> : null}</section></div><section className="panel activity-preview"><div className="panel-heading"><div><p className="eyebrow">VERIFIED ACTIVITY</p><h2>Response record</h2></div><Link href="/app/activity">Full ledger →</Link></div><div className="activity-strip"><ActivityChip label="Incident" value="ACTIVE_INCIDENT" /><ActivityChip label="Containment" value="PAUSED → REMEDIATED" /><ActivityChip label="Recovery" value="SAFE_TO_RECOVER" /><ActivityChip label="Final" value="RECOVERED" /></div></section></main></>;
 }
 
-function ActivityChip({ label, value }: { label: string; value: string }): ReactElement { return <div className="activity-chip"><span>{label}</span><strong>{value}</strong></div>; }
+function ActivityChip({ label, value }: { label: string; value: string }): ReactElement { const displayValue = value.replace(/â†’|→/g, "+"); return <div className="activity-chip"><span>{label}</span><strong>{displayValue}</strong></div>; }
 
 function ProtocolsPage(): ReactElement {
   const dashboard = useDashboard();
@@ -231,11 +231,14 @@ function ProtocolsPage(): ReactElement {
 }
 
 function ProtocolDetailPage({ protocolId }: { protocolId: string }): ReactElement {
-  const [protocol, setProtocol] = useState<ProtocolConfig | null>(null);
-  const [target, setTarget] = useState<ProtectedDemoState | null>(null);
-  useEffect(() => { let active = true; void Promise.all([readProtocol(), readProtectedDemoState()]).then(([nextProtocol, nextTarget]) => { if (active && nextProtocol?.protocolId === protocolId) { setProtocol(nextProtocol); setTarget(nextTarget); } }).catch(() => undefined); return () => { active = false; }; }, [protocolId]);
-  if (!protocol) return <><PageIntro kicker="PROTOCOL SECURITY PROFILE" title={protocolId} body="Reading policy and target state." /><LoadingPage /></>;
-  return <><PageIntro kicker="PROTOCOL SECURITY PROFILE" title={protocolId} body="The exact authority boundary, evidence policy, and target readback for the protected surface." action={<Link href={`/app/incidents/${FINAL_DEPLOYMENT.incidentId}`}>Open incident →</Link>} /><main className="page-width profile-grid"><section className="profile-hero panel"><div><p className="eyebrow">PROTECTION STATUS</p><div className="large-state good">{target?.paused ? "PAUSED" : "PROTECTED"}</div><p className="panel-copy">{target?.remediated ? "Recovered target; remediation remains active." : "Target state is read directly from ProtectedDemo."}</p></div><Badge value={protocol.policyLocked ? "RECOVERED" : "ASSESSING"}>{protocol.policyLocked ? "Policy locked" : "Setup incomplete"}</Badge></section><section className="panel"><p className="eyebrow">TARGET STATE</p><dl className="fact-list"><Fact label="Target address" value={protocol.targetAddress} mono copy /><Fact label="Owner" value={protocol.owner} mono copy /><Fact label="Authorized Sentinel" value={target?.authorizedSentinel ?? "Not read"} mono copy /><Fact label="Controller" value={target?.controllerConfigured ? "Configured" : "Not configured"} /><Fact label="Paused" value={target?.paused ? "true" : "false"} /><Fact label="Remediated" value={target?.remediated ? "true" : "false"} /><Fact label="Treasury" value={`${target?.treasuryBalance ?? 0} units`} /><Fact label="Total outflow" value={`${target?.totalOutflow ?? 0} units`} /></dl></section><section className="panel"><p className="eyebrow">LOCKED POLICY</p><div className="lock-callout"><span>◆</span><div><strong>Policy immutable</strong><small>Emergency configuration cannot be silently changed through the normal policy path.</small></div></div><dl className="fact-list"><Fact label="Failure class" value={protocol.criticalFailureClass} /><Fact label="Minimum evidence" value={`${protocol.minimumSources} sources`} /><Fact label="Freshness window" value={`${protocol.maxEvidenceAgeSeconds}s`} /><Fact label="Recovery cooldown" value={`${protocol.recoveryCooldownSeconds}s`} /><Fact label="Allowed domains" value={protocol.allowedSourceDomains} /></dl></section><section className="panel span-2"><div className="panel-heading"><div><p className="eyebrow">INTEGRATION BOUNDARY</p><h2>Sentinel governs, the protocol executes</h2></div></div><p className="panel-copy">ProtectedDemo authorizes one Sentinel address. Sentinel may request the target's pause adapter, but it does not gain arbitrary control. The target confirms pause and unpause through its own state.</p><div className="integration-flow"><span>ProtectedDemo</span><b>authorizes</b><span>Sentinel</span><b>requests</b><span>pause / recovery</span></div></section></main></>;
+  const cachedProtocol = getCachedProtocol();
+  const cachedTarget = getCachedProtectedDemoState();
+  const [protocol, setProtocol] = useState<ProtocolConfig | null>(() => cachedProtocol?.data ?? null);
+  const [target, setTarget] = useState<ProtectedDemoState | null>(() => cachedTarget?.data ?? null);
+  const [verifiedAt, setVerifiedAt] = useState<number | null>(() => Math.max(cachedProtocol?.verifiedAt ?? 0, cachedTarget?.verifiedAt ?? 0) || null);
+  useEffect(() => { let active = true; void Promise.all([refreshProtocol(), refreshProtectedDemoState()]).then(([nextProtocol, nextTarget]) => { if (active && nextProtocol.data?.protocolId === protocolId) { setProtocol(nextProtocol.data); setTarget(nextTarget.data); setVerifiedAt(Math.max(nextProtocol.verifiedAt, nextTarget.verifiedAt)); } }).catch(() => undefined); return () => { active = false; }; }, [protocolId]);
+  if (!protocol) return <><PageIntro kicker="PROTOCOL SECURITY PROFILE" title={protocolId} body="Reading policy and target state." verifiedAt={verifiedAt} /><LoadingPage /></>;
+  return <><PageIntro kicker="PROTOCOL SECURITY PROFILE" title={protocolId} body="The exact authority boundary, evidence policy, and target readback for the protected surface." verifiedAt={verifiedAt} action={<Link href={`/app/incidents/${FINAL_DEPLOYMENT.incidentId}`}>Open incident →</Link>} /><main className="page-width profile-grid"><section className="profile-hero panel"><div><p className="eyebrow">PROTECTION STATUS</p><div className="large-state good">{target?.paused ? "PAUSED" : "PROTECTED"}</div><p className="panel-copy">{target?.remediated ? "Recovered target; remediation remains active." : "Target state is read directly from ProtectedDemo."}</p></div><Badge value={protocol.policyLocked ? "RECOVERED" : "ASSESSING"}>{protocol.policyLocked ? "Policy locked" : "Setup incomplete"}</Badge></section><section className="panel"><p className="eyebrow">TARGET STATE</p><dl className="fact-list"><Fact label="Target address" value={protocol.targetAddress} mono copy /><Fact label="Owner" value={protocol.owner} mono copy /><Fact label="Authorized Sentinel" value={target?.authorizedSentinel ?? "Not read"} mono copy /><Fact label="Controller" value={target?.controllerConfigured ? "Configured" : "Not configured"} /><Fact label="Paused" value={target?.paused ? "true" : "false"} /><Fact label="Remediated" value={target?.remediated ? "true" : "false"} /><Fact label="Treasury" value={`${target?.treasuryBalance ?? 0} units`} /><Fact label="Total outflow" value={`${target?.totalOutflow ?? 0} units`} /></dl></section><section className="panel"><p className="eyebrow">LOCKED POLICY</p><div className="lock-callout"><span>◆</span><div><strong>Policy immutable</strong><small>Emergency configuration cannot be silently changed through the normal policy path.</small></div></div><dl className="fact-list"><Fact label="Failure class" value={protocol.criticalFailureClass} /><Fact label="Minimum evidence" value={`${protocol.minimumSources} sources`} /><Fact label="Freshness window" value={`${protocol.maxEvidenceAgeSeconds}s`} /><Fact label="Recovery cooldown" value={`${protocol.recoveryCooldownSeconds}s`} /><Fact label="Allowed domains" value={protocol.allowedSourceDomains} /></dl></section><section className="panel span-2"><div className="panel-heading"><div><p className="eyebrow">INTEGRATION BOUNDARY</p><h2>Sentinel governs, the protocol executes</h2></div></div><p className="panel-copy">ProtectedDemo authorizes one Sentinel address. Sentinel may request the target's pause adapter, but it does not gain arbitrary control. The target confirms pause and unpause through its own state.</p><div className="integration-flow"><span>ProtectedDemo</span><b>authorizes</b><span>Sentinel</span><b>requests</b><span>pause / recovery</span></div></section></main></>;
 }
 
 function EvidenceStats({ evidence, phase }: { evidence: EvidenceMetadata[]; phase: "EMERGENCY" | "RECOVERY" }): ReactElement {
@@ -263,9 +266,11 @@ function RecoveryGuardian({ incident, target, evidence }: { incident: IncidentRe
 function GuardCheck({ label, value, good }: { label: string; value: string; good: boolean }): ReactElement { return <div className="guard-check"><span className={good ? "check good" : "check"}>{good ? "✓" : "—"}</span><div><small>{label}</small><strong>{value}</strong></div></div>; }
 
 function IncidentCommandCenter({ incidentId }: { incidentId: string }): ReactElement {
-  const [dossier, setDossier] = useState<IncidentDossier | null>(null);
-  useEffect(() => { let active = true; void readIncidentDossier(incidentId).then((next) => { if (active) setDossier(next); }).catch(() => undefined); return () => { active = false; }; }, [incidentId]);
-  if (!dossier) return <><PageIntro kicker="INCIDENT COMMAND CENTER" title={incidentId} body="Reading incident state and evidence." /><LoadingPage /></>;
+  const cachedDossier = getCachedIncidentDossier(incidentId);
+  const [dossier, setDossier] = useState<IncidentDossier | null>(() => cachedDossier?.data ?? null);
+  const [verifiedAt, setVerifiedAt] = useState<number | null>(() => cachedDossier?.verifiedAt ?? null);
+  useEffect(() => { let active = true; void refreshIncidentDossier(incidentId).then((next) => { if (active) { setDossier(next.data); setVerifiedAt(next.verifiedAt); } }).catch(() => undefined); return () => { active = false; }; }, [incidentId]);
+  if (!dossier) return <><PageIntro kicker="INCIDENT COMMAND CENTER" title={incidentId} body="Reading incident state and evidence." verifiedAt={verifiedAt} /><LoadingPage /></>;
   const { incident, target, evidence } = dossier;
   const emergencyIds: string[] = [FINAL_DEPLOYMENT.evidenceIds.incidentChain, FINAL_DEPLOYMENT.evidenceIds.incidentAdvisory];
   const recoveryIds: string[] = [FINAL_DEPLOYMENT.evidenceIds.recoveryChain, FINAL_DEPLOYMENT.evidenceIds.recoveryAdvisory];
@@ -319,6 +324,7 @@ function saveIncidentDraftId(value: string): void {
 }
 
 function clearIncidentDraftId(): void {
+  invalidateVerifiedReadCaches();
   try {
     window.localStorage.removeItem(NEW_INCIDENT_DRAFT_KEY);
   } catch {
@@ -342,13 +348,15 @@ function hasPendingIncident(incidentId: string): boolean {
 function NewIncidentPage(): ReactElement {
   const [incidentId, setIncidentId] = useState<string>(() => initialIncidentId());
   const [reviewing, setReviewing] = useState<boolean>(() => hasPendingIncident(incidentId));
-  const [protocol, setProtocol] = useState<ProtocolConfig | null>(null);
-  const [target, setTarget] = useState<ProtectedDemoState | null>(null);
+  const cachedProtocol = getCachedProtocol();
+  const cachedTarget = getCachedProtectedDemoState();
+  const [protocol, setProtocol] = useState<ProtocolConfig | null>(() => cachedProtocol?.data ?? null);
+  const [target, setTarget] = useState<ProtectedDemoState | null>(() => cachedTarget?.data ?? null);
   const [complete, setComplete] = useState(false);
   const args = useMemo(() => [incidentId.trim(), FINAL_DEPLOYMENT.protocolId], [incidentId]);
-  useEffect(() => { let active = true; void Promise.all([readProtocol(), readProtectedDemoState()]).then(([nextProtocol, nextTarget]) => { if (!active) return; setProtocol(nextProtocol); setTarget(nextTarget); }).catch(() => undefined); return () => { active = false; }; }, []);
+  useEffect(() => { let active = true; void Promise.all([refreshProtocol(), refreshProtectedDemoState()]).then(([nextProtocol, nextTarget]) => { if (!active) return; setProtocol(nextProtocol.data); setTarget(nextTarget.data); }).catch(() => undefined); return () => { active = false; }; }, []);
   const prepareContext = async () => {
-    const [nextProtocol, nextTarget] = await Promise.all([readProtocol(), readProtectedDemoState()]);
+    const [nextProtocol, nextTarget] = await Promise.all([readProtocol(undefined, { forceFresh: true }), readProtectedDemoState(undefined, { forceFresh: true })]);
     if (!nextProtocol) throw new Error("The selected protected protocol could not be read.");
     setProtocol(nextProtocol);
     setTarget(nextTarget);
@@ -357,9 +365,11 @@ function NewIncidentPage(): ReactElement {
 }
 
 function ActivityPage(): ReactElement {
-  const [rows, setRows] = useState<ProofActivity[] | null>(null);
-  useEffect(() => { let active = true; void readProofActivity().then((next) => { if (active) setRows(next); }).catch(() => undefined); return () => { active = false; }; }, []);
-  return <><PageIntro kicker="ACTIVITY / PROOF LEDGER" title="Verified system activity" body="A transaction is only complete when finality, consensus, execution, and expected state are all understood." action={<Link href={`/app/incidents/${FINAL_DEPLOYMENT.incidentId}`}>Open incident →</Link>} /><main className="page-width"><section className="activity-legend"><span><i className="legend-dot good" />Finalized + execution verified</span><span><i className="legend-dot warn" />Pending / reconcile same hash</span><span><i className="legend-dot danger" />Execution failed</span></section>{!rows ? <LoadingPage /> : <section className="panel ledger-panel"><div className="ledger-head"><span>OPERATION</span><span>TRANSACTION</span><span>CONSENSUS</span><span>EXECUTION</span><span>STATE</span></div>{rows.map((row) => <div className="ledger-row" key={row.hash}><div><strong>{row.label}</strong><small>{row.stage}</small></div><ProofLink hash={row.hash} /><span className="ledger-value">{row.consensus}</span><span className="ledger-value">{row.execution}</span><Badge value={row.status}>{row.status}</Badge></div>)}</section>}<section className="panel activity-limit"><p className="eyebrow">RECONCILIATION MODEL</p><p>Hashes are persisted before waiting. A timeout is never permission to submit again. The ledger reads known proof transactions from Studio Next; it does not invent historical activity.</p></section></main></>;
+  const cachedRows = getCachedProofActivity();
+  const [rows, setRows] = useState<ProofActivity[] | null>(() => cachedRows?.data ?? null);
+  const [verifiedAt, setVerifiedAt] = useState<number | null>(() => cachedRows?.verifiedAt ?? null);
+  useEffect(() => { let active = true; void refreshProofActivity().then((next) => { if (active) { setRows(next.data); setVerifiedAt(next.verifiedAt); } }).catch(() => undefined); return () => { active = false; }; }, []);
+  return <><PageIntro kicker="ACTIVITY / PROOF LEDGER" title="Verified system activity" body="A transaction is only complete when finality, consensus, execution, and expected state are all understood." verifiedAt={verifiedAt} action={<Link href={`/app/incidents/${FINAL_DEPLOYMENT.incidentId}`}>Open incident →</Link>} /><main className="page-width"><section className="activity-legend"><span><i className="legend-dot good" />Finalized + execution verified</span><span><i className="legend-dot warn" />Pending / reconcile same hash</span><span><i className="legend-dot danger" />Execution failed</span></section>{!rows ? <LoadingPage /> : <section className="panel ledger-panel"><div className="ledger-head"><span>OPERATION</span><span>TRANSACTION</span><span>CONSENSUS</span><span>EXECUTION</span><span>STATE</span></div>{rows.map((row) => <div className="ledger-row" key={row.hash}><span className="ledger-rail" aria-hidden="true"><i /></span><div><strong>{row.label}</strong><small>{row.stage}</small></div><ProofLink hash={row.hash} /><span className="ledger-value">{row.consensus}</span><span className="ledger-value">{row.execution}</span><Badge value={row.status}>{row.status}</Badge></div>)}</section>}<section className="panel activity-limit"><p className="eyebrow">RECONCILIATION MODEL</p><p>Hashes are persisted before waiting. A timeout is never permission to submit again. The ledger reads known proof transactions from Studio Next; it does not invent historical activity.</p></section></main></>;
 }
 
 function TransparencyPage(): ReactElement {
