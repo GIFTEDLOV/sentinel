@@ -1,0 +1,27 @@
+AUTHENTICATION-FIRST BOUNDARY PROOF
+
+FAIL-CLOSED PATH
+Historical blocked incident: incident-hardened-v1-mu5x1g4z
+Block reason: SOURCE_UNAVAILABLE
+Semantic assessment while blocked: NO
+Approval while blocked: NO
+Owner retry while evidence remained invalid: BLOCKED
+
+SUCCESSFUL INCIDENT PATH
+Incident: incident-hardened-v1-r2-20260917
+Two authenticated sources: YES
+Distinct approved domains: YES
+Freshness: YES
+Target/protocol/incident binding: YES
+Incident authentication: VERIFIED
+Semantic assessment: ACTIVE_INCIDENT
+
+SUCCESSFUL RECOVERY PATH
+Two fresh recovery sources: YES
+Recovery authentication: VERIFIED
+Semantic recovery assessment: SAFE_TO_RECOVER
+Recovery cooldown: 900 seconds observed
+Final target: paused=false; remediated=true
+
+No manual approval or authentication bypass was used.
+Unauthorized retry live test: NOT EXECUTED; covered by contract tests.

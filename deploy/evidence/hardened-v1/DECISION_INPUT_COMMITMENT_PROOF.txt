@@ -1,0 +1,18 @@
+DECISION INPUT COMMITMENT PROOF
+DOMAIN: SENTINEL_DECISION_INPUT_V1
+
+INCIDENT_ASSESSMENT_ID: incident-hardened-v1-r2-20260917:incident:1
+INCIDENT_QUESTION_VERSION: INCIDENT_ASSESSMENT_V1
+INCIDENT_DECISION_INPUT_HASH: 454abba089fbdfbb557e184deee526e122f445aa052772aeb5e11045fbbb3c5b
+INCIDENT_LOCAL_HASH: 454abba089fbdfbb557e184deee526e122f445aa052772aeb5e11045fbbb3c5b
+INCIDENT_HASH_MATCH: YES
+INCIDENT_INPUTS: sorted evidence IDs/digests/source domains/observed_at; protocol; incident; target; chain; Sentinel identity; authentication and binding flags
+
+RECOVERY_ASSESSMENT_ID: incident-hardened-v1-r2-20260917:recovery:1
+RECOVERY_QUESTION_VERSION: RECOVERY_ASSESSMENT_V1
+RECOVERY_DECISION_INPUT_HASH: 6d4579774e0fd0366d74cc9d35eb7da1e8505807b5087d2e0133debcdd872403
+RECOVERY_LOCAL_HASH: 6d4579774e0fd0366d74cc9d35eb7da1e8505807b5087d2e0133debcdd872403
+RECOVERY_HASH_MATCH: YES
+RECOVERY_INPUTS: sorted fresh evidence IDs/digests/source domains/observed_at; protocol; incident; target; chain; Sentinel identity; authentication and binding flags
+
+Both commitments were independently reconstructed with deterministic JSON serialization and SHA-256.

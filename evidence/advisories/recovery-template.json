@@ -1,0 +1,31 @@
+{
+  "schema": "sentinel-advisory-v1",
+  "protocol_id": "sentinel-demo",
+  "protocol_address": "0xbfC7DD4e7c57997F74C56175DBad234E4CA01B05",
+  "network": "Studio Next",
+  "canonical_rpc": "https://studio-next.genlayer.com/api",
+  "incident_id": "<INCIDENT_ID>",
+  "phase": "RECOVERY",
+  "failure_class": "unauthorized-drain",
+  "status": "REMEDIATED",
+  "transaction_hash": "<REMEDIATION_TX_HASH>",
+  "issued_at": "<ISSUED_AT_UTC>",
+  "current": false,
+  "critical_signal": false,
+  "mitigation_complete": true,
+  "summary": "<OWNER_AUTHORED_CONTAINMENT_SUMMARY>",
+  "facts": [
+    {
+      "name": "remediation",
+      "value": "<OWNER_CONFIRMATION_THAT_THE_REFERENCED_REMEDIATION_APPLIED_THE_FIX>"
+    },
+    {
+      "name": "outflow_guard",
+      "value": "<CONFIRMATION_THAT_ARBITRARY_CALLER_OUTFLOW_IS_DISABLED>"
+    },
+    {
+      "name": "containment",
+      "value": "<OWNER_CONFIRMATION_THAT_THE_INCIDENT_IS_CONTAINED_AND_RECOVERY_REVIEW_IS_APPROPRIATE>"
+    }
+  ]
+}

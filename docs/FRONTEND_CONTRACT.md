@@ -1,41 +1,42 @@
-# Frontend contract boundary (Phase 2)
+# Frontend contract
 
-No frontend is built in Phase 1. This document defines the eventual UI boundary so future pages do not weaken the protocol invariants.
+The frontend is a real Bradbury client for the deployed Sentinel and ProtectedDemo addresses. It
+does not create local incident truth, fake metrics, or simulated target state.
 
-## Pages
+## Network and reads
 
-The eventual application may provide:
+`BradburyGenLayerTransport` uses `genlayer-js 1.1.8` with the official `testnetBradbury` chain
+definition (`4221`, `https://rpc-bradbury.genlayer.com`). Read clients are created without a wallet.
+Configured protocol and incident ids are explicit read hints because the MVP intentionally has no
+map-enumeration view.
 
-`/` · `/app` · `/protocols` · `/protocols/[id]` · `/incidents` · `/incidents/[id]` · `/report` · `/lab` · `/activity` · `/integrate`
+## Wallet and writes
 
-## Reads
+Writes require an injected EIP-1193 provider and an account on chain `4221`. The wallet is asked to
+sign only after the UI has read the relevant precondition. No automatic network switch or auto-sign
+is performed. The stable client submits the SDK's normal `writeContract` request with `value: 0`;
+the RC fee-estimation API is not used.
 
-The UI reads `ProtectedVault.get_status`, `get_voucher`, `get_total_demo_assets`, `is_paused`, `is_vulnerable`, and `contract_info`. It reads Sentinel `get_protocol`, `get_incident`, `get_protocol_ids`, `get_incident_ids`, `get_incidents_for_protocol` where available, and `contract_info`.
+## Write lifecycle
 
-Incident screens must distinguish incident verdict (`OPEN`, `ADJUDICATING`, `DECIDED` plus the verdict enum) from target state (`ACTIVE`/paused or unpaused). There is no `PAUSED` incident verdict.
+```text
+PRECONDITION READ
+  -> BROADCAST ONCE
+  -> PERSIST HASH IMMEDIATELY
+  -> RECONCILE SAME HASH
+  -> FINALIZED + FINISHED_WITH_RETURN
+  -> READ FINAL CONTRACT STATE
+```
 
-## Writes
+`TransactionCoordinator` stores pending operation hashes in localStorage, resumes them after a
+refresh, distinguishes provisional `ACCEPTED` from final consensus, preserves the last trustworthy
+state during a temporary lookup failure, and never rebroadcasts after a hash exists. Triggered
+cross-contract transaction ids are read when Bradbury exposes them.
 
-Future forms may call `register_protocol`, `report_incident`, and `adjudicate_incident` on Sentinel, and the toy-only owner/test controls on ProtectedVault. Reporting must be presented as alarm intake, never as a pause control. The UI must not expose or imply an administrator verdict shortcut.
+## UI rules
 
-## Lab state machine
-
-The Lab must be able to show:
-
-`ACTIVE` → exploit succeeds → report incident → GenLayer adjudicates → `FINALIZED` → finalized Sentinel pause reaches target → same exploit fails.
-
-It must show evidence admission, consensus decision, parent transaction status, child-message status, and verified target state separately.
-
-## v0.6 transaction tracking boundary
-
-For every write:
-
-1. Broadcast exactly once.
-2. Persist the transaction hash before polling.
-3. Reconcile the same hash; never blind-rebroadcast after an ambiguous polling failure.
-4. Require a protocol status of `ACCEPTED` or `FINALIZED` as appropriate.
-5. Require the successful execution result (`FINISHED_WITH_RETURN`); an EVM submission receipt alone is not success.
-6. For pause completion specifically, wait for `FINALIZED`, then read the target and verify `paused == true` and the expected incident identifier.
-
-The UI must not equate `ACCEPTED` with `FINALIZED`, and it must not claim the target is paused merely because the parent Sentinel transaction was accepted. Child-message reconciliation and target-state verification are required.
-
+- No fake incident, verdict, pause state, balance, or deployment address.
+- `ACTIVE_INCIDENT` and `PAUSED` are rendered only from contract reads.
+- Evidence metadata is labeled separately from contract-side authentication and consensus.
+- A finalized execution error is surfaced as a failure, not as a successful state change.
+- Recovery controls require fresh recovery consensus and target confirmation.

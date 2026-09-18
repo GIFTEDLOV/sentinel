@@ -1,0 +1,35 @@
+{
+  "network": "Studio Next",
+  "rpc": "https://studio-next.genlayer.com/api",
+  "chainId": 61997,
+  "sourceHashes": {
+    "sentinel": "55A33D31B473BC61384EDDC723C15B378ABF9668C9A2760CB79438F3AA0A1ED8",
+    "protectedDemo": "7D684E6CA326981018ED63EECC4EEC8C6C4D1B8FF91BC20037E2BA38175FCFBD"
+  },
+  "oldProductionUntouched": true,
+  "newProtectedDemo": {
+    "address": "0xdFb4f6Fc4570B04A198b484aa6175025882c7c21",
+    "deployTx": "0xedf828b7c65d97f0f55d49a9d24a0e137f83f5164eec5cb92734fa186d2bb4d6",
+    "status": "FINALIZED"
+  },
+  "newSentinel": {
+    "address": "0xeA6d5350929d0F3cc80f5f3f9533515C690a3952",
+    "deployTx": "0x19743a9c8d9a268f71f096e442cd8e3ba489aae37b5c8ba1956b10a99b5769c4",
+    "status": "FINALIZED",
+    "sourceHash": "55A33D31B473BC61384EDDC723C15B378ABF9668C9A2760CB79438F3AA0A1ED8"
+  },
+  "controllerConfiguration": {
+    "tx": "0x5f981b2319ad9a6df570f9924d429dafcc381c80563a23e240bf43f047baebae",
+    "configured": true,
+    "authorizedSentinel": "0xeA6d5350929d0F3cc80f5f3f9533515C690a3952"
+  },
+  "protocol": {
+    "id": "sentinel-demo",
+    "registrationTx": "0x697971e306f4fd31ac829f28cab60e837498daf09a74d61b63d15d793f4822bd",
+    "policyLockTx": "0x3d9350abbf5f153a92a4d19bf7157bf3039e4b7c4752e77471124cf61b732533",
+    "locked": true
+  },
+  "evidenceRepositoryCommit": "556820c",
+  "incidentId": "incident-hardened-v1-r2-20260917",
+  "finalState": "RECOVERED"
+}
